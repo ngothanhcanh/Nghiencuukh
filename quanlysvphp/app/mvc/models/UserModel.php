@@ -16,9 +16,21 @@ class UserModel
         }
     }
     public function add($id,$name,$password,$user_type,$status,$mssv,$magv)
-    {
-      $sql="INSERT INTO `nguoidung`(`ID`, `name`, `password`, `user_type`, `status`, `MSSV`, `MAGV`)
-       VALUES ('$id','$name','$password','$user_type','$status','$mssv','$magv') ";
+    { 
+        if($magv=='')
+        {
+            $sql="INSERT INTO `nguoidung`(`ID`, `name`, `password`, `user_type`, `status`, `MSSV`, `MAGV`)
+            VALUES ('$id','$name','$password','$user_type','$status','$mssv',null) ";
+        }else if($mssv=='')
+        {
+            $sql="INSERT INTO `nguoidung`(`ID`, `name`, `password`, `user_type`, `status`, `MSSV`, `MAGV`)
+            VALUES ('$id','$name','$password','$user_type','$status',null,'$magv') ";
+        }else
+        {
+            
+            $sql="INSERT INTO `nguoidung`(`ID`, `name`, `password`, `user_type`, `status`, `MSSV`, `MAGV`)
+            VALUES ('$id','$name','$password','$user_type','$status','$mssv','$magv') ";
+        }
         return $this->db->execute($sql); 
     }
     public function update()

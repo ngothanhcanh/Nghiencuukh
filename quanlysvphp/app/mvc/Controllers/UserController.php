@@ -2,20 +2,32 @@
 class UserController extends Controller
 {   
     private $userModel;
+    private $giangvienModel;
+    private $sinhvienModel;
     public function __construct()
     {
-        $this->userModel=$this->model('userModel');
+        $this->userModel=$this->model('UserModel');
+        $this->giangvienModel=$this->model('GiangVienModel');
+        $this->sinhvienModel=$this->model('SinhVienModel');
     }
     public function index() 
     {  
         if(isset($_GET['delete']))
         {    $id=$_GET['delete'];
-            $this->userModel->delete($id);
+            
+            if($this->userModel->delete($id))
+            {
+            header('location:'.URL.'/UserController/index');
+            }
         }
         $result=$this->userModel->show();
+        $result_giaovien = $this->giangvienModel->showid();
+        $result_sinhvien=$this->sinhvienModel->show();
         $this->view('admin/user',
     [
-        'result'=>$result
+        'result'=>$result,
+        'result_giaovien'=>$result_giaovien,
+        'result_sinhvien'=>$result_sinhvien
     ]);
     }
     public function save()
@@ -31,9 +43,8 @@ class UserController extends Controller
     $status = $_POST["status"];
     $mssv = $_POST["mssv"];
     $magv = $_POST["magv"];
-
-    // TODO: Thực hiện lưu dữ liệu vào cơ sở dữ liệu
     $this->userModel->add($id, $name, $password, $userType, $status, $mssv, $magv);
+    // TODO: Thực hiện lưu dữ liệu vào cơ sở dữ liệu
     // Gọi phương thức lưu dữ liệu trong userModel
     // Trả về kết quả (ví dụ: thành công hoặc thất bại)
     $response = array(
