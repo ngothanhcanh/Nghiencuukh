@@ -48,8 +48,13 @@ class UserController extends Controller
     // Gọi phương thức lưu dữ liệu trong userModel
     // Trả về kết quả (ví dụ: thành công hoặc thất bại)
     $response = array(
-        'success' => true,
-        'message' => 'Dữ liệu đã được lưu thành công'
+        'id'=>$id,
+        'name'=>$name,
+        'password'=>$password,
+        'userType'=>$userType,
+        'status'=>$status,
+        'mssv'=>$mssv,
+        'magv'=>$magv
     );
     echo json_encode($response);
       }

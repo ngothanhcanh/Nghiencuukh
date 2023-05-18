@@ -45,7 +45,7 @@
                                                 </select> records per page</label></div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="dataTables_filter" id="editable-sample_filter"><label>Search: <input type="text" id="search-input" aria-controls="editable-sample"  class="form-control medium"></label></div>
+                                        <div class="dataTables_filter" id="editable-sample_filter"><label>Search: <input type="text" id="search-input" aria-controls="editable-sample" class="form-control medium"></label></div>
                                     </div>
                                 </div>
                                 <table class="table table-striped table-hover table-bordered dataTable" id="editable-sample" aria-describedby="editable-sample_info">
@@ -68,41 +68,41 @@
                                             <td contenteditable="true" id="newName"></td>
                                             <td contenteditable="true" id="newPassword"></td>
                                             <td contenteditable="true" id="newUserType">
-                                            <select class="select-usertype">
-                                                        <option value="admin">admin</option>
-                                                        <option value="nguoidung">nguoidung</option>
+                                                <select class="select-usertype">
+                                                    <option value="admin">admin</option>
+                                                    <option value="nguoidung">nguoidung</option>
                                                 </select>
                                             </td>
                                             <td contenteditable="true" id="newStatus">
-                                            <select class="select-status">
-                                                        <option value="enable">enable</option>
-                                                        <option value="disable">disable</option>
+                                                <select class="select-status">
+                                                    <option value="enable">enable</option>
+                                                    <option value="disable">disable</option>
                                                 </select>
                                             </td>
                                             <td contenteditable="true" id="newMSSV">
                                                 <select class="mssv-select">
                                                     <option value="">Không</option>
-                                                <?php foreach($result_sinhvien as $rowsinhvien){ ?>
-                                                    <option value="<?php echo $rowsinhvien['MSSV'] ?>"><?php echo $rowsinhvien['TENSV'] ?></option>
-                                                    <?php }?>
-                                                     
+                                                    <?php foreach ($result_sinhvien as $rowsinhvien) { ?>
+                                                        <option value="<?php echo $rowsinhvien['MSSV'] ?>"><?php echo $rowsinhvien['TENSV'] ?></option>
+                                                    <?php } ?>
+
                                                 </select>
                                             </td>
                                             <td contenteditable="true" id="newMAGV">
                                                 <select class="magv-select">
-                                                <option value="">Không</option>
-                                                <?php foreach($result_giaovien as $rowgiaovien){ ?>
-                                                    <option value="<?php echo $rowgiaovien['MAGV'] ?>"><?php echo $rowgiaovien['TENGV'] ?></option>
-                                                    <?php }?>
+                                                    <option value="">Không</option>
+                                                    <?php foreach ($result_giaovien as $rowgiaovien) { ?>
+                                                        <option value="<?php echo $rowgiaovien['MAGV'] ?>"><?php echo $rowgiaovien['TENGV'] ?></option>
+                                                    <?php } ?>
                                                 </select>
                                             </td>
                                             <td><button id="saveButton" class="save">save</button></td>
                                             <td><a class="delete" name="delete" href="<?= URL ?>/UserController/index?delete=">Delete</a></td>
-                                          </tr>
+                                        </tr>
                                         <?php foreach ($result as $row) {
                                         ?>
-                                            <tr class="odd">
-                                                <td class="  sorting_1"><?php echo $row['ID'] ?></td>
+                                            <tr class="odd" id=<?= $row['ID'] ?>>
+                                                <td class="sorting_1"><?php echo $row['ID'] ?></td>
                                                 <td class=" "> <?= $row['name'] ?></td>
                                                 <td class=" "><?= $row['password'] ?></td>
                                                 <td class="center "><?= $row['user_type'] ?></td>
@@ -147,24 +147,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-     
-  
-        //tìm kiếm 
-        $('#search-input').on('input', function() {
-        $('.odd').remove();//xóa đoạn các đoạn tr trong bảng
-        var searchValue = $(this).val().toLowerCase(); //đưa hết về chữ thường 
-        $('#search-results').empty();//đoạn tbody được để trống 
-        <?php foreach($result as $row) { ?>
-            var name = '<?php echo $row['name']; ?>'.toLowerCase();//đặt biến name là tên của giá trị name trong bảng người dùng
-            if(name.includes(searchValue))//so sách giá trị tìm bằng giá trị name
-             {
-                var listItem = '<tr class="odd"><td class="  sorting_1"><?php echo $row['ID'] ?></td><td class=" "> <?= $row['name'] ?></td> <td class=" "><?= $row['password'] ?></td><td class="center "><?= $row['user_type'] ?></td><td class="center "><?= $row['status'] ?></td><td class="center "><?= $row['MSSV'] ?></td><td class="center "><?= $row['MAGV'] ?></td><td class=" "><a class="edit" name="edit" href="<?= URL ?>/UserController/index?edit=<?= $row['ID'] ?>">Edit</a></td><td class=" "><a class="delete" name="delete" href="<?= URL ?>/UserController/index?delete=<?= $row['ID'] ?>">Delete</a></td></tr>';
-                $('#search-results').append(listItem);
-            }
-        <?php } ?>
-    });
-        // Xử lý sự kiện khi bấm nút "Add New"
-        $('#editable-sample_new').click(function() {
+        //nút edit
+        $(document).on('click', '.edit', function() {
+            var row = $(this).closest('tr');
+            row.find('td[contenteditable="true"]').attr('contenteditable', 'true');
+            row.find('.edit').text('Save');
+        });
+        // Gắn sự kiện click cho nút "Add New"
+        $(document).on('click', '#editable-sample_new', function() {
             // Lấy dòng mẫu để thêm dữ liệu mới
             var newRow = $('#new-row');
 
@@ -174,7 +164,21 @@
             cloneRow.removeAttr('style'); // Hiển thị dòng mới
             tableBody.append(cloneRow);
         });
+        //tìm kiếm 
+        $('#search-input').on('input', function() {
+            // $('.odd').remove(); //xóa đoạn các đoạn tr trong bảng
+            var searchValue = $(this).val().toLowerCase(); //đưa hết về chữ thường 
+            $('#search-results').empty(); //đoạn tbody được để trống 
+            <?php foreach ($result as $row) { ?>
+                var name = '<?php echo $row['name']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
+                if (name.includes(searchValue)) //so sách giá trị tìm bằng giá trị name
+                {
+                    var listItem = '<tr class="odd"><td class="sorting_1"><?php echo $row['ID'] ?></td><td class=" "> <?= $row['name'] ?></td> <td class=" "><?= $row['password'] ?></td><td class="center "><?= $row['user_type'] ?></td><td class="center "><?= $row['status'] ?></td><td class="center "><?= $row['MSSV'] ?></td><td class="center "><?= $row['MAGV'] ?></td><td class=" "><a class="edit" name="edit" href="<?= URL ?>/UserController/index?edit=<?= $row['ID'] ?>">Edit</a></td><td class=" "><a class="delete" name="delete" href="<?= URL ?>/UserController/index?delete=<?= $row['ID'] ?>">Delete</a></td></tr>';
+                    $('#search-results').append(listItem);
+                }
+            <?php } ?>
 
+        });
         // Xử lý sự kiện click của nút "Save"
         $(document).on('click', '.save', function() {
             var newRow = $(this).closest('tr'); // Dòng mới được thêm    
@@ -185,7 +189,7 @@
             var userType = newRow.find('.select-usertype').val();
             var status = newRow.find('.select-status').val();
             var mssv = newRow.find('.mssv-select').val();
-             var magv = newRow.find('.magv-select').val();
+            var magv = newRow.find('.magv-select').val();
             // Tạo đối tượng dữ liệu để gửi đi
             var data = {
                 id: id,
@@ -196,7 +200,6 @@
                 mssv: mssv,
                 magv: magv
             };
-
             // Gửi yêu cầu AJAX để lưu dữ liệu
             $.ajax({
                 url: '<?= URL ?>/UserController/save',
@@ -208,20 +211,17 @@
                     var newRow = `
                 <tr>
                     <td class="sorting_1">${id}</td>
-                    <td>${name}</td>
-                    <td>${password}</td>
-                    <td>${userType}</td>
-                    <td>${status}</td>
-                    <td>${mssv}</td>
-                    <td>${magv}</td>
+                    <td>${response.name}</td>
+                    <td>${response.password}</td>
+                    <td>${response.userType}</td>
+                    <td>${response.status}</td>
+                    <td>${response.mssv}</td>
+                    <td>${response.magv}</td>
                     <td class=" "><a class="delete" href="">edit</a></td>
-                    <td><a class="edit" name="delete" href="<?= URL ?>/UserController/index?delete=${id}">Delete</a></td>
+                    <td><a class="edit" name="delete" href="<?= URL ?>/UserController/index?delete=${response.id}">Delete</a></td>
                 </tr>
-            `;
-
+                  `;
                     $("#editable-sample tbody").append(newRow);
-
-
                 },
                 error: function(xhr, status, error) {
                     // Xử lý lỗi khi gửi yêu cầu AJAX
@@ -229,7 +229,11 @@
                 }
             });
             newRow.css('display', 'none');
+                setInterval(() => {
+                location.reload();
+             },500);
         });
+        //set time tại 500ml giây
     });
 </script>
 <!-- main-end -->
