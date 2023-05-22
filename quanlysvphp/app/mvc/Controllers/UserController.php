@@ -59,4 +59,23 @@ class UserController extends Controller
     echo json_encode($response);
       }
     }
+    public function update()
+    {
+        if($_SERVER["REQUEST_METHOD"] === "POST")
+        {
+            $id = $_POST["id"];
+            $name = $_POST["editedName"];
+            $password = $_POST["editedPassword"];
+            $userType = $_POST["editedUserType"];
+            $status = $_POST["editedStatus"];
+            $mssv = $_POST["editedMssv"];
+            $magv = $_POST["editedMagv"];
+            $this->userModel->update($id, $name, $password, $userType, $status, $mssv, $magv);
+            $response = array(
+                'id' => $id,
+                'name' => $name
+            );
+            echo json_encode($response);
+        }
+    }
 }

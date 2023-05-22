@@ -8,12 +8,12 @@
             <div class="col-sm-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        Editable Table
-                        <span class="tools pull-right">
+                        Người Dùng
+                        <!-- <span class="tools pull-right">
                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                             <a href="javascript:;" class="fa fa-cog"></a>
                             <a href="javascript:;" class="fa fa-times"></a>
-                        </span>
+                        </span> -->
                     </header>
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
@@ -101,15 +101,15 @@
                                         </tr>
                                         <?php foreach ($result as $row) {
                                         ?>
-                                            <tr class="odd" id=<?= $row['ID'] ?>>
+                                            <tr class="odd" id="<?= $row['ID'] ?>">
                                                 <td class="sorting_1"><?php echo $row['ID'] ?></td>
-                                                <td class=" "> <?= $row['name'] ?></td>
-                                                <td class=" "><?= $row['password'] ?></td>
-                                                <td class="center "><?= $row['user_type'] ?></td>
-                                                <td class="center "><?= $row['status'] ?></td>
-                                                <td class="center "><?= $row['MSSV'] ?></td>
-                                                <td class="center "><?= $row['MAGV'] ?></td>
-                                                <td class=" "><a class="edit" name="edit" href="<?= URL ?>/UserController/index?edit=<?= $row['ID'] ?>">Edit</a></td>
+                                                <td class="name"> <?= $row['name'] ?></td>
+                                                <td class="password"><?= $row['password'] ?></td>
+                                                <td class="usertype"><?= $row['user_type'] ?></td>
+                                                <td class="status"><?= $row['status'] ?></td>
+                                                <td class="mssv"><?= $row['MSSV'] ?></td>
+                                                <td class="magv"><?= $row['MAGV'] ?></td>
+                                                <td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td>
                                                 <td class=" "><a class="delete" name="delete" href="<?= URL ?>/UserController/index?delete=<?= $row['ID'] ?>">Delete</a></td>
                                             </tr>
                                         <?php
@@ -148,16 +148,69 @@
 <script>
     $(document).ready(function() {
         //nút edit
-        $(document).on('click', '.edit', function() {
-            var row = $(this).closest('tr');
-            row.find('td[contenteditable="true"]').attr('contenteditable', 'true');
-            row.find('.edit').text('Save');
+        $(document).on('click', '.edit-btn', function() {
+            var row = $(this).closest('tr'); //lấy đoạn tr vừa bấm
+            var id = row.attr('id'); // lấy id của đoạn tr
+            //lấy gán từng giá tri của từng biến tương ứng
+            var name = row.find('.name').text().trim();
+            var password = row.find('.password').text().trim();
+            var usertype = row.find('.usertype').text().trim();
+            var status = row.find('.status').text().trim();
+            var mssv = row.find('.mssv').text().trim();
+            var magv = row.find('.magv').text().trim();
+            //hiển thị giá trị đoạn trên và chuyển kiểu thành input để sửa
+            row.find('.name').html('<input type="text" value="' + name + '">');
+            row.find('.password').html('<input type="text" value="' + password + '">')
+            row.find('.usertype').html('<input type="text" value="' + usertype + '">');
+            row.find('.status').html('<input type="text" value="' + status + '">');
+            row.find('.mssv').html('<input type="text" value="' + mssv + '">');
+            row.find('.magv').html('<input type="text" value="' + magv + '">');
+            //thay nút edit thành update
+            row.find('.edit-btn').text('Update');
+            row.find('.edit-btn').removeClass('edit-btn').addClass('update-btn');
+            row.find('.update-btn').on('click', function() {
+                var editedName = row.find('input').eq(0).val();
+                var editedPassword = row.find('input').eq(1).val();
+                var editedUserType = row.find('input').eq(2).val();
+                var editedStatus = row.find('input').eq(3).val();
+                var editedMssv = row.find('input').eq(4).val();
+                var editedMagv = row.find('input').eq(5).val();
+                var data={
+                        id:id,
+                        editedName: editedName,
+                        editedPassword: editedPassword,
+                        editedUserType: editedUserType,
+                        editedStatus: editedStatus,
+                        editedMssv: editedMssv,
+                        editedMagv: editedMagv
+                };
+                $.ajax({
+                url: '<?= URL ?>/UserController/update',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function(response) {               
+                        row.find('.name').html(editedName);
+                        row.find('.password').html(editedPassword);
+                        row.find('.usertype').html(editedUserType);
+                        row.find('.status').html(editedStatus);
+                        row.find('.mssv').html(editedMssv);
+                        row.find('.magv').html(editedMagv);
+
+                        row.find('.update-btn').text('Edit');
+                        row.find('.update-btn').removeClass('save').addClass('edit-btn');
+                    },error: function(xhr, status, error) {
+                       console.log('Lỗi khi gửi yêu cầu AJAX:', error);
+                    }
+                })
+            });
+
+
         });
         // Gắn sự kiện click cho nút "Add New"
         $(document).on('click', '#editable-sample_new', function() {
             // Lấy dòng mẫu để thêm dữ liệu mới
             var newRow = $('#new-row');
-
             // Sao chép dòng mẫu và thêm vào bảng
             var tableBody = $('#editable-sample tbody');
             var cloneRow = newRow.clone();
@@ -166,21 +219,24 @@
         });
         //tìm kiếm 
         $('#search-input').on('input', function() {
-            // $('.odd').remove(); //xóa đoạn các đoạn tr trong bảng
+            $('.odd').remove(); //xóa các tr odd đang hiện 
             var searchValue = $(this).val().toLowerCase(); //đưa hết về chữ thường 
-            $('#search-results').empty(); //đoạn tbody được để trống 
-            <?php foreach ($result as $row) { ?>
-                var name = '<?php echo $row['name']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
-                if (name.includes(searchValue)) //so sách giá trị tìm bằng giá trị name
-                {
-                    var listItem = '<tr class="odd"><td class="sorting_1"><?php echo $row['ID'] ?></td><td class=" "> <?= $row['name'] ?></td> <td class=" "><?= $row['password'] ?></td><td class="center "><?= $row['user_type'] ?></td><td class="center "><?= $row['status'] ?></td><td class="center "><?= $row['MSSV'] ?></td><td class="center "><?= $row['MAGV'] ?></td><td class=" "><a class="edit" name="edit" href="<?= URL ?>/UserController/index?edit=<?= $row['ID'] ?>">Edit</a></td><td class=" "><a class="delete" name="delete" href="<?= URL ?>/UserController/index?delete=<?= $row['ID'] ?>">Delete</a></td></tr>';
-                    $('#search-results').append(listItem);
-                }
-            <?php } ?>
+            <?php if (isset($result)) {
+                foreach ($result as $row) { ?>
+                    var name = '<?php echo $row['name']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
+                    if (name.includes(searchValue)) //so sách giá trị tìm bằng giá trị name
+                    {
+                        var listItem = '<tr class="odd"><td class="sorting_1"><?php echo $row['ID'] ?></td><td class=" "> <?= $row['name'] ?></td> <td class=" "><?= $row['password'] ?></td><td class="center "><?= $row['user_type'] ?></td><td class="center "><?= $row['status'] ?></td><td class="center "><?= $row['MSSV'] ?></td><td class="center "><?= $row['MAGV'] ?></td><td class=" "><a class="edit" name="edit" href="<?= URL ?>/UserController/index?edit=<?= $row['ID'] ?>">Edit</a></td><td class=" "><a class="delete" name="delete" href="<?= URL ?>/UserController/index?delete=<?= $row['ID'] ?>">Delete</a></td></tr>';
+                        $('#search-results').append(listItem);
+                    }
+
+            <?php }
+            } ?>
 
         });
         // Xử lý sự kiện click của nút "Save"
-        $(document).on('click', '.save', function() {
+        $(document).on('click', '.save', function(e) {
+            e.preventDefault();
             var newRow = $(this).closest('tr'); // Dòng mới được thêm    
             // Lấy giá trị từ các ô input
             var id = newRow.find('#newId').text();
@@ -207,6 +263,7 @@
                 dataType: 'json',
                 data: data,
                 success: function(response) {
+
                     //thêm đối tượng trả về vào dòng mới tạm thời.
                     var newRow = `
                 <tr>
@@ -229,9 +286,9 @@
                 }
             });
             newRow.css('display', 'none');
-                setInterval(() => {
+            setTimeout(() => {
                 location.reload();
-             },500);
+            }, 500);
         });
         //set time tại 500ml giây
     });

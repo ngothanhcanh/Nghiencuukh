@@ -33,9 +33,19 @@ class UserModel
         }
         return $this->db->execute($sql); 
     }
-    public function update()
+    public function update($ID,$name,$password,$usertype,$status,$mssv,$magv)
     {
-
+        if($magv=='')
+        {
+            $sql="UPDATE `nguoidung` SET `name`='$name',`password`='$password',`user_type`='$usertype',`status`='$status',`MSSV`='$mssv',`MAGV`=null WHERE ID='$ID' ";
+        }else if($mssv=='')
+        {
+            $sql="UPDATE `nguoidung` SET `name`='$name',`password`='$password',`user_type`='$usertype',`status`='$status',`MSSV`=null,`MAGV`='$magv' WHERE ID='$ID' ";
+        }else
+        {    
+            $sql="UPDATE `nguoidung` SET `name`='$name',`password`='$password',`user_type`='$usertype',`status`='$status',`MSSV`='$mssv',`MAGV`='$magv' WHERE ID='$ID' ";
+        }
+        return $this->db->execute($sql); 
     }
     public function delete($id)
     {
