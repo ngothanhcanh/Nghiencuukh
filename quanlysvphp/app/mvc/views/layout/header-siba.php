@@ -277,6 +277,7 @@
                         <li><a href="<?=URL?>/UserController/index">Người Dùng</a></li>
                         <li><a href="<?=URL?>/AdminSinhVienController/index">Sinh Viên</a></li>
                         <li><a href="<?=URL?>/AdminKhoaController/index">Khoa</a></li>
+                        <li><a href="<?=URL?>/AdminGiangVienController/index">Giảng Viên</a></li>
                         <li><a href="language_switch.html">Language Switch Bar</a></li>
                     </ul>
                 </li>          
