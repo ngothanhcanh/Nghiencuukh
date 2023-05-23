@@ -7,7 +7,7 @@ class KhoaModel
     }
     public function showid()
     {
-        $sql = "SELECT * FROM khoa WHERE MAKH";
+        $sql = "SELECT * FROM khoa ";
         $resuil=$this->db->execute($sql);
         if(mysqli_num_rows($resuil)>0)
         {
