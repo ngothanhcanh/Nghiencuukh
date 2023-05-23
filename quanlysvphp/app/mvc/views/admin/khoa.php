@@ -132,18 +132,16 @@
                 id: id,
                 name: name
             };
-
             // Gửi yêu cầu AJAX để lưu dữ liệu
             $.ajax({
                 url: '<?= URL ?>/AdminKhoaController/save',
                 type: 'POST',
-                dataType: 'json',
                 data: data,
                 success: function(response) {
                     var newRow = `
                 <tr>
-                    <td class="sorting_1">${id}</td>
-                    <td>${name}</td>
+                    <td class="sorting_1 idKhoa">${id}</td>
+                    <td class="tenKhoa">${name}</td>
                     <td class=""><a data-id="${id}" class="editKhoa" href="#">edit</a></td>
                     <td><a class="delete" name="delete" href="<?=URL?>/AdminKhoaController/index?delete=${id}">Delete</a></td>
                 </tr>

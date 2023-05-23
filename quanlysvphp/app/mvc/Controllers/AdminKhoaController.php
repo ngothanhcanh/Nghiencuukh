@@ -31,7 +31,7 @@ class AdminKhoaController extends Controller
             'success' => true,
             'message' => 'Dữ liệu đã được lưu thành công'
         );
-        $this->loadContent();
+        // $this->loadContent();
         echo json_encode($response);
         }
     }
