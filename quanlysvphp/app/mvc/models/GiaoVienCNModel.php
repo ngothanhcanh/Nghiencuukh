@@ -1,5 +1,6 @@
 <?php 
-class LopModel{
+class GiaoVienCNModel
+{
     private $db;
     public function __construct()
     {
@@ -7,7 +8,7 @@ class LopModel{
     }
     public function showid()
     {
-        $sql = "SELECT * FROM lop ";
+        $sql = "SELECT * FROM giaovienchunhiem ";
         $resuil=$this->db->execute($sql);
         if(mysqli_num_rows($resuil)>0)
         {
@@ -18,10 +19,11 @@ class LopModel{
         {
             return null;
         }
+       
     }
     public function show()
     {
-        $sql="SELECT * FROM lop ORDER BY MALOP ASC";
+        $sql="SELECT * FROM giaovienchunhiem ORDER BY ID ASC";
         $resuil= $this->db->execute($sql);
         if(mysqli_num_rows($resuil)>0)
         {
@@ -29,22 +31,22 @@ class LopModel{
             return $data;
         }
     }
-    public function add($id,$TENLOP,$MAKH)
+    public function add($id,$MAGV)
     { 
-            $sql="INSERT INTO `lop`(`MALOP`, `TENLOP`, `MAKH`)
-            VALUES ('$id','$TENLOP','$MAKH') ";
+            $sql="INSERT INTO `giaovienchunhiem`(`ID`, `MAGV`)
+            VALUES ('$id','$MAGV') ";
         return $this->db->execute($sql); 
     }
-    public function update($MALOP,$TENLOP,$MAKH)
+    public function update($ID,$MAGV)
     {
        
-            $sql="UPDATE `lop` SET `TENLOP`='$TENLOP',`MAKH`='$MAKH' WHERE MALOP='$MALOP' ";
+            $sql="UPDATE `giaovienchunhiem` SET `MAGV`='$MAGV' WHERE ID='$ID' ";
         
         return $this->db->execute($sql); 
     }
     public function delete($id)
     {
-       $sql= "DELETE FROM `lop` WHERE MALOP='$id'";
+       $sql= "DELETE FROM `giaovienchunhiem` WHERE ID='$id'";
        $resuil= $this->db->execute($sql);
        return $resuil;
     }

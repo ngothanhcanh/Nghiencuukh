@@ -281,6 +281,8 @@
                         <li><a href="<?=URL?>/AdminKhoaHocController/index">Khóa Học</a></li>
                         <li><a href="<?=URL?>/AdminHocPhanController/index">Học Phần</a></li>
                         <li><a href="<?=URL?>/AdminLopController/index">Lớp</a></li>
+                        <li><a href="<?=URL?>/AdminGiaoVienCNController/index">Giáo Viên</a></li>
+
                     </ul>
                 </li>          
                 <li>

@@ -17,7 +17,7 @@ class SinhVienModel
     }
     public function showid()
     {
-        $sql="SELECT * FROM sinhvien WHERE MSSV";
+        $sql="SELECT * FROM sinhvien";
         $resuil= $this->db->execute($sql);
         if(mysqli_num_rows($resuil)>0)
           { 
@@ -29,6 +29,7 @@ class SinhVienModel
     {
       $sql="INSERT INTO `sinhvien`(`MSSV`, `TENSV`, `GIOITINH`, `NGAYSINH`, `DIACHI`, `KHOAS`, `MALOP`, `MAKH`, `GVCN`) 
       VALUES ('$mssv','$tensv','$gioitinh','$ngaysinh','$diachi','$khoas','$malop','$makh','$gvcn')";
+       return $this->db->execute($sql); 
     }
     public function update($mssv, $tensv, $gioitinh, $ngaysinh, $diachi, $khoas, $malop, $makh, $gvcn)
     {
