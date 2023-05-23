@@ -12,11 +12,7 @@ class AdminKhoaController extends Controller
         {    $id=$_GET['delete'];
             $this->khoaModel->delete($id);
         }
-        $result=$this->khoaModel->show();
-        $this->view('admin/khoa',
-        [
-            'result'=>$result
-        ]);
+        $this->loadContent();
     }
     public function save()
     {    
@@ -35,7 +31,7 @@ class AdminKhoaController extends Controller
             'success' => true,
             'message' => 'Dữ liệu đã được lưu thành công'
         );
-        $this->loadContent();
+        // $this->loadContent();
         echo json_encode($response);
         }
     }
