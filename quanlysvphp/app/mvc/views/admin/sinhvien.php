@@ -80,7 +80,7 @@
                                                   <option value="1">Nữ</option>
                                                 </select>
                                             </td>
-                                            <td contenteditable="true" id="newNgaysinh"></td>
+                                            <td id="newNgaysinh"><input type="date" style="height: 20px; width: 70px"/></td>
                                             <td contenteditable="true" id="newDiachi"></td>
                                             <td contenteditable="true" id="newKhoa">
                                                 <select class="select-khoa">
@@ -106,7 +106,7 @@
                                             <td contenteditable="true" id="newGvcn">
                                                 <select class="select-magvcn">
                                                     <?php foreach ($result_GiaoVienCNModel as $rowGiaoVienCNModel) { ?>
-                                                        <option value="<?php echo $rowGiaoVienCNModel['ID'] ?>"><?php echo $rowGiaoVienCNModel['ID'] ?></option>
+                                                        <option value="<?php echo $rowGiaoVienCNModel['ID'] ?>"><?php echo $rowGiaoVienCNModel['MAGV'] ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
@@ -170,21 +170,16 @@
             //lấy gán từng giá tri của từng biến tương ứng
             var name = row.find('.name').text().trim();
             var gioitinh = row.find('.gioitinh').text().trim();
-            var ngaysinh = row.find('.ngaysinh').text().trim();
             var diachi = row.find('.diachi').text().trim();
-            var khoas = row.find('.khoas').text().trim();
-            var malop = row.find('.malop').text().trim();
-            var makh = row.find('.makh').text().trim();
-            var gvcn = row.find('.gvcn').text().trim();
             //hiển thị giá trị đoạn trên và chuyển kiểu thành input để sửa
             row.find('.name').html('<input type="text" value="' + name + '">');
             row.find('.gioitinh').html('<input type="text" value="' + gioitinh + '">')
-            row.find('.ngaysinh').html('<input type="text" value="' + ngaysinh + '">');
+            row.find('.ngaysinh').html('<input type="date">');
             row.find('.diachi').html('<input type="text" value="' + diachi + '">');
-            row.find('.khoas').html('<input type="text" value="' + khoas + '">');
-            row.find('.malop').html('<input type="text" value="' + malop + '">');
-            row.find('.makh').html('<input type="text" value="' + makh + '">');
-            row.find('.gvcn').html('<input type="text" value="' + gvcn + '">');
+            row.find('.khoas').html('<select class="editkhoas"><?php foreach ($result_KhoaHocModel as $rowKhoahocModel) { ?><option value="<?php echo $rowKhoahocModel['ID'] ?>"><?php echo $rowKhoahocModel['ID'] ?></option><?php } ?></select>');
+            row.find('.malop').html('<select class="editmalop"><?php foreach ($result_LopModel as $rowLopModel) { ?><option value="<?php echo $rowLopModel['MALOP'] ?>"><?php echo $rowLopModel['MALOP'] ?></option><?php } ?></select>');
+            row.find('.makh').html(' <select class="editmakh"><?php foreach ($result_KhoaModel as $rowKhoaModel) { ?><option value="<?php echo $rowKhoaModel['MAKH'] ?>"><?php echo $rowKhoaModel['MAKH'] ?></option><?php } ?></select>');
+            row.find('.gvcn').html('<select class="editmagvcn"><?php foreach ($result_GiaoVienCNModel as $rowGiaoVienCNModel) { ?><option value="<?php echo $rowGiaoVienCNModel['ID'] ?>"><?php echo $rowGiaoVienCNModel['MAGV'] ?></option><?php } ?></select>');
             //thay nút edit thành update
             row.find('.edit-btn').text('Update');
             row.find('.edit-btn').removeClass('edit-btn').addClass('update-btn');
@@ -193,10 +188,10 @@
                 var editedGioitinh = row.find('input').eq(1).val();
                 var editedNgaysinh = row.find('input').eq(2).val();
                 var editedDiachi = row.find('input').eq(3).val();
-                var editedKhoas = row.find('input').eq(4).val();
-                var editedMalop = row.find('input').eq(5).val();
-                var editedMakh = row.find('input').eq(6).val();
-                var editedGvcn = row.find('input').eq(7).val();
+                var editedKhoas = row.find('.editkhoas').find('option:selected').val();
+                var editedMalop = row.find('.editmalop').find('option:selected').val();
+                var editedMakh = row.find('.editmakh').find('option:selected').val();
+                var editedGvcn = row.find('.editmagvcn').find('option:selected').val();
                 var data = {
                     id: id,
                     editedName: editedName,
@@ -209,23 +204,25 @@
                     editedGvcn: editedGvcn
                 };
                 $.ajax({
-                    url: '<?= URL ?>/UserController/update',
+                    url: '<?= URL ?>/AdminSinhVienController/update',
                     type: 'POST',
                     dataType: 'json',
                     data: data,
                     success: function(response) {
+                      
                         row.find('.name').html(editedName);
                         row.find('.gioitinh').html(editedGioitinh);
-                        row.find('.ngaysinh').html(editedDiachi);
-                        row.find('.diachi').html(editedKhoas);
-                        row.find('.khoas').html(editedMalop);
-                        row.find('.malop').html(editedMagv);
+                        row.find('.ngaysinh').html(editedNgaysinh);
+                        row.find('.diachi').html(editedDiachi);
+                        row.find('.khoas').html(editedKhoas);
+                        row.find('.malop').html(editedMalop);
                         row.find('.makh').html(editedMakh);
                         row.find('.gvcn').html(editedGvcn);
                         row.find('.update-btn').text('Edit');
                         row.find('.update-btn').removeClass('save').addClass('edit-btn');
                     },
                     error: function(xhr, status, error) {
+                      
                         console.log('Lỗi khi gửi yêu cầu AJAX:', error);
                     }
                 })
@@ -268,7 +265,7 @@
             var id = newRow.find('#newId').text();
             var name = newRow.find('#newName').text();
             var gioitinh = newRow.find('.select-gioitinh').val();
-            var ngaysinh = newRow.find('#newNgaysinh').text();
+            var ngaysinh = newRow.find('#newNgaysinh input').val();
             var diachi = newRow.find('#newDiachi').text();
             var khoas = newRow.find('.select-khoa').val();
             var malop = newRow.find('.select-malop').val();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2023 at 04:45 PM
+-- Generation Time: May 31, 2023 at 12:25 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -24,16 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `diemdanh`
+-- Table structure for table `diem`
 --
 
-CREATE TABLE `diemdanh` (
-  `MSSV` char(20) CHARACTER SET utf8 NOT NULL,
-  `MONHOC` char(20) CHARACTER SET utf8 NOT NULL,
-  `THU` char(1) CHARACTER SET utf8 DEFAULT NULL,
-  `TIET` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
-  `PHONG` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
-  `TRANGTHAI` varchar(50) CHARACTER SET utf8 DEFAULT NULL
+CREATE TABLE `diem` (
+  `ID` int(11) NOT NULL,
+  `CC` float DEFAULT NULL,
+  `GK` float DEFAULT NULL,
+  `CK` float DEFAULT NULL,
+  `DTB_HE10` float DEFAULT NULL,
+  `DTL_HE4` float DEFAULT NULL,
+  `DIEMQUYDOI` int(11) DEFAULT NULL,
+  `XEPLOAI` varchar(50) CHARACTER SET utf8 DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -62,24 +64,14 @@ CREATE TABLE `giangvien_lop` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `giaovienchunhiem`
---
-
-CREATE TABLE `giaovienchunhiem` (
-  `ID` char(20) CHARACTER SET utf8 NOT NULL,
-  `MAGV` char(20) CHARACTER SET utf8 DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `hocphan`
 --
 
 CREATE TABLE `hocphan` (
   `MAHP` char(20) CHARACTER SET utf8 NOT NULL,
   `TENHP` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
-  `SOTC` int(11) DEFAULT NULL
+  `SOTC` int(11) DEFAULT NULL,
+  `GVPT` char(20) CHARACTER SET utf8 DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -101,14 +93,13 @@ CREATE TABLE `hocphi` (
 --
 
 CREATE TABLE `ketqua` (
-  `MSSV` char(20) CHARACTER SET utf8 NOT NULL,
-  `MAHP` char(20) CHARACTER SET utf8 NOT NULL,
-  `CC` float DEFAULT NULL,
-  `GK` float DEFAULT NULL,
-  `CK` float DEFAULT NULL,
-  `DTB` float DEFAULT NULL,
-  `DIEMHE4` float DEFAULT NULL,
-  `DIEMQUYDOI` char(1) DEFAULT NULL
+  `MAGV` char(20) CHARACTER SET utf8 NOT NULL,
+  `MSSV` char(20) CHARACTER SET utf8 DEFAULT NULL,
+  `MALOP` char(20) CHARACTER SET utf8 DEFAULT NULL,
+  `MAHP` char(20) CHARACTER SET utf8 DEFAULT NULL,
+  `MADIEM` int(11) DEFAULT NULL,
+  `HOCKY` int(11) DEFAULT NULL,
+  `NAMHOC` varchar(50) CHARACTER SET utf8 DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -127,39 +118,24 @@ CREATE TABLE `khoa` (
 --
 
 INSERT INTO `khoa` (`MAKH`, `TENKH`) VALUES
-('CNTT', 'Công Nghệ Thông Tin'),
-('DL', 'Du Lịch'),
-('KT', 'Kế Toán');
+('CNTT', 'Công Nghệ Thông Tin');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `khoahoc`
+-- Table structure for table `khoas`
 --
 
-CREATE TABLE `khoahoc` (
+CREATE TABLE `khoas` (
   `ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `khoahoc`
+-- Dumping data for table `khoas`
 --
 
-INSERT INTO `khoahoc` (`ID`) VALUES
-(1),
-(2),
-(3),
-(4),
-(5),
-(6),
-(7),
-(8),
-(9),
-(10),
-(11),
-(12),
-(13),
-(14);
+INSERT INTO `khoas` (`ID`) VALUES
+(12);
 
 -- --------------------------------------------------------
 
@@ -173,6 +149,13 @@ CREATE TABLE `lop` (
   `MAKH` char(20) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `lop`
+--
+
+INSERT INTO `lop` (`MALOP`, `TENLOP`, `MAKH`) VALUES
+('K12THO1', 'TIN HỌC 1', 'CNTT');
+
 -- --------------------------------------------------------
 
 --
@@ -181,13 +164,31 @@ CREATE TABLE `lop` (
 
 CREATE TABLE `nguoidung` (
   `ID` char(20) CHARACTER SET utf8 NOT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL,
-  `user_type` text NOT NULL DEFAULT 'nguoidung',
-  `status` varchar(50) DEFAULT NULL,
-  `MSSV` char(20) CHARACTER SET utf8 DEFAULT NULL,
-  `MAGV` char(20) CHARACTER SET utf8 DEFAULT NULL
+  `Name` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `Pass` varchar(50) DEFAULT NULL,
+  `User_type` text NOT NULL DEFAULT 'NguoiDung',
+  `TrangThai` varchar(50) DEFAULT NULL,
+  `SV` char(20) CHARACTER SET utf8 DEFAULT NULL,
+  `GV` char(20) CHARACTER SET utf8 DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `phuhuynh`
+--
+
+CREATE TABLE `phuhuynh` (
+  `CCCD` char(20) CHARACTER SET utf8 NOT NULL,
+  `MK` varchar(50) CHARACTER SET utf8 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `phuhuynh`
+--
+
+INSERT INTO `phuhuynh` (`CCCD`, `MK`) VALUES
+('1', '1');
 
 -- --------------------------------------------------------
 
@@ -201,11 +202,20 @@ CREATE TABLE `sinhvien` (
   `GIOITINH` bit(1) DEFAULT NULL,
   `NGAYSINH` date DEFAULT NULL,
   `DIACHI` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
-  `KHOAS` int(11) DEFAULT NULL,
+  `SDT` char(20) CHARACTER SET utf8 DEFAULT NULL,
+  `IDKHOAS` int(11) DEFAULT NULL,
   `MALOP` char(20) CHARACTER SET utf8 DEFAULT NULL,
   `MAKH` char(20) CHARACTER SET utf8 DEFAULT NULL,
-  `GVCN` char(20) CHARACTER SET utf8 DEFAULT NULL
+  `MAPH` char(20) CHARACTER SET utf8 DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sinhvien`
+--
+
+INSERT INTO `sinhvien` (`MSSV`, `TENSV`, `GIOITINH`, `NGAYSINH`, `DIACHI`, `SDT`, `IDKHOAS`, `MALOP`, `MAKH`, `MAPH`) VALUES
+('K12THO0047', 'Nguyễn Minh Tấn', b'1', '2002-06-09', 'PHAN THIẾT - BÌNH THUẬN', '0947199126', 12, 'K12THO1', 'CNTT', '1'),
+('K12THO0059', 'Hồ Anh Tú', b'1', '2002-01-22', 'Bình Thuận', NULL, 12, 'K12THO1', 'CNTT', NULL);
 
 -- --------------------------------------------------------
 
@@ -215,12 +225,12 @@ CREATE TABLE `sinhvien` (
 
 CREATE TABLE `thoikhoabieu` (
   `ID` int(11) NOT NULL,
-  `BUOI1_THU` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
-  `BUOI1_TIET` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
-  `BUOI1_PHONG` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
-  `BUOI2_THU` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
-  `BUOI2_TIET` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
-  `BUOI2_PHONG` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
+  `BUOI1_THU` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `BUOI1_TIET` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `BUOI1_PHONG` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `BUOI2_THU` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `BUOI2_TIET` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `BUOI2_PHONG` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `NGAYBATDAU` date DEFAULT NULL,
   `NGAYKETTHUC` date DEFAULT NULL,
   `GHICHU` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
@@ -234,11 +244,10 @@ CREATE TABLE `thoikhoabieu` (
 --
 
 --
--- Indexes for table `diemdanh`
+-- Indexes for table `diem`
 --
-ALTER TABLE `diemdanh`
-  ADD PRIMARY KEY (`MSSV`,`MONHOC`),
-  ADD KEY `MONHOC` (`MONHOC`);
+ALTER TABLE `diem`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `giangvien`
@@ -255,17 +264,11 @@ ALTER TABLE `giangvien_lop`
   ADD KEY `MALOP` (`MALOP`);
 
 --
--- Indexes for table `giaovienchunhiem`
---
-ALTER TABLE `giaovienchunhiem`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `MAGV` (`MAGV`);
-
---
 -- Indexes for table `hocphan`
 --
 ALTER TABLE `hocphan`
-  ADD PRIMARY KEY (`MAHP`);
+  ADD PRIMARY KEY (`MAHP`),
+  ADD KEY `GVPT` (`GVPT`);
 
 --
 -- Indexes for table `hocphi`
@@ -278,8 +281,11 @@ ALTER TABLE `hocphi`
 -- Indexes for table `ketqua`
 --
 ALTER TABLE `ketqua`
-  ADD PRIMARY KEY (`MSSV`,`MAHP`),
-  ADD KEY `MAHP` (`MAHP`);
+  ADD PRIMARY KEY (`MAGV`),
+  ADD KEY `MSSV` (`MSSV`),
+  ADD KEY `MALOP` (`MALOP`),
+  ADD KEY `MAHP` (`MAHP`),
+  ADD KEY `MADIEM` (`MADIEM`);
 
 --
 -- Indexes for table `khoa`
@@ -288,9 +294,9 @@ ALTER TABLE `khoa`
   ADD PRIMARY KEY (`MAKH`);
 
 --
--- Indexes for table `khoahoc`
+-- Indexes for table `khoas`
 --
-ALTER TABLE `khoahoc`
+ALTER TABLE `khoas`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -305,18 +311,24 @@ ALTER TABLE `lop`
 --
 ALTER TABLE `nguoidung`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `MSSV` (`MSSV`),
-  ADD KEY `MAGV` (`MAGV`);
+  ADD KEY `SV` (`SV`),
+  ADD KEY `GV` (`GV`);
+
+--
+-- Indexes for table `phuhuynh`
+--
+ALTER TABLE `phuhuynh`
+  ADD PRIMARY KEY (`CCCD`);
 
 --
 -- Indexes for table `sinhvien`
 --
 ALTER TABLE `sinhvien`
   ADD PRIMARY KEY (`MSSV`),
-  ADD KEY `KHOAS` (`KHOAS`),
+  ADD KEY `IDKHOAS` (`IDKHOAS`),
   ADD KEY `MALOP` (`MALOP`),
   ADD KEY `MAKH` (`MAKH`),
-  ADD KEY `GVCN` (`GVCN`);
+  ADD KEY `MAPH` (`MAPH`);
 
 --
 -- Indexes for table `thoikhoabieu`
@@ -332,13 +344,6 @@ ALTER TABLE `thoikhoabieu`
 --
 
 --
--- Constraints for table `diemdanh`
---
-ALTER TABLE `diemdanh`
-  ADD CONSTRAINT `diemdanh_ibfk_1` FOREIGN KEY (`MSSV`) REFERENCES `sinhvien` (`MSSV`),
-  ADD CONSTRAINT `diemdanh_ibfk_2` FOREIGN KEY (`MONHOC`) REFERENCES `hocphan` (`MAHP`);
-
---
 -- Constraints for table `giangvien`
 --
 ALTER TABLE `giangvien`
@@ -352,10 +357,10 @@ ALTER TABLE `giangvien_lop`
   ADD CONSTRAINT `giangvien_lop_ibfk_2` FOREIGN KEY (`MALOP`) REFERENCES `lop` (`MALOP`);
 
 --
--- Constraints for table `giaovienchunhiem`
+-- Constraints for table `hocphan`
 --
-ALTER TABLE `giaovienchunhiem`
-  ADD CONSTRAINT `giaovienchunhiem_ibfk_1` FOREIGN KEY (`MAGV`) REFERENCES `giangvien` (`MAGV`);
+ALTER TABLE `hocphan`
+  ADD CONSTRAINT `hocphan_ibfk_1` FOREIGN KEY (`GVPT`) REFERENCES `giangvien` (`MAGV`);
 
 --
 -- Constraints for table `hocphi`
@@ -368,8 +373,11 @@ ALTER TABLE `hocphi`
 -- Constraints for table `ketqua`
 --
 ALTER TABLE `ketqua`
-  ADD CONSTRAINT `ketqua_ibfk_1` FOREIGN KEY (`MSSV`) REFERENCES `sinhvien` (`MSSV`),
-  ADD CONSTRAINT `ketqua_ibfk_2` FOREIGN KEY (`MAHP`) REFERENCES `hocphan` (`MAHP`);
+  ADD CONSTRAINT `ketqua_ibfk_1` FOREIGN KEY (`MAGV`) REFERENCES `giangvien` (`MAGV`),
+  ADD CONSTRAINT `ketqua_ibfk_2` FOREIGN KEY (`MSSV`) REFERENCES `sinhvien` (`MSSV`),
+  ADD CONSTRAINT `ketqua_ibfk_3` FOREIGN KEY (`MALOP`) REFERENCES `lop` (`MALOP`),
+  ADD CONSTRAINT `ketqua_ibfk_4` FOREIGN KEY (`MAHP`) REFERENCES `hocphan` (`MAHP`),
+  ADD CONSTRAINT `ketqua_ibfk_5` FOREIGN KEY (`MADIEM`) REFERENCES `diem` (`ID`);
 
 --
 -- Constraints for table `lop`
@@ -381,17 +389,17 @@ ALTER TABLE `lop`
 -- Constraints for table `nguoidung`
 --
 ALTER TABLE `nguoidung`
-  ADD CONSTRAINT `nguoidung_ibfk_1` FOREIGN KEY (`MSSV`) REFERENCES `sinhvien` (`MSSV`),
-  ADD CONSTRAINT `nguoidung_ibfk_2` FOREIGN KEY (`MAGV`) REFERENCES `giangvien` (`MAGV`);
+  ADD CONSTRAINT `nguoidung_ibfk_1` FOREIGN KEY (`SV`) REFERENCES `sinhvien` (`MSSV`),
+  ADD CONSTRAINT `nguoidung_ibfk_2` FOREIGN KEY (`GV`) REFERENCES `giangvien` (`MAGV`);
 
 --
 -- Constraints for table `sinhvien`
 --
 ALTER TABLE `sinhvien`
-  ADD CONSTRAINT `sinhvien_ibfk_1` FOREIGN KEY (`KHOAS`) REFERENCES `khoahoc` (`ID`),
+  ADD CONSTRAINT `sinhvien_ibfk_1` FOREIGN KEY (`IDKHOAS`) REFERENCES `khoas` (`ID`),
   ADD CONSTRAINT `sinhvien_ibfk_2` FOREIGN KEY (`MALOP`) REFERENCES `lop` (`MALOP`),
   ADD CONSTRAINT `sinhvien_ibfk_3` FOREIGN KEY (`MAKH`) REFERENCES `khoa` (`MAKH`),
-  ADD CONSTRAINT `sinhvien_ibfk_4` FOREIGN KEY (`GVCN`) REFERENCES `giaovienchunhiem` (`ID`);
+  ADD CONSTRAINT `sinhvien_ibfk_4` FOREIGN KEY (`MAPH`) REFERENCES `phuhuynh` (`CCCD`);
 
 --
 -- Constraints for table `thoikhoabieu`

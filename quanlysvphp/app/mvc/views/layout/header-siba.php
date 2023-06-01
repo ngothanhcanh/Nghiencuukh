@@ -281,7 +281,12 @@
                         <li><a href="<?=URL?>/AdminKhoaHocController/index">Khóa Học</a></li>
                         <li><a href="<?=URL?>/AdminHocPhanController/index">Học Phần</a></li>
                         <li><a href="<?=URL?>/AdminLopController/index">Lớp</a></li>
-                        <li><a href="<?=URL?>/AdminGiaoVienCNController/index">Giáo Viên</a></li>
+                        <li><a href="<?=URL?>/AdminGiaoVienCNController/index">Giáo Viên</a></li> 
+                        <li><a href="<?=URL?>/AdminGiangVienLopController/index">Giảng Viên Lớp</a></li>
+                        <li><a href="<?=URL?>/AdminHocPhiController/index">Học Phí</a></li>
+                        <li><a href="<?=URL?>/AdminThoiKhoaBieuController/index">Thời Khóa Biểu</a></li>
+                        <li><a href="<?=URL?>/AdminDiemDanhController/index">Điểm danh</a></li>
+                        <li><a href="<?=URL?>/AdminKetQuaController/index">Kết quả điểm</a></li>
 
                     </ul>
                 </li>          

@@ -124,16 +124,15 @@
             var id = row.attr('id'); // lấy id của đoạn tr
             //lấy gán từng giá tri của từng biến tương ứng
             var name = row.find('.name').text().trim();
-            var password = row.find('.password').text().trim();
             //hiển thị giá trị đoạn trên và chuyển kiểu thành input để sửa
             row.find('.name').html('<input type="text" value="' + name + '">');
-            row.find('.password').html('<input type="text" value="' + password + '">')
+            row.find('.password').html('<select class="editlop"><option value="">Không</option><?php foreach ($result_KhoaModel as $rowkhoa) { ?><option value="<?php echo $rowkhoa['MAKH'] ?>"><?php echo $rowkhoa['MAKH'] ?></option><?php } ?></select>')
             //thay nút edit thành update
             row.find('.edit-btn').text('Update');
             row.find('.edit-btn').removeClass('edit-btn').addClass('update-btn');
             row.find('.update-btn').on('click', function() {
                 var editedName = row.find('input').eq(0).val();
-                var editedPassword = row.find('input').eq(1).val();
+                var editedPassword = row.find('.editlop').find('option:selected').val();
                 var data={
                         id:id,
                         editedName: editedName,

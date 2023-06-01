@@ -33,9 +33,12 @@
   <body class="login-body">
 
     <div class="container">
-
       <form class="form-signin" method="post" action="<?=URL?>/LoginController/index">
         <h2 class="form-signin-heading">sign in now</h2>
+        <h3><?php foreach($error as $er)
+        {
+            echo $er;
+        }?></h3>
         <div class="login-wrap">
             <div class="user-login-info">
                 <input type="text" name="login_name" class="form-control" placeholder="User ID" autofocus>

@@ -5,7 +5,7 @@ class HocPhanModel{
     {
         $this->db=new Database();
     }
-    public function show()
+    function show()
     {
         $sql="SELECT * FROM hocphan ORDER BY MAHP ASC";
         $resuil=$this->db->execute($sql);
