@@ -280,17 +280,10 @@
                         <li><a href="<?=URL?>/AdminGiangVienController/index">Giảng Viên</a></li>
                         <li><a href="<?=URL?>/AdminKhoasController/index">Khóa Học</a></li>
                         <li><a href="<?=URL?>/AdminHocPhanController/index">Học Phần</a></li>
-<<<<<<< HEAD
-                        <li><a href="<?=URL?>/AdminLopController/index">Lớp</a></li>                      
-                        <li><a href="<?=URL?>/AdminGiangVienLopController/index">Giảng Viên Lớp</a></li>
-                        <li><a href="<?=URL?>/AdminHocPhiController/index">Học Phí</a></li>
-                        <li><a href="<?=URL?>/AdminThoiKhoaBieuController/index">Thời Khóa Biểu</a></li>
-=======
                         <li><a href="<?=URL?>/AdminGiangVienLopController/index">Giảng Viên Lớp</a></li>
                         <li><a href="<?=URL?>/AdminHocPhiController/index">Học Phí</a></li>
                         <li><a href="<?=URL?>/AdminThoiKhoaBieuController/index">Thời Khóa Biểu</a></li>
                         <li><a href="<?=URL?>/AdminLopController/index">Lớp</a></li>
->>>>>>> 49aef09cb1f02bdc070f6e582b4855d7dacbddaf
                     </ul>
                 </li>          
                 <li>

@@ -192,6 +192,7 @@
             <option value="<?php echo $rowlop['MALOP'] ?>"><?php echo $rowlop['MALOP'] ?></option>
             <?php }}?>
         </select>`)
+
      });
      // Xử lý sự kiện click của nút "Edit"
      $(document).on('click', '#updateButton', function() {

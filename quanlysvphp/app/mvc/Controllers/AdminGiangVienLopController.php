@@ -32,6 +32,7 @@ class AdminGiangVienLopController extends Controller
     }
     public function save()
     {    
+       
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Lấy dữ liệu từ yêu cầu AJAX
         $magv = $_POST["magv"];
