@@ -16,7 +16,6 @@ class AdminHocPhiController extends Controller
         {    
             $makh=$_GET['delete_kh'];
             $masv=$_GET['delete_sv'];
-
             if($this->hocphiModel->delete($makh, $masv))
             {
                 header('location:'.URL.'/AdminHocPhiController/index');
@@ -34,9 +33,8 @@ class AdminHocPhiController extends Controller
     }
     public function save()
     {    
-
+       
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
         // Lấy dữ liệu từ yêu cầu AJAX
         $makh = $_POST["makh"];
         $masv = $_POST["masv"];

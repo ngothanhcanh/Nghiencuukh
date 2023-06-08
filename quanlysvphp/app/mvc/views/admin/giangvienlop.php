@@ -125,7 +125,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
         $(document).ready(function() {
-
      // Xử lý sự kiện khi bấm nút "Add New"
      $('#editable-sample_new').click(function(e) {
          // Lấy dòng mẫu để thêm dữ liệu mới
@@ -193,7 +192,6 @@
             <option value="<?php echo $rowlop['MALOP'] ?>"><?php echo $rowlop['MALOP'] ?></option>
             <?php }}?>
         </select>`)
-
      });
      // Xử lý sự kiện click của nút "Edit"
      $(document).on('click', '#updateButton', function() {

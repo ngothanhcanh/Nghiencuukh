@@ -12,11 +12,11 @@ class AdminKhoasController extends Controller
             
             if($this->khoasModel->delete($id))
             {
-            header('location:'.URL.'/AdminKhoasController/index');
+            header('location:'.URL.'/AdminKhoaHocController/index');
             }
         }
         $result=$this->khoasModel->show();
-        $this->view('admin/khoas',
+        $this->view('admin/khoahoc',
     [
         'result'=>$result,
     ]);
