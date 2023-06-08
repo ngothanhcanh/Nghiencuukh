@@ -14,10 +14,7 @@ class KhoaModel
             $data= $resuil->fetch_all(MYSQLI_ASSOC);
             return $data;
         }
-        else
-        {
-            return null;
-        }
+       
     }
     public function show()
     {

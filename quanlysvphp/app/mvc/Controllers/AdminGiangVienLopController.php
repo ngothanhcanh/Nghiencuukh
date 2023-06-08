@@ -14,7 +14,7 @@ class AdminGiangVienLopController extends Controller
     {  
         if(isset($_GET['delete']))
         {    $id=$_GET['delete'];
-            
+
             if($this->giangvienlopModel->delete($id))
             {
                 header('location:'.URL.'/AdminGiangVienLopController/index');
@@ -34,7 +34,6 @@ class AdminGiangVienLopController extends Controller
     {    
        
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        
         // Lấy dữ liệu từ yêu cầu AJAX
         $magv = $_POST["magv"];
         $malop = $_POST["malop"];

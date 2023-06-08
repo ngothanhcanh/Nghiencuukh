@@ -31,7 +31,8 @@ class AdminHocPhanController extends Controller
     $id = $_POST["id"];
     $name = $_POST["name"];
     $password = $_POST["password"];
-    $this->hocphanModel->add($id, $name, $password);
+    $giangvien = $_POST["giangvien"];
+    $this->hocphanModel->add($id, $name, $password,$giangvien);
     // TODO: Thực hiện lưu dữ liệu vào cơ sở dữ liệu
     // Gọi phương thức lưu dữ liệu trong hocphanModel
     // Trả về kết quả (ví dụ: thành công hoặc thất bại)
@@ -39,6 +40,7 @@ class AdminHocPhanController extends Controller
         'id'=>$id,
         'name'=>$name,
         'password'=>$password,
+        'giangvien'=>$giangvien
     );
     echo json_encode($response);
       }
@@ -50,7 +52,8 @@ class AdminHocPhanController extends Controller
             $id = $_POST["id"];
             $name = $_POST["editedName"];
             $password = $_POST["editedPassword"];
-            $this->hocphanModel->update($id, $name, $password);
+            $giangvien = $_POST['editMagv'];
+            $this->hocphanModel->update($id, $name, $password,$giangvien);
             $response = array(
                 'id' => $id,
                 'name' => $name

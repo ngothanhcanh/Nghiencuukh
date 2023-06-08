@@ -8,7 +8,7 @@ class GiangVienModel
     }
     public function showid()
     {
-        $sql = "SELECT * FROM giangvien WHERE MAGV";
+        $sql = "SELECT * FROM giangvien";
         $resuil=$this->db->execute($sql);
         if(mysqli_num_rows($resuil)>0)
         {

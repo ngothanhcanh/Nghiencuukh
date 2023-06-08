@@ -278,7 +278,7 @@
                         <li><a href="<?=URL?>/AdminSinhVienController/index">Sinh Viên</a></li>
                         <li><a href="<?=URL?>/AdminKhoaController/index">Khoa</a></li>
                         <li><a href="<?=URL?>/AdminGiangVienController/index">Giảng Viên</a></li>
-                        <li><a href="<?=URL?>/AdminKhoaHocController/index">Khóa Học</a></li>
+                        <li><a href="<?=URL?>/AdminKhoasController/index">Khóa Học</a></li>
                         <li><a href="<?=URL?>/AdminHocPhanController/index">Học Phần</a></li>
                         <li><a href="<?=URL?>/AdminGiangVienLopController/index">Giảng Viên Lớp</a></li>
                         <li><a href="<?=URL?>/AdminHocPhiController/index">Học Phí</a></li>

@@ -16,7 +16,6 @@ class AdminThoiKhoaBieuController extends Controller
     {  
         if(isset($_GET['delete']))
         {    $id=$_GET['delete'];
-            
             if($this->thoikhoabieuModel->delete($id))
             {
                 header('location:'.URL.'/AdminThoiKhoaBieuController/index');
@@ -38,7 +37,7 @@ class AdminThoiKhoaBieuController extends Controller
     {    
        
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        
+     
         // Lấy dữ liệu từ yêu cầu AJAX
         $id = $_POST["id"];
         $b1_tiet = $_POST["b1_tiet"];

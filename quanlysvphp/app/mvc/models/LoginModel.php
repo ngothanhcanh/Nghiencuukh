@@ -7,13 +7,15 @@ class LoginModel
     }
     public function sigin($name,$password)
    {
-      $sql="SELECT * FROM nguoidung WHERE name='$name' and password = '$password'" or die('database not exit');
-      if($this->db->execute($sql))
+      $sql="SELECT * FROM `nguoidung` WHERE Name='$name' AND Pass ='$password'";
+      $resuil=$this->db->execute($sql);
+      if(mysqli_num_rows($resuil)>0)
       {
-        return 1;
-      }
-      else {
-        return 0;
+        $data=mysqli_fetch_assoc($resuil);
+        return $data; 
+      }else
+      {
+        return null;
       }
    }
 

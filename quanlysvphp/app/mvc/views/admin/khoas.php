@@ -60,14 +60,14 @@
                                         <tr id="new-row" style="display:none;">
                                             <td class="sorting_1" contenteditable="true" id="newId"></td>
                                             <td><button id="saveButton" class="save">save</button></td>
-                                            <td><a class="delete" name="delete" href="<?= URL ?>/AdminKhoaHocController/index?delete=">Delete</a></td>
+                                            <td><a class="delete" name="delete" href="<?= URL ?>/AdminKhoasController/index?delete=">Delete</a></td>
                                         </tr>
                                         <?php foreach ($result as $row) {
                                         ?>
                                             <tr class="odd" id="<?= $row['ID'] ?>">
                                                 <td id="idkhoahoc" class="sorting_1"><?php echo $row['ID'] ?></td>
                                                 <td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td>
-                                                <td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminKhoaHocController/index?delete=<?= $row['ID'] ?>">Delete</a></td>
+                                                <td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminKhoasController/index?delete=<?= $row['ID'] ?>">Delete</a></td>
                                             </tr>
                                         <?php
                                         }
@@ -117,7 +117,7 @@
                         id:id,       
                 };
                 $.ajax({
-                url: '<?= URL ?>/AdminKhoaHocController/update',
+                url: '<?= URL ?>/AdminKhoasController/update',
                 type: 'POST',
                 dataType: 'json',
                 data: data,
@@ -152,7 +152,7 @@
                     var name = '<?php echo $row['ID']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
                     if (name.includes(searchValue)) //so sách giá trị tìm bằng giá trị name
                     {
-                        var listItem = '<tr class="odd"><td class="sorting_1"><?php echo $row['ID'] ?><td class=" "><a class="edit" name="edit" href="<?= URL ?>/AdminKhoaHocController/index?edit=<?= $row['ID'] ?>">Edit</a></td><td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminKhoaHocController/index?delete=<?= $row['ID'] ?>">Delete</a></td></tr>';
+                        var listItem = '<tr class="odd"><td class="sorting_1"><?php echo $row['ID'] ?><td class=" "><a class="edit" name="edit" href="<?= URL ?>/AdminKhoasController/index?edit=<?= $row['ID'] ?>">Edit</a></td><td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminKhoasController/index?delete=<?= $row['ID'] ?>">Delete</a></td></tr>';
                         $('#search-results').append(listItem);
                     }
 
@@ -172,7 +172,7 @@
             };
             // Gửi yêu cầu AJAX để lưu dữ liệu
             $.ajax({
-                url: '<?= URL ?>/AdminKhoaHocController/save',
+                url: '<?= URL ?>/AdminKhoasController/save',
                 type: 'POST',
                 dataType: 'json',
                 data: data,
@@ -183,7 +183,7 @@
                 <tr>
                     <td class="sorting_1">${id}</td>
                     <td class=" "><a class="delete" href="">edit</a></td>
-                    <td><a class="edit" name="delete" href="<?= URL ?>/AdminKhoaHocController/index?delete=${response.id}">Delete</a></td>
+                    <td><a class="edit" name="delete" href="<?= URL ?>/AdminKhoasController/index?delete=${response.id}">Delete</a></td>
                 </tr>
                   `;
                     $("#editable-sample tbody").append(newRow);

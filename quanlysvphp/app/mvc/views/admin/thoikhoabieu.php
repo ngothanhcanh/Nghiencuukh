@@ -77,7 +77,6 @@
                                         <tr id="new-row" style="display:none;">
                                             <td contenteditable="true" id="newID"></td>
                                             <td contenteditable="true" id="newB1_thu"></td>
-                                            <td contenteditable="true" id="newB1_tiet"></td>
                                             <td contenteditable="true" id="newB1_phong"></td>
                                             <td contenteditable="true" id="newB2_thu"></td>
                                             <td contenteditable="true" id="newB2_tiet"></td>
@@ -170,7 +169,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
         $(document).ready(function() {
-     
      // Xử lý sự kiện khi bấm nút "Add New"
      $('#editable-sample_new').click(function(e) {
          // Lấy dòng mẫu để thêm dữ liệu mới
@@ -294,8 +292,6 @@
          });
          newRow.find(".n_bd").html(`<input type="date" style="height: 20px; width: 70px"/>`)
          newRow.find(".n_kt").html(`<input type="date" style="height: 20px; width: 70px"/>`)
-
-        
         newRow.find('.mh').html(`<select class="mahp-select">
         <option value="">Không</option>
         <?php if (isset($result_hp) && is_array($result_hp) || is_object($result_hp))
@@ -317,12 +313,10 @@
             <option value="<?php echo $rowgv['MAGV'] ?>"><?php echo $rowgv['MAGV'] ?></option>
             <?php }}?>
         </select>`)
-        
      });
      // Xử lý sự kiện click của nút "Edit"
      $(document).on('click', '#updateButton', function() {
          var newRow = $(this).closest('tr'); 
-         
          let id = newRow.find(".id").text()
          let b1_thu = newRow.find(".b1_thu").text()
          let b1_tiet = newRow.find(".b1_tiet").text()
