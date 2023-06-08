@@ -1,13 +1,13 @@
 <?php 
-class AdminKetQuaController extends Controller
+class AdminBangDiemController extends Controller
 {   private $SinhVienModel;
     private $HocPhanModel;
-    private $KetQuaModel; 
+    private $BangDiemModel; 
     public function __construct()
     {
         $this->SinhVienModel=$this->model('SinhVienModel');
         $this->HocPhanModel=$this->model('HocPhanModel');
-        $this->KetQuaModel=$this->model('KetQuaModel');
+        $this->BangDiemModel=$this->model('BangDiemModel');
 
     }
     public function index()
@@ -17,11 +17,11 @@ class AdminKetQuaController extends Controller
             $MSSV=$_GET['delete'];
             if(isset($MSSV))
             {  
-                $this->KetQuaModel->delete($MSSV);
-                header('location:'.URL.'/AdminKetQuaController/index');
+                $this->BangDiemModel->delete($MSSV);
+                header('location:'.URL.'/AdminBangDiemController/index');
             }
         }
-        $result=$this->KetQuaModel->show();
+        $result=$this->BangDiemModel->show();
         $result_HocPhanModel=$this->HocPhanModel->show();
         $result_SinhVienModel=$this->SinhVienModel->showid();
         $this->view('admin/ketqua',
@@ -84,7 +84,7 @@ class AdminKetQuaController extends Controller
                 {
                 $DIEMQUYDOI= "F";
                 }
-            $this->KetQuaModel->save($MSSV,$MAHP,$CC,$GK,$CK,$DTB,$DIEMHE4,$DIEMQUYDOI);
+            $this->BangDiemModel->save($MSSV,$MAHP,$CC,$GK,$CK,$DTB,$DIEMHE4,$DIEMQUYDOI);
             $response = array(
                 'MSSV'=>$MSSV,
                 'MAHP'=>$MAHP,
@@ -149,7 +149,7 @@ class AdminKetQuaController extends Controller
                 {
                 $DIEMQUYDOI= "F";
                 }
-                $this->KetQuaModel->update($MSSV,$MAHP,$CC,$GK,$CK,$DTB,$DIEMHE4,$DIEMQUYDOI);
+                $this->BangDiemModel->update($MSSV,$MAHP,$CC,$GK,$CK,$DTB,$DIEMHE4,$DIEMQUYDOI);
                 $response = array(
                     'MSSV'=>$MSSV,
                     'MAHP'=>$MAHP,

@@ -64,7 +64,7 @@
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Mã khóa học</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Mã Lớp</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Mã Khoa</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">GVCN</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">MAPH</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Edit: activate to sort column ascending" style="width: 103px;">Edit</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Delete: activate to sort column ascending" style="width: 149px;">Delete</th>
                                         </tr>
@@ -103,10 +103,10 @@
                                                     <?php } ?>
                                                 </select>
                                             </td>
-                                            <td contenteditable="true" id="newGvcn">
-                                                <select class="select-magvcn">
-                                                    <?php foreach ($result_GiaoVienCNModel as $rowGiaoVienCNModel) { ?>
-                                                        <option value="<?php echo $rowGiaoVienCNModel['ID'] ?>"><?php echo $rowGiaoVienCNModel['MAGV'] ?></option>
+                                            <td contenteditable="true" id="newMahp">
+                                                <select class="select-mamaph">
+                                                    <?php foreach ($result_PhuHuynhModel as $rowPhuHuynhModel) { ?>
+                                                        <option value="<?php echo $rowPhuHuynhModel['CCCD'] ?>"><?php echo $rowPhuHuynhModel['CCCD'] ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
@@ -121,10 +121,10 @@
                                                 <td class="gioitinh"><?= $row['GIOITINH'] ?></td>
                                                 <td class="ngaysinh"><?= $row['NGAYSINH'] ?></td>
                                                 <td class="diachi"><?= $row['DIACHI'] ?></td>
-                                                <td class="khoas"><?= $row['KHOAS'] ?></td>
+                                                <td class="khoas"><?= $row['IDKHOAS'] ?></td>
                                                 <td class="malop"><?= $row['MALOP'] ?></td>
                                                 <td class="makh"><?= $row['MAKH'] ?></td>
-                                                <td class="gvcn"><?= $row['GVCN'] ?></td>
+                                                <td class="maph"><?= $row['MAPH'] ?></td>
                                                 <td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td>
                                                 <td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminSinhVienController/index?delete=<?= $row['MSSV'] ?>">Delete</a></td>
                                             </tr>
@@ -179,7 +179,7 @@
             row.find('.khoas').html('<select class="editkhoas"><?php foreach ($result_KhoaHocModel as $rowKhoahocModel) { ?><option value="<?php echo $rowKhoahocModel['ID'] ?>"><?php echo $rowKhoahocModel['ID'] ?></option><?php } ?></select>');
             row.find('.malop').html('<select class="editmalop"><?php foreach ($result_LopModel as $rowLopModel) { ?><option value="<?php echo $rowLopModel['MALOP'] ?>"><?php echo $rowLopModel['MALOP'] ?></option><?php } ?></select>');
             row.find('.makh').html(' <select class="editmakh"><?php foreach ($result_KhoaModel as $rowKhoaModel) { ?><option value="<?php echo $rowKhoaModel['MAKH'] ?>"><?php echo $rowKhoaModel['MAKH'] ?></option><?php } ?></select>');
-            row.find('.gvcn').html('<select class="editmagvcn"><?php foreach ($result_GiaoVienCNModel as $rowGiaoVienCNModel) { ?><option value="<?php echo $rowGiaoVienCNModel['ID'] ?>"><?php echo $rowGiaoVienCNModel['MAGV'] ?></option><?php } ?></select>');
+            row.find('.maph').html('<select class="editmamaph"><?php foreach ($result_PhuHuynhModel as $rowPhuHuynhModel) { ?><option value="<?php echo $rowPhuHuynhModel['CCCD'] ?>"><?php echo $rowPhuHuynhModel['CCCD'] ?></option><?php } ?></select>');
             //thay nút edit thành update
             row.find('.edit-btn').text('Update');
             row.find('.edit-btn').removeClass('edit-btn').addClass('update-btn');
@@ -191,7 +191,7 @@
                 var editedKhoas = row.find('.editkhoas').find('option:selected').val();
                 var editedMalop = row.find('.editmalop').find('option:selected').val();
                 var editedMakh = row.find('.editmakh').find('option:selected').val();
-                var editedGvcn = row.find('.editmagvcn').find('option:selected').val();
+                var editedMahp = row.find('.editmamaph').find('option:selected').val();
                 var data = {
                     id: id,
                     editedName: editedName,
@@ -201,7 +201,7 @@
                     editedKhoas: editedKhoas,
                     editedMalop: editedMalop,
                     editedMakh: editedMakh,
-                    editedGvcn: editedGvcn
+                    editedMahp: editedMahp
                 };
                 $.ajax({
                     url: '<?= URL ?>/AdminSinhVienController/update',
@@ -217,7 +217,7 @@
                         row.find('.khoas').html(editedKhoas);
                         row.find('.malop').html(editedMalop);
                         row.find('.makh').html(editedMakh);
-                        row.find('.gvcn').html(editedGvcn);
+                        row.find('.maph').html(editedMahp);
                         row.find('.update-btn').text('Edit');
                         row.find('.update-btn').removeClass('save').addClass('edit-btn');
                     },
@@ -249,7 +249,7 @@
                     var name = '<?php echo $row['TENSV']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
                     if (name.includes(searchValue)) //so sách giá trị tìm bằng giá trị name
                     {
-                        var listItem = '<tr class="odd" id="<?= $row['MSSV'] ?>"><td class="sorting_1"><?php echo $row['MSSV'] ?></td><td class="name"> <?= $row['TENSV'] ?></td><td class="gioitinh"><?= $row['GIOITINH'] ?></td><td class="ngaysinh"><?= $row['NGAYSINH'] ?></td><td class="diachi"><?= $row['DIACHI'] ?></td><td class="khoas"><?= $row['KHOAS'] ?></td><td class="malop"><?= $row['MALOP'] ?></td><td class="makh"><?= $row['MAKH'] ?></td><td class="gvcn"><?= $row['GVCN'] ?></td><td class=" "><a class="edit" href="">Edit</a></td><td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminSinhVienController/index?delete=<?= $row['MSSV'] ?>">Delete</a></td></tr>'
+                        var listItem = '<tr class="odd" id="<?= $row['MSSV'] ?>"><td class="sorting_1"><?php echo $row['MSSV'] ?></td><td class="name"> <?= $row['TENSV'] ?></td><td class="gioitinh"><?= $row['GIOITINH'] ?></td><td class="ngaysinh"><?= $row['NGAYSINH'] ?></td><td class="diachi"><?= $row['DIACHI'] ?></td><td class="khoas"><?= $row['IDKHOAS'] ?></td><td class="malop"><?= $row['MALOP'] ?></td><td class="makh"><?= $row['MAKH'] ?></td><td class="maph"><?= $row['MAPH'] ?></td><td class=" "><a class="edit" href="">Edit</a></td><td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminSinhVienController/index?delete=<?= $row['MSSV'] ?>">Delete</a></td></tr>'
                         $('#search-results').append(listItem);
                     }
 
@@ -270,7 +270,7 @@
             var khoas = newRow.find('.select-khoa').val();
             var malop = newRow.find('.select-malop').val();
             var makh = newRow.find('.select-makh').val();
-            var gvcn = newRow.find('.select-magvcn').val();
+            var maph = newRow.find('.select-mamaph').val();
             // Tạo đối tượng dữ liệu để gửi đi
             var data = {
                 id: id,
@@ -281,7 +281,7 @@
                 khoas: khoas,
                 malop: malop,
                 makh: makh,
-                gvcn: gvcn
+                maph: maph
             };
             // Gửi yêu cầu AJAX để lưu dữ liệu
             $.ajax({
@@ -302,7 +302,7 @@
                     <td>${response.khoas}</td>
                     <td>${response.malop}</td>
                     <td>${response.makh}</td>
-                    <td>${response.gvcn}</td>
+                    <td>${response.maph}</td>
                     <td class=" "><a class="delete" href="">edit</a></td>
                     <td><a class="edit" name="delete" href="<?= URL ?>/AdminSinhVienController/index?delete=${response.id}">Delete</a></td>
                 </tr>

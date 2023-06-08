@@ -1,22 +1,22 @@
 <?php 
-class AdminKhoaHocController extends Controller
-{   private $khoahocModel;
+class AdminKhoasController extends Controller
+{   private $khoasModel;
     public function __construct()
     {
-        $this->khoahocModel=$this->model('KhoaHocModel');
+        $this->khoasModel=$this->model('KhoasModel');
     }
     public function index() 
     {  
         if(isset($_GET['delete']))
         {    $id=$_GET['delete'];
             
-            if($this->khoahocModel->delete($id))
+            if($this->khoasModel->delete($id))
             {
-            header('location:'.URL.'/AdminKhoaHocController/index');
+            header('location:'.URL.'/AdminKhoasController/index');
             }
         }
-        $result=$this->khoahocModel->show();
-        $this->view('admin/khoahoc',
+        $result=$this->khoasModel->show();
+        $this->view('admin/khoas',
     [
         'result'=>$result,
     ]);
@@ -28,9 +28,9 @@ class AdminKhoaHocController extends Controller
        
     // Lấy dữ liệu từ yêu cầu AJAX
     $id = $_POST["id"];
-    $this->khoahocModel->add($id);
+    $this->khoasModel->add($id);
     // TODO: Thực hiện lưu dữ liệu vào cơ sở dữ liệu
-    // Gọi phương thức lưu dữ liệu trong khoahocModel
+    // Gọi phương thức lưu dữ liệu trong khoasModel
     // Trả về kết quả (ví dụ: thành công hoặc thất bại)
     $response = array(
         'id'=>$id,

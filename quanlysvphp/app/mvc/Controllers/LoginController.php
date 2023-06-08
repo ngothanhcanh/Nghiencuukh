@@ -14,11 +14,11 @@ class LoginController extends Controller
            $name=isset($_POST['login_name']) ? $_POST['login_name'] : '' ;
            $password=$_POST['login_password'] ? $_POST['login_password'] : '';
            $result=$this->loginModel->sigin($name,$password) ?? array();
-           if($result && $result['name']===$name && $result['password']===$password)
+           if($result && $result['Name']===$name && $result['Pass']===$password)
            { 
             $_SESSION['user_id']=$result['ID'];
-            $_SESSION['status']=$result['status'];
-            $_SESSION['user_type']=$result['user_type'];
+            $_SESSION['status']=$result['trangthai'];
+            $_SESSION['user_type']=$result['User_type'];
            if( $_SESSION['user_type']=='nguoidung')
             {
                 header('location:'.URL.'/ViewController/index');

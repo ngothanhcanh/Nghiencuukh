@@ -37,7 +37,7 @@
                             <div id="editable-sample_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div id="editable-sample_length" class="dataTables_length"><label><select size="1" name="editable-sample_length" aria-controls="editable-sample" class="form-control xsmall">
+                                        <div id="editable-sample_length" class="dataTables_length"><label><select size="1" Name="editable-sample_length" aria-controls="editable-sample" class="form-control xsmall">
                                                     <option value="5" selected="selected">5</option>
                                                     <option value="15">15</option>
                                                     <option value="20">20</option>
@@ -57,7 +57,7 @@
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Quyền</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Status</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">MASSV</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">MAGV</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">GV</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Edit: activate to sort column ascending" style="width: 103px;">Edit</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Delete: activate to sort column ascending" style="width: 149px;">Delete</th>
                                         </tr>
@@ -74,43 +74,43 @@
                                                 </select>
                                             </td>
                                             <td contenteditable="true" id="newStatus">
-                                                <select class="select-status">
+                                                <select class="select-TrangThai">
                                                     <option value="enable">enable</option>
                                                     <option value="disable">disable</option>
                                                 </select>
                                             </td>
-                                            <td contenteditable="true" id="newMSSV">
+                                            <td contenteditable="true" id="newSV">
                                                 <select class="mssv-select">
                                                     <option value="">Không</option>
                                                     <?php foreach ($result_sinhvien as $rowsinhvien) { ?>
-                                                        <option value="<?php echo $rowsinhvien['MSSV'] ?>"><?php echo $rowsinhvien['TENSV'] ?></option>
+                                                        <option value="<?php echo $rowsinhvien['SV'] ?>"><?php echo $rowsinhvien['TENSV'] ?></option>
                                                     <?php } ?>
 
                                                 </select>
                                             </td>
-                                            <td contenteditable="true" id="newMAGV">
+                                            <td contenteditable="true" id="newGV">
                                                 <select class="magv-select">
                                                     <option value="">Không</option>
                                                     <?php foreach ($result_giaovien as $rowgiaovien) { ?>
-                                                        <option value="<?php echo $rowgiaovien['MAGV'] ?>"><?php echo $rowgiaovien['TENGV'] ?></option>
+                                                        <option value="<?php echo $rowgiaovien['GV'] ?>"><?php echo $rowgiaovien['TENGV'] ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
                                             <td><button id="saveButton" class="save">save</button></td>
-                                            <td><a class="delete" name="delete" href="<?= URL ?>/UserController/index?delete=">Delete</a></td>
+                                            <td><a class="delete" Name="delete" href="<?= URL ?>/UserController/index?delete=">Delete</a></td>
                                         </tr>
                                         <?php foreach ($result as $row) {
                                         ?>
                                             <tr class="odd" id="<?= $row['ID'] ?>">
                                                 <td class="sorting_1"><?php echo $row['ID'] ?></td>
-                                                <td class="name"> <?= $row['name'] ?></td>
-                                                <td class="password"><?= $row['password'] ?></td>
-                                                <td class="usertype"><?= $row['user_type'] ?></td>
-                                                <td class="status"><?= $row['status'] ?></td>
-                                                <td class="mssv"><?= $row['MSSV'] ?></td>
-                                                <td class="magv"><?= $row['MAGV'] ?></td>
-                                                <td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td>
-                                                <td class=" "><a class="delete" name="delete" href="<?= URL ?>/UserController/index?delete=<?= $row['ID'] ?>">Delete</a></td>
+                                                <td class="Name"> <?= $row['Name'] ?></td>
+                                                <td class="Pass"><?= $row['Pass'] ?></td>
+                                                <td class="usertype"><?= $row['User_type'] ?></td>
+                                                <td class="TrangThai"><?= $row['TrangThai'] ?></td>
+                                                <td class="mssv"><?= $row['SV'] ?></td>
+                                                <td class="magv"><?= $row['GV'] ?></td>
+                                                <td class="edit"><a class="edit-btn" Name="edit" href="#">Edit</a></td>
+                                                <td class=" "><a class="delete" Name="delete" href="<?= URL ?>/UserController/index?delete=<?= $row['ID'] ?>">Delete</a></td>
                                             </tr>
                                         <?php
                                         }
@@ -152,17 +152,17 @@
             var row = $(this).closest('tr'); //lấy đoạn tr vừa bấm
             var id = row.attr('id'); // lấy id của đoạn tr
             //lấy gán từng giá tri của từng biến tương ứng
-            var name = row.find('.name').text().trim();
-            var password = row.find('.password').text().trim();
+            var Name = row.find('.Name').text().trim();
+            var Pass = row.find('.Pass').text().trim();
             var usertype = row.find('.usertype').text().trim();
-            var status = row.find('.status').text().trim();
+            var TrangThai = row.find('.TrangThai').text().trim();
             var mssv = row.find('.mssv').text().trim();
             var magv = row.find('.magv').text().trim();
             //hiển thị giá trị đoạn trên và chuyển kiểu thành input để sửa
-            row.find('.name').html('<input type="text" value="' + name + '">');
-            row.find('.password').html('<input type="text" value="' + password + '">')
+            row.find('.Name').html('<input type="text" value="' + Name + '">');
+            row.find('.Pass').html('<input type="text" value="' + Pass + '">')
             row.find('.usertype').html('<input type="text" value="' + usertype + '">');
-            row.find('.status').html('<input type="text" value="' + status + '">');
+            row.find('.TrangThai').html('<input type="text" value="' + TrangThai + '">');
             row.find('.mssv').html('<input type="text" value="' + mssv + '">');
             row.find('.magv').html('<input type="text" value="' + magv + '">');
             //thay nút edit thành update
@@ -190,16 +190,16 @@
                 dataType: 'json',
                 data: data,
                 success: function(response) {               
-                        row.find('.name').html(editedName);
-                        row.find('.password').html(editedPassword);
+                        row.find('.Name').html(editedName);
+                        row.find('.Pass').html(editedPassword);
                         row.find('.usertype').html(editedUserType);
-                        row.find('.status').html(editedStatus);
+                        row.find('.TrangThai').html(editedStatus);
                         row.find('.mssv').html(editedMssv);
                         row.find('.magv').html(editedMagv);
 
                         row.find('.update-btn').text('Edit');
                         row.find('.update-btn').removeClass('save').addClass('edit-btn');
-                    },error: function(xhr, status, error) {
+                    },error: function(xhr, TrangThai, error) {
                        console.log('Lỗi khi gửi yêu cầu AJAX:', error);
                     }
                 })
@@ -223,10 +223,10 @@
             var searchValue = $(this).val().toLowerCase(); //đưa hết về chữ thường 
             <?php if (isset($result)) {
                 foreach ($result as $row) { ?>
-                    var name = '<?php echo $row['name']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
-                    if (name.includes(searchValue)) //so sách giá trị tìm bằng giá trị name
+                    var Name = '<?php echo $row['Name']; ?>'.toLowerCase(); //đặt biến Name là tên của giá trị Name trong bảng người dùng
+                    if (Name.includes(searchValue)) //so sách giá trị tìm bằng giá trị Name
                     {
-                        var listItem = '<tr class="odd"><td class="sorting_1"><?php echo $row['ID'] ?></td><td class=" "> <?= $row['name'] ?></td> <td class=" "><?= $row['password'] ?></td><td class="center "><?= $row['user_type'] ?></td><td class="center "><?= $row['status'] ?></td><td class="center "><?= $row['MSSV'] ?></td><td class="center "><?= $row['MAGV'] ?></td><td class=" "><a class="edit" name="edit" href="<?= URL ?>/UserController/index?edit=<?= $row['ID'] ?>">Edit</a></td><td class=" "><a class="delete" name="delete" href="<?= URL ?>/UserController/index?delete=<?= $row['ID'] ?>">Delete</a></td></tr>';
+                        var listItem = '<tr class="odd"><td class="sorting_1"><?php echo $row['ID'] ?></td><td class=" "> <?= $row['Name'] ?></td> <td class=" "><?= $row['Pass'] ?></td><td class="center "><?= $row['User_type'] ?></td><td class="center "><?= $row['TrangThai'] ?></td><td class="center "><?= $row['SV'] ?></td><td class="center "><?= $row['GV'] ?></td><td class=" "><a class="edit" Name="edit" href="<?= URL ?>/UserController/index?edit=<?= $row['ID'] ?>">Edit</a></td><td class=" "><a class="delete" Name="delete" href="<?= URL ?>/UserController/index?delete=<?= $row['ID'] ?>">Delete</a></td></tr>';
                         $('#search-results').append(listItem);
                     }
 
@@ -240,19 +240,19 @@
             var newRow = $(this).closest('tr'); // Dòng mới được thêm    
             // Lấy giá trị từ các ô input
             var id = newRow.find('#newId').text();
-            var name = newRow.find('#newName').text();
-            var password = newRow.find('#newPassword').text();
+            var Name = newRow.find('#newName').text();
+            var Pass = newRow.find('#newPassword').text();
             var userType = newRow.find('.select-usertype').val();
-            var status = newRow.find('.select-status').val();
+            var TrangThai = newRow.find('.select-TrangThai').val();
             var mssv = newRow.find('.mssv-select').val();
             var magv = newRow.find('.magv-select').val();
             // Tạo đối tượng dữ liệu để gửi đi
             var data = {
                 id: id,
-                name: name,
-                password: password,
+                Name: Name,
+                Pass: Pass,
                 userType: userType,
-                status: status,
+                status: TrangThai,
                 mssv: mssv,
                 magv: magv
             };
@@ -268,19 +268,19 @@
                     var newRow = `
                 <tr>
                     <td class="sorting_1">${id}</td>
-                    <td>${response.name}</td>
-                    <td>${response.password}</td>
+                    <td>${response.Name}</td>
+                    <td>${response.Pass}</td>
                     <td>${response.userType}</td>
                     <td>${response.status}</td>
                     <td>${response.mssv}</td>
                     <td>${response.magv}</td>
                     <td class=" "><a class="delete" href="">edit</a></td>
-                    <td><a class="edit" name="delete" href="<?= URL ?>/UserController/index?delete=${response.id}">Delete</a></td>
+                    <td><a class="edit" Name="delete" href="<?= URL ?>/UserController/index?delete=${response.id}">Delete</a></td>
                 </tr>
                   `;
                     $("#editable-sample tbody").append(newRow);
                 },
-                error: function(xhr, status, error) {
+                error: function(xhr, TrangThai, error) {
                     // Xử lý lỗi khi gửi yêu cầu AJAX
                     console.error(xhr.responseText);
                 }

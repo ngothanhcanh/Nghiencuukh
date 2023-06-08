@@ -1,14 +1,14 @@
 <?php
 class AdminSinhVienController extends Controller
 {    private $sinhvien;
-    private $KhoaHocModel;
+    private $KhoasModel;
     private $LopModel;
     private $KhoaModel;
     private $GiaoVienCNModel;
     public function __construct()
     {
         $this->sinhvien=$this->model('SinhVienModel');
-        $this->KhoaHocModel=$this->model('KhoaHocModel');
+        $this->KhoasModel=$this->model('KhoasModel');
         $this->LopModel=$this->model('LopModel');
         $this->KhoaModel=$this->model('KhoaModel');
         $this->GiaoVienCNModel=$this->model('GiaoVienCNModel');
@@ -26,14 +26,14 @@ class AdminSinhVienController extends Controller
         }
         $result=$this->sinhvien->show();
         $result_KhoaModel=$this->KhoaModel->showid();
-        $result_KhoaHocModel=$this->KhoaHocModel->showid();
+        $result_KhoasModel=$this->KhoasModel->showid();
         $result_LopModel=$this->LopModel->showid();
         $result_GiaoVienCNModel=$this->GiaoVienCNModel->showid();
         $this->view('admin/sinhvien',
     [
         'result'=>$result,
         'result_KhoaModel'=>$result_KhoaModel,
-        'result_KhoaHocModel'=>$result_KhoaHocModel,
+        'result_KhoasModel'=>$result_KhoasModel,
         'result_LopModel'=>$result_LopModel,
         'result_GiaoVienCNModel'=>$result_GiaoVienCNModel
     ]);
@@ -52,8 +52,8 @@ class AdminSinhVienController extends Controller
     $khoas = $_POST['khoas'];
     $malop = $_POST['malop'];
     $makh = $_POST['makh'];
-    $gvcn = $_POST['gvcn'];
-    $this->sinhvien->add($id, $name, $gioitinh, $ngaysinh, $diachi,$khoas, $malop, $makh,$gvcn);
+    $maph = $_POST['maph'];
+    $this->sinhvien->add($id, $name, $gioitinh, $ngaysinh, $diachi,$khoas, $malop, $makh,$maph);
     // TODO: Thực hiện lưu dữ liệu vào cơ sở dữ liệu
     // Gọi phương thức lưu dữ liệu trong sinhvien
     // Trả về kết quả (ví dụ: thành công hoặc thất bại)
@@ -66,7 +66,7 @@ class AdminSinhVienController extends Controller
        'khoas'=>$khoas ,
         'malop'=>$malop,
         'makh'=>$makh,
-        'gvcn'=>$gvcn
+        'maph'=>$maph
     );
     echo json_encode($response);
       }
@@ -83,8 +83,8 @@ class AdminSinhVienController extends Controller
             $khoas = $_POST['editedKhoas'];
             $malop = $_POST['editedMalop'];
             $makh = $_POST['editedMakh'];
-             $gvcn = $_POST['editedGvcn'];
-            $this->sinhvien->update($id, $name, $gioitinh, $ngaysinh, $diachi,$khoas, $malop, $makh,$gvcn);
+             $maph = $_POST['editedGvcn'];
+            $this->sinhvien->update($id, $name, $gioitinh, $ngaysinh, $diachi,$khoas, $malop, $makh,$maph);
             $response = array(
                 'id' => $id,
                 'name' => $name

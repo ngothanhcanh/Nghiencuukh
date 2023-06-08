@@ -15,16 +15,16 @@ class HocPhanModel{
             return $data;
         }
     }
-    public function add($id,$TENHP,$SOTC)
+    public function add($id,$TENHP,$SOTC,$GVPT)
     { 
-            $sql="INSERT INTO `hocphan`(`MAHP`, `TENHP`, `SOTC`)
-            VALUES ('$id','$TENHP','$SOTC') ";
+            $sql="INSERT INTO `hocphan`(`MAHP`, `TENHP`, `SOTC`,`GVPT`)
+            VALUES ('$id','$TENHP','$SOTC','$GVPT') ";
         return $this->db->execute($sql); 
     }
-    public function update($MAHP,$TENHP,$SOTC)
+    public function update($MAHP,$TENHP,$SOTC,$GVPT)
     {
        
-            $sql="UPDATE `hocphan` SET `TENHP`='$TENHP',`SOTC`='$SOTC' WHERE MAHP='$MAHP' ";
+            $sql="UPDATE `hocphan` SET `TENHP`='$TENHP',`SOTC`='$SOTC',GVPT`= '$GVPT' WHERE MAHP='$MAHP' ";
         
         return $this->db->execute($sql); 
     }

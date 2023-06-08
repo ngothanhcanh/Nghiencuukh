@@ -1,14 +1,13 @@
 <?php 
-class GiaoVienCNModel
-{
-    private $db;
+class KhoasModel
+{  private $db;
     public function __construct()
     {
         $this->db=new Database();
     }
     public function showid()
     {
-        $sql = "SELECT * FROM giaovienchunhiem ";
+        $sql = "SELECT * FROM khoas ";
         $resuil=$this->db->execute($sql);
         if(mysqli_num_rows($resuil)>0)
         {
@@ -19,11 +18,10 @@ class GiaoVienCNModel
         {
             return null;
         }
-       
     }
     public function show()
     {
-        $sql="SELECT * FROM giaovienchunhiem ORDER BY ID ASC";
+        $sql="SELECT * FROM khoas ORDER BY ID ASC";
         $resuil= $this->db->execute($sql);
         if(mysqli_num_rows($resuil)>0)
         {
@@ -31,22 +29,15 @@ class GiaoVienCNModel
             return $data;
         }
     }
-    public function add($id,$MAGV)
-    { 
-            $sql="INSERT INTO `giaovienchunhiem`(`ID`, `MAGV`)
-            VALUES ('$id','$MAGV') ";
-        return $this->db->execute($sql); 
-    }
-    public function update($ID,$MAGV)
-    {
-       
-            $sql="UPDATE `giaovienchunhiem` SET `MAGV`='$MAGV' WHERE ID='$ID' ";
-        
+    public function add($id)
+    {   
+          $sql="INSERT INTO `khoas`(`ID`)
+            VALUES ('$id') ";
         return $this->db->execute($sql); 
     }
     public function delete($id)
     {
-       $sql= "DELETE FROM `giaovienchunhiem` WHERE ID='$id'";
+       $sql= "DELETE FROM `khoas` WHERE id='$id'";
        $resuil= $this->db->execute($sql);
        return $resuil;
     }

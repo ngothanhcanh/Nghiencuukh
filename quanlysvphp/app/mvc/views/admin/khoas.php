@@ -52,33 +52,22 @@
                                     <thead>
                                         <tr role="row">
                                             <th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="First Name" style="width: 120px;">ID</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Mã giáo viên</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Edit</th>        
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Delete</th>        
-
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Edit: activate to sort column ascending" style="width: 103px;">Edit</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Delete: activate to sort column ascending" style="width: 149px;">Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody id="search-results" role="alert" aria-live="polite" aria-relevant="all">
                                         <tr id="new-row" style="display:none;">
                                             <td class="sorting_1" contenteditable="true" id="newId"></td>
-                                            <td contenteditable="true" id="newPassword">
-                                            <select class="makh-select">
-                                                    <option value="">Không</option>
-                                                    <?php foreach ($result_GiangVienModel as $rowGiangVienModel) { ?>
-                                                        <option value="<?php echo $rowGiangVienModel['MAGV'] ?>"><?php echo $rowGiangVienModel['MAGV'] ?></option>
-                                                    <?php } ?>
-                                             </select>
-                                            </td>
                                             <td><button id="saveButton" class="save">save</button></td>
-                                            <td><a class="delete" name="delete" href="<?= URL ?>/AdminGiaoVienCNController/index?delete=">Delete</a></td>
+                                            <td><a class="delete" name="delete" href="<?= URL ?>/AdminKhoasController/index?delete=">Delete</a></td>
                                         </tr>
                                         <?php foreach ($result as $row) {
                                         ?>
                                             <tr class="odd" id="<?= $row['ID'] ?>">
-                                                <td class="sorting_1"><?php echo $row['ID'] ?></td>
-                                                <td class="password"><?= $row['MAGV'] ?></td>
+                                                <td id="idkhoahoc" class="sorting_1"><?php echo $row['ID'] ?></td>
                                                 <td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td>
-                                                <td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminGiaoVienCNController/index?delete=<?= $row['ID'] ?>">Delete</a></td>
+                                                <td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminKhoasController/index?delete=<?= $row['ID'] ?>">Delete</a></td>
                                             </tr>
                                         <?php
                                         }
@@ -117,30 +106,23 @@
     $(document).ready(function() {
         //nút edit
         $(document).on('click', '.edit-btn', function() {
-            var row = $(this).closest('tr'); //lấy đoạn tr vừa bấm
-            var id = row.attr('id'); // lấy id của đoạn tr
-            //lấy gán từng giá tri của từng biến tương ứng
-            var password = row.find('.password').text().trim();
-            //hiển thị giá trị đoạn trên và chuyển kiểu thành input để sửa
-            row.find('.password').html(' <select class="editgvcn"><option value="">Không</option><?php foreach ($result_GiangVienModel as $rowGiangVienModel) { ?><option value="<?php echo $rowGiangVienModel['MAGV'] ?>"><?php echo $rowGiangVienModel['MAGV'] ?></option><?php } ?></select>')
+            var newRow = $(this).closest('tr');  // Dòng mới được thêm    
+            // Lấy giá trị từ các ô input
+            newRow.find('.idkhoahoc').attr("contenteditable", "true")
             //thay nút edit thành update
             row.find('.edit-btn').text('Update');
             row.find('.edit-btn').removeClass('edit-btn').addClass('update-btn');
             row.find('.update-btn').on('click', function() {
-                var editedPassword = row.find('.editgvcn').find('option:selected').val();
                 var data={
-                        id:id,
-                        editedPassword: editedPassword,
+                        id:id,       
                 };
                 $.ajax({
-                url: '<?= URL ?>/AdminGiaoVienCNController/update',
+                url: '<?= URL ?>/AdminKhoasController/update',
                 type: 'POST',
                 dataType: 'json',
                 data: data,
-                success: function(response) {               
+                success: function(response) {              
                         
-                        row.find('.password').html(editedPassword);
-
                         row.find('.update-btn').text('Edit');
                         row.find('.update-btn').removeClass('save').addClass('edit-btn');
                     },error: function(xhr, status, error) {
@@ -167,10 +149,10 @@
             var searchValue = $(this).val().toLowerCase(); //đưa hết về chữ thường 
             <?php if (isset($result)) {
                 foreach ($result as $row) { ?>
-                    var name = '<?php echo $row['MAGV']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
+                    var name = '<?php echo $row['ID']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
                     if (name.includes(searchValue)) //so sách giá trị tìm bằng giá trị name
                     {
-                        var listItem = '<tr class="odd" id="<?= $row['ID'] ?>"><td class="sorting_1"><?php echo $row['ID'] ?></td><td class="password"><?= $row['MAGV'] ?></td><td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td><td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminGiaoVienCNController/index?delete=<?= $row['ID'] ?>">Delete</a></td></tr>';
+                        var listItem = '<tr class="odd"><td class="sorting_1"><?php echo $row['ID'] ?><td class=" "><a class="edit" name="edit" href="<?= URL ?>/AdminKhoasController/index?edit=<?= $row['ID'] ?>">Edit</a></td><td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminKhoasController/index?delete=<?= $row['ID'] ?>">Delete</a></td></tr>';
                         $('#search-results').append(listItem);
                     }
 
@@ -184,27 +166,24 @@
             var newRow = $(this).closest('tr'); // Dòng mới được thêm    
             // Lấy giá trị từ các ô input
             var id = newRow.find('#newId').text();
-            var name = newRow.find('#newName').text();
-            var password = newRow.find('.makh-select').val();
             // Tạo đối tượng dữ liệu để gửi đi
             var data = {
                 id: id,
-                password: password,
             };
             // Gửi yêu cầu AJAX để lưu dữ liệu
             $.ajax({
-                url: '<?= URL ?>/AdminGiaoVienCNController/save',
+                url: '<?= URL ?>/AdminKhoasController/save',
                 type: 'POST',
                 dataType: 'json',
                 data: data,
                 success: function(response) {
+
                     //thêm đối tượng trả về vào dòng mới tạm thời.
                     var newRow = `
                 <tr>
                     <td class="sorting_1">${id}</td>
-                    <td>${password}</td>
                     <td class=" "><a class="delete" href="">edit</a></td>
-                    <td><a class="edit" name="delete" href="<?= URL ?>/AdminGiaoVienCNController/index?delete=${response.id}">Delete</a></td>
+                    <td><a class="edit" name="delete" href="<?= URL ?>/AdminKhoasController/index?delete=${response.id}">Delete</a></td>
                 </tr>
                   `;
                     $("#editable-sample tbody").append(newRow);
@@ -215,9 +194,9 @@
                 }
             });
             newRow.css('display', 'none');
-            // setTimeout(() => {
-            //     location.reload();
-            // }, 500);
+            setTimeout(() => {
+                location.reload();
+            }, 500);
         });
         //set time tại 500ml giây
     });

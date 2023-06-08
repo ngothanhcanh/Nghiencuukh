@@ -7,7 +7,7 @@ class LoginModel
     }
     public function sigin($name,$password)
    {
-      $sql="SELECT * FROM `nguoidung` WHERE name='$name' AND password='$password'";
+      $sql="SELECT * FROM `nguoidung` WHERE Name='$name' AND Pass ='$password'";
       $resuil=$this->db->execute($sql);
       if(mysqli_num_rows($resuil)>0)
       {
