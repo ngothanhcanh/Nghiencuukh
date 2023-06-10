@@ -12,19 +12,20 @@ class AdminBangDiemController extends Controller
     }
     public function index()
     {  
-        if(isset($_GET['delete']))
+        if(isset($_GET['deletesv']))
         {
-            $MSSV=$_GET['delete'];
+            $MSSV=$_GET['deletesv'];
+            $MAHP=$_GET['deletehp'];
             if(isset($MSSV))
             {  
-                $this->BangDiemModel->delete($MSSV);
+                $this->BangDiemModel->delete($MSSV,$MAHP);
                 header('location:'.URL.'/AdminBangDiemController/index');
             }
         }
         $result=$this->BangDiemModel->show();
         $result_HocPhanModel=$this->HocPhanModel->show();
         $result_SinhVienModel=$this->SinhVienModel->showid();
-        $this->view('admin/ketqua',
+        $this->view('admin/bangdiem',
         [
             'result'=>$result,
             'result_HocPhanModel'=>$result_HocPhanModel,
@@ -41,50 +42,50 @@ class AdminBangDiemController extends Controller
             $GK=$_POST['GK'];
             $CK=$_POST['CK'];
             $DTB=$_POST['DTB'];
+            $HK = $_POST['HocKy'];
+            $NH = $_POST['NamHoc'];
+            if($DTB>=8.5)
+            {
+            $DIEMHE4=4;
+            }
+            else if($DTB>=7)
+            {
+             $DIEMHE4=3;
+            }
+            else if($DTB>=5.5)
+            {
+             $DIEMHE4=2;
+            }
+            else if($DTB>=4)
+            {
+            $DIEMHE4=1;
+            }
+            else
+            {
             $DIEMHE4=0;
-            $DIEMQUYDOI="";
-                if($DTB>=8.5)
-                {
-                $DIEMHE4=4;
-                }
-                else if($DTB>=7)
-                {
-                 $DIEMHE4=3;
-                }
-                else if($DTB>=5.5)
-                {
-                 $DIEMHE4=2;
-                }
-                else if($DTB>=4)
-                {
-                $DIEMHE4=1;
-                }
-                else
-                {
-                $DIEMHE4=0;
-                }
+            }
 
-                if($DIEMHE4==4)
-                {
-                $DIEMQUYDOI= "A";
-                }
-                else if($DIEMHE4==3)
-                {
-                    $DIEMQUYDOI= "B";
-                }
-                else if($DIEMHE4==2)
-                {
-                    $DIEMQUYDOI= "C";
-                }
-                else if($DIEMHE4==1)
-                {
-                    $DIEMQUYDOI= "D";
-                }
-                else
-                {
-                $DIEMQUYDOI= "F";
-                }
-            $this->BangDiemModel->save($MSSV,$MAHP,$CC,$GK,$CK,$DTB,$DIEMHE4,$DIEMQUYDOI);
+            if($DIEMHE4==4)
+            {
+            $DIEMQUYDOI= "A";
+            }
+            else if($DIEMHE4==3)
+            {
+                $DIEMQUYDOI= "B";
+            }
+            else if($DIEMHE4==2)
+            {
+                $DIEMQUYDOI= "C";
+            }
+            else if($DIEMHE4==1)
+            {
+                $DIEMQUYDOI= "D";
+            }
+            else
+            {
+            $DIEMQUYDOI= "F";
+            }
+            $this->BangDiemModel->save($MSSV,$MAHP,$CC,$GK,$CK,$DTB,$DIEMHE4,$DIEMQUYDOI,$HK,$NH);
             $response = array(
                 'MSSV'=>$MSSV,
                 'MAHP'=>$MAHP,
@@ -93,7 +94,9 @@ class AdminBangDiemController extends Controller
                 'CK'=>$CK,
                 'DTB'=>$DTB,
                 'DIEMHE4'=>$DIEMHE4,
-                'DIEMQUYDOI'=>$DIEMQUYDOI
+                'DIEMQUYDOI'=>$DIEMQUYDOI,
+                'HocKy'=>$HK,
+                'NamHoc'=>$NH
             );
             echo json_encode($response);
             }
@@ -108,6 +111,8 @@ class AdminBangDiemController extends Controller
                 $GK=$_POST['editedGK'];
                 $CK=$_POST['editedCK'];
                 $DTB=$_POST['editDTB'];
+                $HK = $_POST['editedHK'];
+                $NH = $_POST['editedNH'];
                 if($DTB>=8.5)
                 {
                 $DIEMHE4=4;
@@ -149,7 +154,7 @@ class AdminBangDiemController extends Controller
                 {
                 $DIEMQUYDOI= "F";
                 }
-                $this->BangDiemModel->update($MSSV,$MAHP,$CC,$GK,$CK,$DTB,$DIEMHE4,$DIEMQUYDOI);
+                $this->BangDiemModel->update($MSSV,$MAHP,$CC,$GK,$CK,$DTB,$DIEMHE4,$DIEMQUYDOI,$HK,$NH);
                 $response = array(
                     'MSSV'=>$MSSV,
                     'MAHP'=>$MAHP,
@@ -158,7 +163,9 @@ class AdminBangDiemController extends Controller
                     'CK'=>$CK,
                     'DTB'=>$DTB,
                     'DIEMHE4'=>$DIEMHE4,
-                    'DIEMQUYDOI'=>$DIEMQUYDOI
+                    'DIEMQUYDOI'=>$DIEMQUYDOI,
+                    'HocKy'=>$HK,
+                    'NamHoc'=>$NH
                 );
                 echo json_encode($response);
                 }

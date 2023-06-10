@@ -4,14 +4,14 @@ class AdminSinhVienController extends Controller
     private $KhoasModel;
     private $LopModel;
     private $KhoaModel;
-    private $GiaoVienCNModel;
+    private $PhuHuynhModel;
     public function __construct()
     {
         $this->sinhvien=$this->model('SinhVienModel');
         $this->KhoasModel=$this->model('KhoasModel');
         $this->LopModel=$this->model('LopModel');
         $this->KhoaModel=$this->model('KhoaModel');
-        $this->GiaoVienCNModel=$this->model('GiaoVienCNModel');
+        $this->PhuHuynhModel=$this->model('PhuHuynhModel');
 
     }
     public function index() 
@@ -28,14 +28,14 @@ class AdminSinhVienController extends Controller
         $result_KhoaModel=$this->KhoaModel->showid();
         $result_KhoasModel=$this->KhoasModel->showid();
         $result_LopModel=$this->LopModel->showid();
-        $result_GiaoVienCNModel=$this->GiaoVienCNModel->showid();
+        $result_PhuHuynhModel=$this->PhuHuynhModel->showid();
         $this->view('admin/sinhvien',
     [
         'result'=>$result,
         'result_KhoaModel'=>$result_KhoaModel,
         'result_KhoasModel'=>$result_KhoasModel,
         'result_LopModel'=>$result_LopModel,
-        'result_GiaoVienCNModel'=>$result_GiaoVienCNModel
+        'result_PhuHuynhModel'=>$result_PhuHuynhModel
     ]);
     }
     public function save()
@@ -83,7 +83,7 @@ class AdminSinhVienController extends Controller
             $khoas = $_POST['editedKhoas'];
             $malop = $_POST['editedMalop'];
             $makh = $_POST['editedMakh'];
-             $maph = $_POST['editedGvcn'];
+             $maph = $_POST['editedMaph'];
             $this->sinhvien->update($id, $name, $gioitinh, $ngaysinh, $diachi,$khoas, $malop, $makh,$maph);
             $response = array(
                 'id' => $id,

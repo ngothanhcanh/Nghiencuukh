@@ -20,17 +20,17 @@ class BangDiemModel
     public function save($MSSV,$MHP,$CC,$GK,$CK,$DIEMHE10,$DIEMHE4,$DIEMQD,$HOCKY,$NAMHOC)
     {
       $sql="INSERT INTO `bangdiem`(`MSSV`, `MAHP`, `CC`, `GK`, `CK`, `DIEMHE10`, `DIEMHE4`, `DIEMQUYDOI`, `HOCKY`, `NAMHOC`)
-       VALUES ('$MSSV','$MHP','$CC','$GK','$CK','$DIEMHE10',',$DIEMHE4',',$DIEMQD','$HOCKY','$NAMHOC')";
+       VALUES ('$MSSV','$MHP','$CC','$GK','$CK','$DIEMHE10','$DIEMHE4','$DIEMQD','$HOCKY','$NAMHOC')";
        $this->db->execute($sql);
     }
     public function update($MSSV,$MHP,$CC,$GK,$CK,$DIEMHE10,$DIEMHE4,$DIEMQD,$HOCKY,$NAMHOC)
     {
-     $sql="UPDATE `bangdiem` SET `MAHP`='$MHP',`CC`='$CC',`GK`='$GK',`CK`='$CK',`DIEMHE10`='$DIEMHE10',`DIEMHE4`='$DIEMHE4',`DIEMQUYDOI`='$DIEMQD',`HOCKY`='$HOCKY,',`NAMHOC`='$NAMHOC' WHERE MSSV='$MSSV'";
+     $sql="UPDATE `bangdiem` SET `CC`='$CC',`GK`='$GK',`CK`='$CK',`DIEMHE10`='$DIEMHE10',`DIEMHE4`='$DIEMHE4',`DIEMQUYDOI`='$DIEMQD',`HOCKY`='$HOCKY,',`NAMHOC`='$NAMHOC' WHERE MSSV='$MSSV' and `MAHP`='$MHP'";
      $this->db->execute($sql);
     }
-    public function delete($MSSV)
+    public function delete($MSSV,$MHP)
     {
-        $sql= "DELETE FROM `bangdiem` WHERE MSSV = '$MSSV'";
+        $sql= "DELETE FROM `bangdiem` WHERE MSSV = '$MSSV' and `MAHP`='$MHP' ";
         $this->db->execute($sql);
     }
 }

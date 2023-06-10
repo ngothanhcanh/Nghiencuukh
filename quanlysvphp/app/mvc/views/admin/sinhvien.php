@@ -84,7 +84,7 @@
                                             <td contenteditable="true" id="newDiachi"></td>
                                             <td contenteditable="true" id="newKhoa">
                                                 <select class="select-khoa">
-                                                    <?php foreach ($result_KhoaHocModel as $rowKhoahocModel) { ?>
+                                                    <?php foreach ($result_KhoasModel as $rowKhoahocModel) { ?>
                                                         <option value="<?php echo $rowKhoahocModel['ID'] ?>"><?php echo $rowKhoahocModel['ID'] ?></option>
                                                     <?php } ?>
                                                 </select>
@@ -103,7 +103,7 @@
                                                     <?php } ?>
                                                 </select>
                                             </td>
-                                            <td contenteditable="true" id="newMahp">
+                                            <td contenteditable="true" id="newMaph">
                                                 <select class="select-mamaph">
                                                     <?php foreach ($result_PhuHuynhModel as $rowPhuHuynhModel) { ?>
                                                         <option value="<?php echo $rowPhuHuynhModel['CCCD'] ?>"><?php echo $rowPhuHuynhModel['CCCD'] ?></option>
@@ -176,7 +176,7 @@
             row.find('.gioitinh').html('<input type="text" value="' + gioitinh + '">')
             row.find('.ngaysinh').html('<input type="date">');
             row.find('.diachi').html('<input type="text" value="' + diachi + '">');
-            row.find('.khoas').html('<select class="editkhoas"><?php foreach ($result_KhoaHocModel as $rowKhoahocModel) { ?><option value="<?php echo $rowKhoahocModel['ID'] ?>"><?php echo $rowKhoahocModel['ID'] ?></option><?php } ?></select>');
+            row.find('.khoas').html('<select class="editkhoas"><?php foreach ($result_KhoasModel as $rowKhoahocModel) { ?><option value="<?php echo $rowKhoahocModel['ID'] ?>"><?php echo $rowKhoahocModel['ID'] ?></option><?php } ?></select>');
             row.find('.malop').html('<select class="editmalop"><?php foreach ($result_LopModel as $rowLopModel) { ?><option value="<?php echo $rowLopModel['MALOP'] ?>"><?php echo $rowLopModel['MALOP'] ?></option><?php } ?></select>');
             row.find('.makh').html(' <select class="editmakh"><?php foreach ($result_KhoaModel as $rowKhoaModel) { ?><option value="<?php echo $rowKhoaModel['MAKH'] ?>"><?php echo $rowKhoaModel['MAKH'] ?></option><?php } ?></select>');
             row.find('.maph').html('<select class="editmamaph"><?php foreach ($result_PhuHuynhModel as $rowPhuHuynhModel) { ?><option value="<?php echo $rowPhuHuynhModel['CCCD'] ?>"><?php echo $rowPhuHuynhModel['CCCD'] ?></option><?php } ?></select>');
@@ -191,7 +191,7 @@
                 var editedKhoas = row.find('.editkhoas').find('option:selected').val();
                 var editedMalop = row.find('.editmalop').find('option:selected').val();
                 var editedMakh = row.find('.editmakh').find('option:selected').val();
-                var editedMahp = row.find('.editmamaph').find('option:selected').val();
+                var editedMaph = row.find('.editmamaph').find('option:selected').val();
                 var data = {
                     id: id,
                     editedName: editedName,
@@ -201,7 +201,7 @@
                     editedKhoas: editedKhoas,
                     editedMalop: editedMalop,
                     editedMakh: editedMakh,
-                    editedMahp: editedMahp
+                    editedMaph: editedMaph
                 };
                 $.ajax({
                     url: '<?= URL ?>/AdminSinhVienController/update',
@@ -217,12 +217,12 @@
                         row.find('.khoas').html(editedKhoas);
                         row.find('.malop').html(editedMalop);
                         row.find('.makh').html(editedMakh);
-                        row.find('.maph').html(editedMahp);
+                        row.find('.maph').html(editedMaph);
                         row.find('.update-btn').text('Edit');
                         row.find('.update-btn').removeClass('save').addClass('edit-btn');
                     },
                     error: function(xhr, status, error) {
-                      
+                      console.log(data);
                         console.log('Lỗi khi gửi yêu cầu AJAX:', error);
                     }
                 })
