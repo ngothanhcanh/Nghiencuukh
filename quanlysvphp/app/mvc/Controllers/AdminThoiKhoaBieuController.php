@@ -35,8 +35,9 @@ class AdminThoiKhoaBieuController extends Controller
     }
     public function save()
     {    
+       
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
+     
         // Lấy dữ liệu từ yêu cầu AJAX
         $id = $_POST["id"];
         $b1_tiet = $_POST["b1_tiet"];

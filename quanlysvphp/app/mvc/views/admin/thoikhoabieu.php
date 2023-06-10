@@ -75,7 +75,7 @@
 
                                     <tbody id="search-results" role="alert" aria-live="polite" aria-relevant="all">
                                         <tr id="new-row" style="display:none;">
-                                            <td contenteditable="true" id="newID"></td>
+                                        <td contenteditable="true" id="newID"></td>
                                             <td contenteditable="true" id="newB1_thu"></td>
                                             <td contenteditable="true" id="newB1_tiet"></td>    
                                             <td contenteditable="true" id="newB1_phong"></td>
@@ -293,7 +293,6 @@
          });
          newRow.find(".n_bd").html(`<input type="date" style="height: 20px; width: 70px"/>`)
          newRow.find(".n_kt").html(`<input type="date" style="height: 20px; width: 70px"/>`)
-
         newRow.find('.mh').html(`<select class="mahp-select">
         <option value="">Không</option>
         <?php if (isset($result_hp) && is_array($result_hp) || is_object($result_hp))
