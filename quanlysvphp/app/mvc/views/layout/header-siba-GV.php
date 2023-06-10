@@ -274,23 +274,11 @@
                         <span>Layouts</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="<?=URL?>/UserController/index">Người Dùng</a></li>
-                        <li><a href="<?=URL?>/AdminSinhVienController/index">Sinh Viên</a></li>
-                        <li><a href="<?=URL?>/AdminKhoaController/index">Khoa</a></li>
-                        <li><a href="<?=URL?>/AdminGiangVienController/index">Giảng Viên</a></li>
-                        <li><a href="<?=URL?>/AdminKhoasController/index">Khóa Học</a></li>
-                        <li><a href="<?=URL?>/AdminHocPhanController/index">Học Phần</a></li>
-                        <li><a href="<?=URL?>/AdminLopController/index">Lớp</a></li>                      
-                        <li><a href="<?=URL?>/AdminHocPhiController/index">Học Phí</a></li>
-                        <li><a href="<?=URL?>/AdminThoiKhoaBieuController/index">Thời Khóa Biểu</a></li>
-                        <li><a href="<?=URL?>/AdminGiangVienLopController/index">Giảng Viên Lớp</a></li>
-                        <li><a href="<?=URL?>/AdminThoiKhoaBieuController/index">Thời Khóa Biểu</a></li>
-                        <li><a href="<?=URL?>/AdminPhuHuynhController/index">Phụ Huynh</a></li>
-                        <li><a href="<?=URL?>/AdminBangDiemController/index">Bảng Điểm</a></li>
+                      
                     </ul>
                 </li>          
                 <li>
-                    <a href="<?=URL ?>/AdminIndexController/out?thoat">
+                    <a href="login.html">
                         <i class="fa fa-user"></i>
                         <span>Login Page</span>
                     </a>

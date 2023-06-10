@@ -9,6 +9,10 @@ class AdminHocPhiController extends Controller
         $this->hocphiModel=$this->model('HocPhiModel');
         $this->khoaModel=$this->model('KhoaModel');
         $this->sinhvienModel=$this->model('SinhVienModel');
+        if(!isset($_SESSION['user_type']))
+        {
+            header('location:'.URL.'/LoginController/index');
+        }
     }
     public function index() 
     {  

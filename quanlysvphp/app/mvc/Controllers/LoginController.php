@@ -5,6 +5,10 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->loginModel=$this->model('LoginModel');
+        if(!isset($_SESSION['user_type']))
+        {
+            header('location:'.URL.'/LoginController/index');
+        }
     }
     public function index()
     {    $error = array();
@@ -20,12 +24,13 @@ class LoginController extends Controller
             $_SESSION['status']=$result['trangthai'];
             $_SESSION['user_type']=$result['User_type'];
            if( $_SESSION['user_type']=='nguoidung')
-            {
+            { 
+                $_SESSION['MAGV']=$result['GV'];
                 header('location:'.URL.'/ViewController/index');
             }
             if($_SESSION['user_type']=='admin')
             {
-                header('location:'.URL.'/ViewController/index');
+                header('location:'.URL.'/AdminIndexController/index');
             }
            }
                 $error[] = 'sai tài khoản hoặc mật khẩu';

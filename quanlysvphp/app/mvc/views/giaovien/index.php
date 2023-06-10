@@ -1,4 +1,4 @@
-<?php include '../quanlysvphp/app/mvc/views/layout/header-siba.php' ?>
+<?php include '../quanlysvphp/app/mvc/views/layout/header-siba-GV.php' ?>
 <!--main content start-->
 <section id="main-content">
 <section class="wrapper">
@@ -668,4 +668,4 @@
 <!--right sidebar start-->
 <!--right sidebar end-->
 </section>
-<?php include '../quanlysvphp/app/mvc/views/layout/footer.php' ?>
+<?php include '../quanlysvphp/app/mvc/views/layout/footerGV.php' ?>

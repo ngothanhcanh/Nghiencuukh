@@ -12,6 +12,10 @@ class AdminSinhVienController extends Controller
         $this->LopModel=$this->model('LopModel');
         $this->KhoaModel=$this->model('KhoaModel');
         $this->PhuHuynhModel=$this->model('PhuHuynhModel');
+        if(!isset($_SESSION['user_type']))
+        {
+            header('location:'.URL.'/LoginController/index');
+        }
 
     }
     public function index() 

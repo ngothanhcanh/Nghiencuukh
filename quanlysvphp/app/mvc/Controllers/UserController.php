@@ -9,6 +9,10 @@ class UserController extends Controller
         $this->userModel=$this->model('UserModel');
         $this->giangvienModel=$this->model('GiangVienModel');
         $this->sinhvienModel=$this->model('SinhVienModel');
+        if(!isset($_SESSION['user_type']))
+        {
+            header('location:'.URL.'/LoginController/index');
+        }
     }
     public function index() 
     {  
@@ -37,8 +41,8 @@ class UserController extends Controller
        
     // Lấy dữ liệu từ yêu cầu AJAX
     $id = $_POST["id"];
-    $name = $_POST["name"];
-    $password = $_POST["password"];
+    $name = $_POST["Name"];
+    $password = $_POST["Pass"];
     $userType = $_POST["userType"];
     $status = $_POST["status"];
     $mssv = $_POST["mssv"];

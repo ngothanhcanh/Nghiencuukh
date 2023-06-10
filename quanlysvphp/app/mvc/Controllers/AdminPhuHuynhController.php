@@ -5,6 +5,10 @@ class AdminPhuHuynhController extends Controller
     public function __construct()
     {
         $this->phuhuynhModel=$this->model('PhuHuynhModel');
+        if(!isset($_SESSION['user_type']))
+        {
+            header('location:'.URL.'/LoginController/index');
+        }
     }
     public function index() 
     {  

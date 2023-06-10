@@ -15,35 +15,35 @@ class UserModel
             return $data;
         }
     }
-    public function add($id,$name,$password,$user_type,$status,$mssv,$magv)
+    public function add($id,$Name,$Pass,$User_type,$TrangThai,$SV,$GV)
     { 
-        if($magv=='')
+        if($GV=='')
         {
-            $sql="INSERT INTO `nguoidung`(`ID`, `name`, `password`, `user_type`, `status`, `MSSV`, `MAGV`)
-            VALUES ('$id','$name','$password','$user_type','$status','$mssv',null) ";
-        }else if($mssv=='')
+            $sql="INSERT INTO `nguoidung`(`ID`, `Name`, `Pass`, `User_type`, `TrangThai`, `SV`, `GV`)
+            VALUES ('$id','$Name','$Pass','$User_type','$TrangThai','$SV',null) ";
+        }else if($SV=='')
         {
-            $sql="INSERT INTO `nguoidung`(`ID`, `name`, `password`, `user_type`, `status`, `MSSV`, `MAGV`)
-            VALUES ('$id','$name','$password','$user_type','$status',null,'$magv') ";
+            $sql="INSERT INTO `nguoidung`(`ID`, `Name`, `Pass`, `User_type`, `TrangThai`, `SV`, `GV`)
+            VALUES ('$id','$Name','$Pass','$User_type','$TrangThai',null,'$GV') ";
         }else
         {
             
-            $sql="INSERT INTO `nguoidung`(`ID`, `name`, `password`, `user_type`, `status`, `MSSV`, `MAGV`)
-            VALUES ('$id','$name','$password','$user_type','$status','$mssv','$magv') ";
+            $sql="INSERT INTO `nguoidung`(`ID`, `Name`, `Pass`, `User_type`, `TrangThai`, `SV`, `GV`)
+            VALUES ('$id','$Name','$Pass','$User_type','$TrangThai','$SV','$GV') ";
         }
         return $this->db->execute($sql); 
     }
-    public function update($ID,$name,$password,$usertype,$status,$mssv,$magv)
+    public function update($ID,$Name,$Pass,$usertype,$TrangThai,$SV,$GV)
     {
-        if($magv=='')
+        if($GV=='')
         {
-            $sql="UPDATE `nguoidung` SET `name`='$name',`password`='$password',`user_type`='$usertype',`status`='$status',`MSSV`='$mssv',`MAGV`=null WHERE ID='$ID' ";
-        }else if($mssv=='')
+            $sql="UPDATE `nguoidung` SET `Name`='$Name',`Pass`='$Pass',`User_type`='$usertype',`TrangThai`='$TrangThai',`SV`='$SV',`GV`=null WHERE ID='$ID' ";
+        }else if($SV=='')
         {
-            $sql="UPDATE `nguoidung` SET `name`='$name',`password`='$password',`user_type`='$usertype',`status`='$status',`MSSV`=null,`MAGV`='$magv' WHERE ID='$ID' ";
+            $sql="UPDATE `nguoidung` SET `Name`='$Name',`Pass`='$Pass',`User_type`='$usertype',`TrangThai`='$TrangThai',`SV`=null,`GV`='$GV' WHERE ID='$ID' ";
         }else
         {    
-            $sql="UPDATE `nguoidung` SET `name`='$name',`password`='$password',`user_type`='$usertype',`status`='$status',`MSSV`='$mssv',`MAGV`='$magv' WHERE ID='$ID' ";
+            $sql="UPDATE `nguoidung` SET `Name`='$Name',`Pass`='$Pass',`User_type`='$usertype',`TrangThai`='$TrangThai',`SV`='$SV',`GV`='$GV' WHERE ID='$ID' ";
         }
         return $this->db->execute($sql); 
     }

@@ -5,6 +5,10 @@ class AdminHocPhanController extends Controller
     public function __construct()
     {
         $this->hocphanModel=$this->model('HocPhanModel');
+        if(!isset($_SESSION['user_type']))
+        {
+            header('location:'.URL.'/LoginController/index');
+        }
     }
     public function index() 
     {  

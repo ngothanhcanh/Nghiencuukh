@@ -83,7 +83,7 @@
                                                 <select class="mssv-select">
                                                     <option value="">Không</option>
                                                     <?php foreach ($result_sinhvien as $rowsinhvien) { ?>
-                                                        <option value="<?php echo $rowsinhvien['SV'] ?>"><?php echo $rowsinhvien['TENSV'] ?></option>
+                                                        <option value="<?php echo $rowsinhvien['MSSV'] ?>"><?php echo $rowsinhvien['TENSV'] ?></option>
                                                     <?php } ?>
 
                                                 </select>
@@ -92,7 +92,7 @@
                                                 <select class="magv-select">
                                                     <option value="">Không</option>
                                                     <?php foreach ($result_giaovien as $rowgiaovien) { ?>
-                                                        <option value="<?php echo $rowgiaovien['GV'] ?>"><?php echo $rowgiaovien['TENGV'] ?></option>
+                                                        <option value="<?php echo $rowgiaovien['MAGV'] ?>"><?php echo $rowgiaovien['TENGV'] ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </td>
@@ -267,9 +267,9 @@
                     //thêm đối tượng trả về vào dòng mới tạm thời.
                     var newRow = `
                 <tr>
-                    <td class="sorting_1">${id}</td>
-                    <td>${response.Name}</td>
-                    <td>${response.Pass}</td>
+                    <td class="sorting_1">${response.id}</td>
+                    <td>${response.name}</td>
+                    <td>${response.password}</td>
                     <td>${response.userType}</td>
                     <td>${response.status}</td>
                     <td>${response.mssv}</td>
@@ -286,9 +286,9 @@
                 }
             });
             newRow.css('display', 'none');
-            setTimeout(() => {
-                location.reload();
-            }, 500);
+            // setTimeout(() => {
+            //     location.reload();
+            // }, 500);
         });
         //set time tại 500ml giây
     });

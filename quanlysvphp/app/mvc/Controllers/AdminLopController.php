@@ -8,6 +8,10 @@ class AdminLopController extends Controller
     {
         $this->lopModel=$this->model('LopModel');
         $this->KhoaModel=$this->model('KhoaModel');
+        if(!isset($_SESSION['user_type']))
+        {
+            header('location:'.URL.'/LoginController/index');
+        }
     }
     public function index() 
     {  

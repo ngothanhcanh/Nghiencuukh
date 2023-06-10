@@ -4,6 +4,10 @@ class AdminKhoasController extends Controller
     public function __construct()
     {
         $this->khoasModel=$this->model('KhoasModel');
+        if(!isset($_SESSION['user_type']))
+        {
+            header('location:'.URL.'/LoginController/index');
+        }
     }
     public function index() 
     {  

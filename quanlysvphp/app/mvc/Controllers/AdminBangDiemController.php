@@ -8,7 +8,10 @@ class AdminBangDiemController extends Controller
         $this->SinhVienModel=$this->model('SinhVienModel');
         $this->HocPhanModel=$this->model('HocPhanModel');
         $this->BangDiemModel=$this->model('BangDiemModel');
-
+        if(!isset($_SESSION['user_type']))
+        {
+            header('location:'.URL.'/LoginController/index');
+        }
     }
     public function index()
     {  

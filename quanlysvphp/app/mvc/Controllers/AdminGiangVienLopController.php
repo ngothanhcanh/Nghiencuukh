@@ -9,6 +9,10 @@ class AdminGiangVienLopController extends Controller
         $this->giangvienlopModel=$this->model('GiangVienLopModel');
         $this->giangvienModel=$this->model('GiangVienModel');
         $this->lopModel=$this->model('LopModel');
+        if(!isset($_SESSION['user_type']))
+        {
+            header('location:'.URL.'/LoginController/index');
+        }
     }
     public function index() 
     {  
@@ -32,7 +36,6 @@ class AdminGiangVienLopController extends Controller
     }
     public function save()
     {    
-       
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Lấy dữ liệu từ yêu cầu AJAX
         $magv = $_POST["magv"];
