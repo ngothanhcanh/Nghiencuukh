@@ -263,7 +263,7 @@
         <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
-                    <a class="active" href="<?=URL?>/AdminIndexController/index">
+                    <a class="active" href="<?=URL?>/GiangVienIndexController/index">
                         <i class="fa fa-dashboard"></i>
                         <span>Dashboard</span>
                     </a>
@@ -274,7 +274,11 @@
                         <span>Layouts</span>
                     </a>
                     <ul class="sub">
-                      
+                    <li><a href="<?=URL?>/GiangVienLopController/index">Lớp</a></li>
+                    <li><a href="<?=URL?>/GiangVienThoiKhoaBieuController/index">Thời Khóa Biểu</a></li>
+                    <li><a href="<?=URL?>/GiangVienKhoaController/index">Khoa</a></li>
+                    <li><a href="<?=URL?>/GiangVienHocPhanController/index">Học Phần</a></li>
+                    <li><a href="<?=URL?>/GiangVienBangDiemController/index">Bảng Điểm</a></li>
                     </ul>
                 </li>          
                 <li>

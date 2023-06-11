@@ -5,10 +5,7 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->loginModel=$this->model('LoginModel');
-        if(!isset($_SESSION['user_type']))
-        {
-            header('location:'.URL.'/LoginController/index');
-        }
+
     }
     public function index()
     {    $error = array();
@@ -26,7 +23,7 @@ class LoginController extends Controller
            if( $_SESSION['user_type']=='nguoidung')
             { 
                 $_SESSION['MAGV']=$result['GV'];
-                header('location:'.URL.'/ViewController/index');
+                header('location:'.URL.'/GiangVienIndexController/index');
             }
             if($_SESSION['user_type']=='admin')
             {
