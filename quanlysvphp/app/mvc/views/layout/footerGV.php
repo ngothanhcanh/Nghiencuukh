@@ -39,6 +39,15 @@
 <!--common script init for all pages-->
 <script src="<?=URL ?>/public/theme-bucket-master/js/scripts.js"></script>
 <!--script for this page-->
+<!--Core js-->
+<script class="include" type="text/javascript" src="<?=URL ?>/public/theme-bucket-master/js/jquery.dcjqaccordion.2.7.js"></script>
+<!--jQuery Flot Chart-->
+<script src="<?=URL ?>/public/theme-bucket-master/js/iCheck/jquery.icheck.js"></script>
+<script type="text/javascript" src="<?=URL ?>/public/theme-bucket-master/js/ckeditor/ckeditor.js"></script>
+<!--common script init for all pages-->
+<script src="<?=URL ?>/public/theme-bucket-master/js/scripts.js"></script>
+<!--icheck init -->
+<script src="<?=URL ?>/public/theme-bucket-master/js/icheck-init.js"></script>
 </body>
 
 </html>

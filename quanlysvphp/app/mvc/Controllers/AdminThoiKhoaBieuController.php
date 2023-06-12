@@ -11,7 +11,7 @@ class AdminThoiKhoaBieuController extends Controller
         $this->lopModel=$this->model('LopModel');
         $this->hocphanModel=$this->model('HocPhanModel');
         $this->giangvienModel=$this->model('GiangVienModel');
-        if(!isset($_SESSION['user_type']))
+        if( $_SESSION['user_type'] !== 'admin' )
         {
             header('location:'.URL.'/LoginController/index');
         }

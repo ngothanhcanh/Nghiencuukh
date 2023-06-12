@@ -9,7 +9,7 @@ class AdminGiangVienLopController extends Controller
         $this->giangvienlopModel=$this->model('GiangVienLopModel');
         $this->giangvienModel=$this->model('GiangVienModel');
         $this->lopModel=$this->model('LopModel');
-        if(!isset($_SESSION['user_type']))
+        if( $_SESSION['user_type'] !== 'admin' )
         {
             header('location:'.URL.'/LoginController/index');
         }

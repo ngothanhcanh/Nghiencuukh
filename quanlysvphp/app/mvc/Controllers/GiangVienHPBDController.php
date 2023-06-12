@@ -1,20 +1,26 @@
-<?php 
-class AdminBangDiemController extends Controller
-{   private $SinhVienModel;
-    private $HocPhanModel;
+<?php
+class GiangVienHPBDController extends Controller
+{   
     private $BangDiemModel; 
     public function __construct()
     {
-        $this->SinhVienModel=$this->model('SinhVienModel');
-        $this->HocPhanModel=$this->model('HocPhanModel');
         $this->BangDiemModel=$this->model('BangDiemModel');
-        if( $_SESSION['user_type'] !== 'admin' )
+        if($_SESSION['user_type'] !== 'giangvien' )
         {
             header('location:'.URL.'/LoginController/index');
         }
     }
     public function index()
     {  
+        if (isset($_POST['mahp-dssv'])) {
+            $mahp = $_POST['mahp-dssv'];
+        
+            // Lưu giá trị MAHP vào phiên làm việc
+            $_SESSION['mahp'] = $mahp;
+        } elseif (isset($_SESSION['mahp'])) {
+            // Lấy giá trị MAHP từ phiên làm việc (nếu có)
+            $mahp = $_SESSION['mahp'];
+        }
         if(isset($_GET['deletesv']))
         {
             $MSSV=$_GET['deletesv'];
@@ -22,20 +28,14 @@ class AdminBangDiemController extends Controller
             if(isset($MSSV))
             {  
                 $this->BangDiemModel->delete($MSSV,$MAHP);
-                header('location:'.URL.'/AdminBangDiemController/index');
+                header('location:'.URL.'/GiangVienHPBDController/index');
             }
         }
-        $result=$this->BangDiemModel->show();
-        $result_HocPhanModel=$this->HocPhanModel->show();
-        $result_SinhVienModel=$this->SinhVienModel->showid();
-        $this->view('admin/bangdiem',
-        [
+        $result=$this->BangDiemModel->showwheremahp($mahp);
+        $this->view('giangvien/hocphanbangdiem',[
             'result'=>$result,
-            'result_HocPhanModel'=>$result_HocPhanModel,
-            'result_SinhVienModel'=>$result_SinhVienModel
         ]);
-    }
-    public function save()
+    }  public function save()
     {
         if($_SERVER["REQUEST_METHOD"]==="POST")
         {
@@ -172,5 +172,6 @@ class AdminBangDiemController extends Controller
                 );
                 echo json_encode($response);
                 }
-        }
-    }
+            }
+}
+?>

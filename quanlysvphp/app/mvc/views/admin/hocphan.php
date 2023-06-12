@@ -8,7 +8,7 @@
             <div class="col-sm-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        Người Dùng
+                        Học Phần
                         <!-- <span class="tools pull-right">
                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                             <a href="javascript:;" class="fa fa-cog"></a>

@@ -5,6 +5,16 @@ class HocPhanModel{
     {
         $this->db=new Database();
     }
+    function showwheremagv($magv)
+    {
+        $sql="SELECT * FROM hocphan where GVPT='$magv' ORDER BY MAHP ASC";
+        $resuil=$this->db->execute($sql);
+        if(mysqli_num_rows($resuil)>0)
+        {
+            $data=$resuil->fetch_all(MYSQLI_ASSOC);    
+            return $data;
+        }
+    }
     function show()
     {
         $sql="SELECT * FROM hocphan ORDER BY MAHP ASC";

@@ -9,7 +9,7 @@ class UserController extends Controller
         $this->userModel=$this->model('UserModel');
         $this->giangvienModel=$this->model('GiangVienModel');
         $this->sinhvienModel=$this->model('SinhVienModel');
-        if(!isset($_SESSION['user_type']))
+        if( $_SESSION['user_type'] !== 'admin' )
         {
             header('location:'.URL.'/LoginController/index');
         }

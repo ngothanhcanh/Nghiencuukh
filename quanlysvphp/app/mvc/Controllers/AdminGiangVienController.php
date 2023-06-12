@@ -7,7 +7,7 @@ class AdminGiangVienController extends Controller
     {
         $this->giangvienModel=$this->model('GiangVienModel');
         $this->khoaModel=$this->model('KhoaModel');
-        if(!isset($_SESSION['user_type']))
+        if( $_SESSION['user_type'] !== 'admin' )
         {
             header('location:'.URL.'/LoginController/index');
         }

@@ -5,6 +5,16 @@ class SinhVienModel
     {
         $this->db=new Database();
     }
+    public function showwheremalop($MALOP) //banggiangvienlop
+    {
+      $sql= "SELECT * FROM `sinhvien` WHERE MALOP ='$MALOP'" ;
+      $resuil = $this->db->execute($sql);
+      if(mysqli_num_rows($resuil)>0)
+      { 
+        $data= $resuil->fetch_all(MYSQLI_ASSOC);    
+        return $data;
+      }
+    }
     public function show()
     {
         $sql="SELECT * FROM sinhvien";

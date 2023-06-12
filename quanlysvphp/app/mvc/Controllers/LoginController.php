@@ -20,12 +20,12 @@ class LoginController extends Controller
             $_SESSION['user_id']=$result['ID'];
             $_SESSION['status']=$result['trangthai'];
             $_SESSION['user_type']=$result['User_type'];
-           if( $_SESSION['user_type']=='nguoidung')
+           if( $_SESSION['user_type']==='giangvien')
             { 
                 $_SESSION['MAGV']=$result['GV'];
                 header('location:'.URL.'/GiangVienIndexController/index');
             }
-            if($_SESSION['user_type']=='admin')
+            if($_SESSION['user_type']==='admin')
             {
                 header('location:'.URL.'/AdminIndexController/index');
             }

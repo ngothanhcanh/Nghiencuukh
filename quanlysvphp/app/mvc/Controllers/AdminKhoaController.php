@@ -5,7 +5,7 @@ class AdminKhoaController extends Controller
     public function __construct()
     {
         $this->khoaModel=$this->model('KhoaModel');
-        if(!isset($_SESSION['user_type']))
+        if( $_SESSION['user_type'] !== 'admin' )
         {
             header('location:'.URL.'/LoginController/index');
         }

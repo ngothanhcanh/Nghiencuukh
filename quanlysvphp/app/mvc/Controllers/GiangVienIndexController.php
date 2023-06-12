@@ -3,7 +3,7 @@ class GiangVienIndexController extends Controller
 {
     public function __construct()
     {
-        if(!isset($_SESSION['user_type']))
+        if($_SESSION['user_type'] !== 'giangvien' )
         {
             header('location:'.URL.'/LoginController/index');
         }
@@ -11,5 +11,13 @@ class GiangVienIndexController extends Controller
     public function index()
     {
         $this->view('giangvien/index');
+    }
+    public function out()
+    {
+        if(isset($_GET['thoat']))
+        {
+            session_destroy();
+            header('location:'.URL.'/LoginController/index');
+        }
     }
 }

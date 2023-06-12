@@ -12,7 +12,7 @@ class AdminSinhVienController extends Controller
         $this->LopModel=$this->model('LopModel');
         $this->KhoaModel=$this->model('KhoaModel');
         $this->PhuHuynhModel=$this->model('PhuHuynhModel');
-        if(!isset($_SESSION['user_type']))
+        if( $_SESSION['user_type'] !== 'admin' )
         {
             header('location:'.URL.'/LoginController/index');
         }

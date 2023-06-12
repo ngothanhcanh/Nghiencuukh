@@ -5,6 +5,16 @@ class BangDiemModel
     {
         $this->db=new Database();
     }
+    function showwheremahp($mahp)
+    {
+        $sql="SELECT * FROM bangdiem where MAHP='$mahp' ORDER BY MAHP ASC";
+        $resuil=$this->db->execute($sql);
+        if(mysqli_num_rows($resuil)>0)
+        {
+            $data=$resuil->fetch_all(MYSQLI_ASSOC);    
+            return $data;
+        }
+    }
     public function show()
     {
         $sql = "SELECT * FROM bangdiem";
