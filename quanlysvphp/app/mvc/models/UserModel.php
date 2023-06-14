@@ -27,41 +27,52 @@ class UserModel
         }
     }
     public function add($id,$Name,$Pass,$User_type,$TrangThai,$SV,$GV)
-    { try{
-        if($GV=='')
+    {  try {
+        if($SV != '' && $GV != '')
         {
-            $sql="INSERT INTO `nguoidung`(`ID`, `Name`, `Pass`, `User_type`, `TrangThai`, `SV`, `GV`)
-            VALUES ('$id','$Name','$Pass','$User_type','$TrangThai','$SV',null) ";
-        }else if($SV=='')
-        {
-            $sql="INSERT INTO `nguoidung`(`ID`, `Name`, `Pass`, `User_type`, `TrangThai`, `SV`, `GV`)
-            VALUES ('$id','$Name','$Pass','$User_type','$TrangThai',null,'$GV') ";
+        return [];
         }else
         {
-            
-            $sql="INSERT INTO `nguoidung`(`ID`, `Name`, `Pass`, `User_type`, `TrangThai`, `SV`, `GV`)
-            VALUES ('$id','$Name','$Pass','$User_type','$TrangThai',null,null) ";
+        $sql = "INSERT INTO `nguoidung`(`ID`, `Name`, `Pass`, `User_type`, `TrangThai`, `SV`, `GV`)
+        VALUES ('$id', '$Name', '$Pass', '$User_type', '$TrangThai', NULLIF('$SV', ''), NULLIF('$GV', ''))";
         }
-        $this->db->execute($sql); 
-        return "Success"; 
-        }catch (Exception $th) {
-            echo $th;
-          }
+        $this->db->execute($sql);
+        return "Success";
+    } catch (Exception $th) {
+        echo $th;
     }
-    public function update($ID,$Name,$Pass,$usertype,$TrangThai,$SV,$GV)
+    }
+    public function update($ID, $Name, $Pass, $usertype, $TrangThai, $SV, $GV)
     {
-        if($GV=='')
-        {
-            $sql="UPDATE `nguoidung` SET `Name`='$Name',`Pass`='$Pass',`User_type`='$usertype',`TrangThai`='$TrangThai',`SV`='$SV',`GV`=null WHERE ID='$ID' ";
-        }else if($SV=='')
-        {
-            $sql="UPDATE `nguoidung` SET `Name`='$Name',`Pass`='$Pass',`User_type`='$usertype',`TrangThai`='$TrangThai',`SV`=null,`GV`='$GV' WHERE ID='$ID' ";
-        }else
-        {    
-            $sql="UPDATE `nguoidung` SET `Name`='$Name',`Pass`='$Pass',`User_type`='$usertype',`TrangThai`='$TrangThai',`SV`=null,`GV`=null  WHERE ID='$ID' ";
+        try {
+            if ($SV !== '' && $GV !== '') {
+                // Cả $SV và $GV đều có giá trị, không cần cập nhật
+                return "Success";
+            } else {
+                $sql = "UPDATE `nguoidung` SET `Name`='$Name', `Pass`='$Pass', `User_type`='$usertype', `TrangThai`='$TrangThai'";
+                
+                if ($SV !== '') {
+                    $sql .= ", `SV`='$SV'";
+                } else {
+                    $sql .= ", `SV`=null";
+                }
+                
+                if ($GV !== '') {
+                    $sql .= ", `GV`='$GV'";
+                } else {
+                    $sql .= ", `GV`=null";
+                }
+                
+                $sql .= " WHERE ID='$ID'";
+                
+                $this->db->execute($sql);
+                return "Success";
+            }
+        } catch (Exception $th) {
+            echo $th;
         }
-        $this->db->execute($sql); 
     }
+
     public function delete($id)
     {
        $sql= "DELETE FROM `nguoidung` WHERE id='$id'";

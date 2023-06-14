@@ -80,8 +80,7 @@ class UserController extends Controller
             $magv = $_POST["editedMagv"];
             $this->userModel->update($id, $name, $password, $userType, $status, $mssv, $magv);
             $response = array(
-                'id' => $id,
-                'name' => $name
+               
             );
             echo json_encode($response);
         }

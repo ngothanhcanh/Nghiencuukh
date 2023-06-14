@@ -214,7 +214,19 @@
                 type: 'POST',
                 dataType: 'json',
                 data: data,
-                success: function(response) {               
+                success: function(response) {         
+                    if(editedMssv !='' && editedMagv !='')
+                        {
+                        row.find('.Name').html(editedName);
+                        row.find('.Pass').html(editedPassword);
+                        row.find('.usertype').html(editedUserType);
+                        row.find('.TrangThai').html(editedStatus);
+                        row.find('.mssv').html('');
+                        row.find('.magv').html('');
+
+                        row.find('.update-btn').text('Edit');
+                        row.find('.update-btn').removeClass('save').addClass('edit-btn');
+                        }else{      
                         row.find('.Name').html(editedName);
                         row.find('.Pass').html(editedPassword);
                         row.find('.usertype').html(editedUserType);
@@ -224,6 +236,7 @@
 
                         row.find('.update-btn').text('Edit');
                         row.find('.update-btn').removeClass('save').addClass('edit-btn');
+                        }
                     },error: function(xhr, TrangThai, error) {
                        console.log('Lỗi khi gửi yêu cầu AJAX:', error);
                     }
@@ -288,7 +301,11 @@
                 dataType: 'json',
                 data: data,
                 success: function(response) {
-
+                        if(mssv !='' && magv !='')
+                        {
+                            return [];
+                        }else
+                {
                     //thêm đối tượng trả về vào dòng mới tạm thời.
                     var newRow = `
                 <tr>
@@ -304,6 +321,7 @@
                 </tr>
                   `;
                     $("#editable-sample tbody").append(newRow);
+                        }
                 },
                 error: function(xhr, TrangThai, error) {
                     // Xử lý lỗi khi gửi yêu cầu AJAX
