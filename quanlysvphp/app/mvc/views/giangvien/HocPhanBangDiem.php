@@ -14,15 +14,7 @@
                             <a href="javascript:;" class="fa fa-cog"></a>
                             <a href="javascript:;" class="fa fa-times"></a>
                         </span>
-                        <p><?php if (isset($_SESSION['import_error'])) {
-                                $error = $_SESSION['import_error'];
-                                echo 'lỗi ở các mã: ';
-                                foreach ($error as $er) {
-                                    echo " $er;";
-                                }
-                                unset($_SESSION['import_error']);
-                            }
-                            ?></p>
+                      
                     </header>
                     
                     <div class="panel-body">
@@ -34,10 +26,10 @@
                                     </button>
                                     <ul class="dropdown-menu pull-right">
                                     <li>
-                                            <form method="POST" action="<?= URL ?>/GiangVienHPBDController/import" enctype="multipart/form-data">
+                                            <!-- <form method="POST" action="<?= URL ?>/GiangVienHPBDController/import" enctype="multipart/form-data">
                                                 <input type="file" id="excelFile" name="excelFile" accept=".xlsx" onchange="checkFileSelected()">
                                                 <button type="submit" name="importhpbd" id="importButton" disabled>Import</button>
-                                            </form>
+                                            </form> -->
                                         </li>
                                         <form method="POST" action="<?= URL ?>/GiangVienHPBDController/export">
                                             <li><button name="exportds">Export to Excel</button></li>

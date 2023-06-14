@@ -22,7 +22,6 @@ class GiangVienProfileController extends Controller
         $_SESSION['khoa']=$profile['MAKH'];
       }
       $tenkhoa=$this->KhoaModel->shownamekhoa($_SESSION['khoa']);
-      print_r($tenkhoa);
         $this->view('giangvien/profile',[
            'tenkhoa'=>$tenkhoa
         ]);

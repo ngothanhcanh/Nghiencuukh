@@ -5,6 +5,17 @@ class UserModel
     {
         $this->db=new Database();
     }
+    public function exists($ID)
+    {
+      $sql = "SELECT COUNT(*) FROM nguoidung WHERE ID = '$ID'";
+      $count=$this->db->execute($sql);
+      if($count>1)
+      {
+        return false;
+      }else{
+        return true;
+      }
+    }
     public function show()
     {
         $sql="SELECT * FROM nguoidung ORDER BY ID ASC";
@@ -16,7 +27,7 @@ class UserModel
         }
     }
     public function add($id,$Name,$Pass,$User_type,$TrangThai,$SV,$GV)
-    { 
+    { try{
         if($GV=='')
         {
             $sql="INSERT INTO `nguoidung`(`ID`, `Name`, `Pass`, `User_type`, `TrangThai`, `SV`, `GV`)
@@ -29,9 +40,13 @@ class UserModel
         {
             
             $sql="INSERT INTO `nguoidung`(`ID`, `Name`, `Pass`, `User_type`, `TrangThai`, `SV`, `GV`)
-            VALUES ('$id','$Name','$Pass','$User_type','$TrangThai','$SV','$GV') ";
+            VALUES ('$id','$Name','$Pass','$User_type','$TrangThai',null,null) ";
         }
-        return $this->db->execute($sql); 
+        $this->db->execute($sql); 
+        return "Success"; 
+        }catch (Exception $th) {
+            echo $th;
+          }
     }
     public function update($ID,$Name,$Pass,$usertype,$TrangThai,$SV,$GV)
     {
@@ -43,14 +58,13 @@ class UserModel
             $sql="UPDATE `nguoidung` SET `Name`='$Name',`Pass`='$Pass',`User_type`='$usertype',`TrangThai`='$TrangThai',`SV`=null,`GV`='$GV' WHERE ID='$ID' ";
         }else
         {    
-            $sql="UPDATE `nguoidung` SET `Name`='$Name',`Pass`='$Pass',`User_type`='$usertype',`TrangThai`='$TrangThai',`SV`='$SV',`GV`='$GV' WHERE ID='$ID' ";
+            $sql="UPDATE `nguoidung` SET `Name`='$Name',`Pass`='$Pass',`User_type`='$usertype',`TrangThai`='$TrangThai',`SV`=null,`GV`=null  WHERE ID='$ID' ";
         }
-        return $this->db->execute($sql); 
+        $this->db->execute($sql); 
     }
     public function delete($id)
     {
        $sql= "DELETE FROM `nguoidung` WHERE id='$id'";
        $resuil= $this->db->execute($sql);
-       return $resuil;
     }
 }

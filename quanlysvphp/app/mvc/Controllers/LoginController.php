@@ -15,7 +15,7 @@ class LoginController extends Controller
            $name=isset($_POST['login_name']) ? $_POST['login_name'] : '' ;
            $password=$_POST['login_password'] ? $_POST['login_password'] : '';
            $result=$this->loginModel->sigin($name,$password) ?? array();
-           if($result && $result['Name']===$name && $result['Pass']===$password)
+           if($result && $result['Name']===$name && $result['Pass']===$password && $result['TrangThai']==='enable')
            { 
             $_SESSION['user_id']=$result['ID'];
             $_SESSION['status']=$result['trangthai'];
@@ -29,9 +29,14 @@ class LoginController extends Controller
             {
                 header('location:'.URL.'/AdminIndexController/index');
             }
-           }
+           }else if($result && $result['Name']===$name && $result['Pass']===$password && $result['TrangThai']==='disable')
+              {
+                $error[] = 'tài khoản đã bị chặn';
+              }
+              else
+              {
                 $error[] = 'sai tài khoản hoặc mật khẩu';
-            
+              }
         }
 
         $this->view('login/login',

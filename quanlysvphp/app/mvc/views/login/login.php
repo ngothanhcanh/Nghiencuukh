@@ -41,24 +41,24 @@
         }?></h3>
         <div class="login-wrap">
             <div class="user-login-info">
-                <input type="text" name="login_name" class="form-control" placeholder="User ID" autofocus>
+                <input type="text" name="login_name" class="form-control" placeholder="User Name" autofocus>
                 <input type="password" name="login_password" class="form-control" placeholder="Password">
             </div>
-            <label class="checkbox">
+            <!-- <label class="checkbox">
                 <input type="checkbox" value="remember-me"> Remember me
                 <span class="pull-right">
                     <a data-toggle="modal" href="#myModal"> Forgot Password?</a>
 
                 </span>
-            </label>
+            </label> -->
             <button class="btn btn-lg btn-login btn-block" name="login_submit" type="submit">Sign in</button>
 
-            <div class="registration">
+            <!-- <div class="registration">
                 Don't have an account yet?
                 <a class="" href="registration.html">
                     Create an account
                 </a>
-            </div>
+            </div> -->
 
         </div>
 
