@@ -14,6 +14,16 @@
                             <a href="javascript:;" class="fa fa-cog"></a>
                             <a href="javascript:;" class="fa fa-times"></a>
                         </span>
+                        <p><?php if (isset($_SESSION['import_error'])) {
+                            $error=$_SESSION['import_error'];
+                            echo 'lỗi ở các mã sinh viên: ';
+                               foreach($error as $er)
+                               {
+                                echo " $er;";
+                               }
+                               unset($_SESSION['import_error']);
+                            }
+                             ?></p>
                     </header>
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
@@ -27,9 +37,15 @@
                                     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
                                     </button>
                                     <ul class="dropdown-menu pull-right">
-                                        <li><a href="#">Print</a></li>
-                                        <li><a href="#">Save as PDF</a></li>
-                                        <li><a href="#">Export to Excel</a></li>
+                                        <li>
+                                            <form method="POST" action="<?= URL ?>/AdminSinhVienController/import" enctype="multipart/form-data">
+                                                <input type="file" id="excelFile" name="excelFile" accept=".xlsx" onchange="checkFileSelected()">
+                                                <button type="submit" name="importSinhVien" id="importButton" disabled>Import</button>
+                                            </form>
+                                        </li>
+                                        <form method="POST" action="<?= URL ?>/AdminSinhVienController/export">
+                                            <li><button name="exportdssv">Export to Excel</button></li>
+                                        </form>
                                     </ul>
                                 </div>
                             </div>
@@ -37,7 +53,7 @@
                             <div id="editable-sample_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div id="editable-sample_length" class="dataTables_length">
+                                        <!-- <div id="editable-sample_length" class="dataTables_length">
                                             <label>
                                                 <select size="1" name="editable-sample_length" aria-controls="editable-sample" class="form-control xsmall">
                                                     <option value="5" selected="selected">5</option>
@@ -45,7 +61,7 @@
                                                     <option value="20">20</option>
                                                     <option value="-1">All</option>
                                                 </select> records per page</label>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dataTables_filter" id="editable-sample_filter">
@@ -75,12 +91,12 @@
                                             <td class="sorting_1" contenteditable="true" id="newId"></td>
                                             <td contenteditable="true" id="newName"></td>
                                             <td contenteditable="true" id="newGioitinh">
-                                            <select class="select-gioitinh">
-                                                  <option value="0">Nam</option>
-                                                  <option value="1">Nữ</option>
+                                                <select class="select-gioitinh">
+                                                    <option value="0">Nam</option>
+                                                    <option value="1">Nữ</option>
                                                 </select>
                                             </td>
-                                            <td id="newNgaysinh"><input type="date" style="height: 20px; width: 70px"/></td>
+                                            <td id="newNgaysinh"><input type="date" style="height: 20px; width: 70px" /></td>
                                             <td contenteditable="true" id="newDiachi"></td>
                                             <td contenteditable="true" id="newKhoa">
                                                 <select class="select-khoa">
@@ -134,7 +150,7 @@
                                     </tbody>
                                 </table>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <!-- <div class="col-lg-6">
                                         <div class="dataTables_info" id="editable-sample_info">Showing 1 to 5 of 28 entries</div>
                                     </div>
                                     <div class="col-lg-6">
@@ -149,7 +165,7 @@
                                                 <li class="next"><a href="#">Next → </a></li>
                                             </ul>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -163,6 +179,17 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+        $('#excelFile').change(function() {
+        var fileInput = document.getElementById('excelFile');
+        var importButton = document.getElementById('importButton');
+        
+        if (fileInput.files.length > 0) {
+            importButton.disabled = false;
+        } else {
+            importButton.disabled = true;
+        }
+    });
+      
         //nút edit
         $(document).on('click', '.edit-btn', function() {
             var row = $(this).closest('tr'); //lấy đoạn tr vừa bấm
@@ -209,7 +236,7 @@
                     dataType: 'json',
                     data: data,
                     success: function(response) {
-                      
+
                         row.find('.name').html(editedName);
                         row.find('.gioitinh').html(editedGioitinh);
                         row.find('.ngaysinh').html(editedNgaysinh);
@@ -222,7 +249,7 @@
                         row.find('.update-btn').removeClass('save').addClass('edit-btn');
                     },
                     error: function(xhr, status, error) {
-                      console.log(data);
+                        console.log(data);
                         console.log('Lỗi khi gửi yêu cầu AJAX:', error);
                     }
                 })
@@ -321,6 +348,8 @@
             // }, 500);
         });
         //set time tại 500ml giây
+        //khi có file mới có thể submit
+        
     });
 </script>
 <!-- main-end -->

@@ -4,7 +4,7 @@ class Database
     protected $localhost = "localhost";
     protected $name ="root";
     protected $password ="";
-    protected $dbname = "nckhupdate";
+    protected $dbname = "nckhupdate1";
     
     public $conn=null;
     private $result=null;

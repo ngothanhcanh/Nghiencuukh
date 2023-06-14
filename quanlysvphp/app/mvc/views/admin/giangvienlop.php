@@ -8,7 +8,7 @@
             <div class="col-sm-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        Editable Table
+                        Giảng viên lớp
                         <span class="tools pull-right">
                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                             <a href="javascript:;" class="fa fa-cog"></a>
@@ -26,23 +26,23 @@
                                 <div class="btn-group pull-right">
                                     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
                                     </button>
-                                    <ul class="dropdown-menu pull-right">
+                                    <!-- <ul class="dropdown-menu pull-right">
                                         <li><a href="#">Print</a></li>
                                         <li><a href="#">Save as PDF</a></li>
                                         <li><a href="#">Export to Excel</a></li>
-                                    </ul>
+                                    </ul> -->
                                 </div>
                             </div>
                             <div class="space15"></div>
                             <div id="editable-sample_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div id="editable-sample_length" class="dataTables_length"><label><select size="1" name="editable-sample_length" aria-controls="editable-sample" class="form-control xsmall">
+                                        <!-- <div id="editable-sample_length" class="dataTables_length"><label><select size="1" name="editable-sample_length" aria-controls="editable-sample" class="form-control xsmall">
                                                     <option value="5" selected="selected">5</option>
                                                     <option value="15">15</option>
                                                     <option value="20">20</option>
                                                     <option value="-1">All</option>
-                                                </select> records per page</label></div>
+                                                </select> records per page</label></div> -->
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dataTables_filter" id="editable-sample_filter"><label>Search: <input type="text" id="search-input" aria-controls="editable-sample"  class="form-control medium"></label></div>
@@ -96,12 +96,12 @@
                                     </tbody>
                                 </table>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <!-- <div class="col-lg-6">
                                         <div class="dataTables_info" id="editable-sample_info">Showing 1 to 5 of 28 entries</div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-lg-6">
                                         <div class="dataTables_paginate paging_bootstrap pagination">
-                                            <ul>
+                                            <!-- <ul>
                                                 <li class="prev disabled"><a href="#">← Prev</a></li>
                                                 <li class="active"><a href="#">1</a></li>
                                                 <li><a href="#">2</a></li>
@@ -109,7 +109,7 @@
                                                 <li><a href="#">4</a></li>
                                                 <li><a href="#">5</a></li>
                                                 <li class="next"><a href="#">Next → </a></li>
-                                            </ul>
+                                            </ul> -->
                                         </div>
                                     </div>
                                 </div>

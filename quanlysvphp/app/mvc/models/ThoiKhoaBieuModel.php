@@ -6,18 +6,31 @@ class ThoiKhoaBieuModel
     {
         $this->db=new Database();
     }
-    public function showid()
+      public function exists($id)
     {
-        $sql = "SELECT * FROM thoikhoabieu WHERE ID";
-        $resuil=$this->db->execute($sql);
-        if(mysqli_num_rows($resuil)>0)
-        {
-            $data= $resuil->fetch_all(MYSQLI_ASSOC);
-            return $data;
-        }
-        else
-        {
-            return null;
+      $sql = "SELECT COUNT(*) FROM thoikhoabieu WHERE ID = '$id'";
+      $count=$this->db->execute($sql);
+      if($count>1)
+      {
+        return false;
+      }else{
+        return true;
+      }
+    }
+    public function showwheremagv($magv)
+    {
+        try {
+            $sql="SELECT * FROM `thoikhoabieu` Where GIANGVIEN='$magv'";
+            $result= $this->db->execute($sql);
+            if(mysqli_num_rows($result)>0)
+            { 
+                $data= $result->fetch_all(MYSQLI_ASSOC);
+                return $data;
+            }else{
+              return [] ;
+            }
+        } catch (Exception $th) {
+            echo $th;
         }
     }
     public function show()
@@ -39,6 +52,7 @@ class ThoiKhoaBieuModel
       try {
         $sql="INSERT INTO `thoikhoabieu`(`ID`, `BUOI1_THU`, `BUOI1_TIET`, `BUOI1_PHONG`, `BUOI2_THU`, `BUOI2_TIET`, `BUOI2_PHONG`, `NGAYBATDAU`, `NGAYKETTHUC`, `GHICHU`, `LOP`, `MONHOC`, `GIANGVIEN`) VALUES ('$id','$b1_thu','$b1_tiet','$b1_phong','$b2_thu','$b2_tiet','$b2_phong','$ngay_bd','$ngay_kt','$ghichu','$lop','$monhoc','$giangvien')";
         $this->db->execute($sql);
+        return "Success";
       } catch (Exception $th) {
         echo $th;
       }

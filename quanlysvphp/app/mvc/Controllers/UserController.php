@@ -25,7 +25,7 @@ class UserController extends Controller
             }
         }
         $result=$this->userModel->show();
-        $result_giaovien = $this->giangvienModel->showid();
+        $result_giaovien = $this->giangvienModel->show();
         $result_sinhvien=$this->sinhvienModel->show();
         $this->view('admin/user',
     [

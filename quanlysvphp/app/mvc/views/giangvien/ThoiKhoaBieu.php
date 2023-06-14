@@ -14,6 +14,15 @@
                             <a href="javascript:;" class="fa fa-cog"></a>
                             <a href="javascript:;" class="fa fa-times"></a>
                         </span>
+                        <p><?php if (isset($_SESSION['import_error'])) {
+                                $error = $_SESSION['import_error'];
+                                echo 'lỗi ở các mã: ';
+                                foreach ($error as $er) {
+                                    echo " $er;";
+                                }
+                                unset($_SESSION['import_error']);
+                            }
+                            ?></p>
                     </header>
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
@@ -22,9 +31,9 @@
                                     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
                                     </button>
                                     <ul class="dropdown-menu pull-right">
-                                        <li><a href="#">Print</a></li>
-                                        <li><a href="#">Save as PDF</a></li>
-                                        <li><a href="#">Export to Excel</a></li>
+                                        <form method="POST" action="<?= URL ?>/GiangVienThoiKhoaBieuController/export">
+                                            <li><button name="exportds">Export to Excel</button></li>
+                                        </form>
                                     </ul>
                                 </div>
                             </div>
@@ -84,12 +93,12 @@
                                     </tbody>
                                 </table>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <!-- <div class="col-lg-6">
                                         <div class="dataTables_info" id="editable-sample_info">Showing 1 to 5 of 28 entries</div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-lg-6">
                                         <div class="dataTables_paginate paging_bootstrap pagination">
-                                            <ul>
+                                            <!-- <ul>
                                                 <li class="prev disabled"><a href="#">← Prev</a></li>
                                                 <li class="active"><a href="#">1</a></li>
                                                 <li><a href="#">2</a></li>
@@ -97,7 +106,7 @@
                                                 <li><a href="#">4</a></li>
                                                 <li><a href="#">5</a></li>
                                                 <li class="next"><a href="#">Next → </a></li>
-                                            </ul>
+                                            </ul> -->
                                         </div>
                                     </div>
                                 </div>
@@ -113,6 +122,16 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
         $(document).ready(function() {
+            $('#excelFile').change(function() {
+            var fileInput = document.getElementById('excelFile');
+            var importButton = document.getElementById('importButton');
+
+            if (fileInput.files.length > 0) {
+                importButton.disabled = false;
+            } else {
+                importButton.disabled = true;
+            }
+        });
         $(document).on('click','.btn-lop',function(){
         var selectmalop = $(this).val();
        var data = {

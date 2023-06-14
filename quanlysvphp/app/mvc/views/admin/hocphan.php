@@ -14,6 +14,15 @@
                             <a href="javascript:;" class="fa fa-cog"></a>
                             <a href="javascript:;" class="fa fa-times"></a>
                         </span> -->
+                        <p><?php if (isset($_SESSION['import_error'])) {
+                                $error = $_SESSION['import_error'];
+                                echo 'lỗi ở các mã: ';
+                                foreach ($error as $er) {
+                                    echo " $er;";
+                                }
+                                unset($_SESSION['import_error']);
+                            }
+                            ?></p>
                     </header>
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
@@ -27,9 +36,15 @@
                                     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
                                     </button>
                                     <ul class="dropdown-menu pull-right">
-                                        <li><a href="#">Print</a></li>
-                                        <li><a href="#">Save as PDF</a></li>
-                                        <li><a href="#">Export to Excel</a></li>
+                                        <li>
+                                            <form method="POST" action="<?= URL ?>/AdminHocPhanController/import" enctype="multipart/form-data">
+                                                <input type="file" id="excelFile" name="excelFile" accept=".xlsx" onchange="checkFileSelected()">
+                                                <button type="submit" name="importhocphan" id="importButton" disabled>Import</button>
+                                            </form>
+                                        </li>
+                                        <form method="POST" action="<?= URL ?>/AdminHocPhanController/export">
+                                            <li><button name="exportds">Export to Excel</button></li>
+                                        </form>
                                     </ul>
                                 </div>
                             </div>
@@ -37,12 +52,12 @@
                             <div id="editable-sample_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div id="editable-sample_length" class="dataTables_length"><label><select size="1" name="editable-sample_length" aria-controls="editable-sample" class="form-control xsmall">
+                                        <!-- <div id="editable-sample_length" class="dataTables_length"><label><select size="1" name="editable-sample_length" aria-controls="editable-sample" class="form-control xsmall">
                                                     <option value="5" selected="selected">5</option>
                                                     <option value="15">15</option>
                                                     <option value="20">20</option>
                                                     <option value="-1">All</option>
-                                                </select> records per page</label></div>
+                                                </select> records per page</label></div> -->
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dataTables_filter" id="editable-sample_filter"><label>Search: <input type="text" id="search-input" aria-controls="editable-sample" class="form-control medium"></label></div>
@@ -55,8 +70,8 @@
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending" style="width: 223px;">Tên học phần</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Số TC</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Giáo viên phụ trách</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Edit</th>        
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Delete</th>                
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Edit</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody id="search-results" role="alert" aria-live="polite" aria-relevant="all">
@@ -90,12 +105,12 @@
                                     </tbody>
                                 </table>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <!-- <div class="col-lg-6">
                                         <div class="dataTables_info" id="editable-sample_info">Showing 1 to 5 of 28 entries</div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-lg-6">
                                         <div class="dataTables_paginate paging_bootstrap pagination">
-                                            <ul>
+                                            <!-- <ul>
                                                 <li class="prev disabled"><a href="#">← Prev</a></li>
                                                 <li class="active"><a href="#">1</a></li>
                                                 <li><a href="#">2</a></li>
@@ -103,7 +118,7 @@
                                                 <li><a href="#">4</a></li>
                                                 <li><a href="#">5</a></li>
                                                 <li class="next"><a href="#">Next → </a></li>
-                                            </ul>
+                                            </ul> -->
                                         </div>
                                     </div>
                                 </div>
@@ -119,6 +134,16 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+        $('#excelFile').change(function() {
+            var fileInput = document.getElementById('excelFile');
+            var importButton = document.getElementById('importButton');
+
+            if (fileInput.files.length > 0) {
+                importButton.disabled = false;
+            } else {
+                importButton.disabled = true;
+            }
+        });
         //nút edit
         $(document).on('click', '.edit-btn', function() {
             var row = $(this).closest('tr'); //lấy đoạn tr vừa bấm
@@ -129,7 +154,7 @@
             //hiển thị giá trị đoạn trên và chuyển kiểu thành input để sửa
             row.find('.name').html('<input type="text" value="' + name + '">');
             row.find('.password').html('<input type="text" value="' + password + '">')
-            row.find('.giangvien').html(' <select class="editmagv"><?php foreach ($result_giaovien as $rowgiaovien) { ?><option value="<?php echo $rowgiaovien['MAGV'] ?>"><?php echo $rowgiaovien['TENGV'] ?></option><?php } ?></select>');
+            row.find('.giangvien').html('<select class="editmagv"><?php foreach ($result_giaovien as $rowgiaovien) { ?><option value="<?php echo $rowgiaovien['MAGV'] ?>"><?php echo $rowgiaovien['TENGV'] ?></option><?php } ?></select>');
             //thay nút edit thành update
             row.find('.edit-btn').text('Update');
             row.find('.edit-btn').removeClass('edit-btn').addClass('update-btn');
@@ -137,25 +162,26 @@
                 var editedName = row.find('input').eq(0).val();
                 var editedPassword = row.find('input').eq(1).val();
                 var editMagv = row.find('editmagv').find('option:selected').val();
-                var data={
-                        id:id,
-                        editedName: editedName,
-                        editedPassword: editedPassword,
-                        editMagv:editMagv,
+                var data = {
+                    id: id,
+                    editedName: editedName,
+                    editedPassword: editedPassword,
+                    editMagv: editMagv,
                 };
                 $.ajax({
-                url: '<?= URL ?>/AdminHocPhanController/update',
-                type: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function(response) {               
+                    url: '<?= URL ?>/AdminHocPhanController/update',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function(response) {
                         row.find('.name').html(editedName);
                         row.find('.password').html(editedPassword);
                         row.find('.giangvien').html(editMagv);
                         row.find('.update-btn').text('Edit');
                         row.find('.update-btn').removeClass('save').addClass('edit-btn');
-                    },error: function(xhr, status, error) {
-                       console.log('Lỗi khi gửi yêu cầu AJAX:', error);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Lỗi khi gửi yêu cầu AJAX:', error);
                     }
                 })
             });
@@ -203,7 +229,7 @@
                 id: id,
                 name: name,
                 password: password,
-                giangvien:giangvien,
+                giangvien: giangvien,
             };
             // Gửi yêu cầu AJAX để lưu dữ liệu
             $.ajax({

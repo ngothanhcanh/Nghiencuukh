@@ -87,6 +87,7 @@
         <div class="profile-left">
             <img src="<?=URL ?>/public/images/avt.jpg" alt="">
             <h3><?php echo $_SESSION['namegv'] ?> (<?php echo $_SESSION['magv'] ?>)</h3>
+            <h3><?php echo $tenkhoa['TENKH'] ?></h3>
         </div>
         <div class="profile-right">
             <div class="profile-top">
@@ -94,19 +95,19 @@
                 <table>
                     <tr>
                         <td class="title1">Full Name</td>
-                        <td class="info">d</td>
+                        <td class="info"><?php echo $_SESSION['namegv']  ?></td>
                     </tr>
                     <tr>
                         <td class="title1">Email</td>
-                        <td class="info">d</td>
+                        <td class="info">******</td>
                     </tr>
                     <tr>
                         <td class="title1">Phone</td>
-                        <td class="info">d</td>
+                        <td class="info">******</td>
                     </tr>
                     <tr>
                         <td class="title1">Address</td>
-                        <td class="info">d</td>
+                        <td class="info">******</td>
                     </tr>
                 </table>
             </div>

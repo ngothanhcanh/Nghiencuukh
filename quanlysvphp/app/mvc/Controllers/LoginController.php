@@ -23,7 +23,7 @@ class LoginController extends Controller
            if( $_SESSION['user_type']==='giangvien')
             { 
                 $_SESSION['MAGV']=$result['GV'];
-                header('location:'.URL.'/GiangVienIndexController/index');
+                header('location:'.URL.'/GiangVienProfileController/index');
             }
             if($_SESSION['user_type']==='admin')
             {

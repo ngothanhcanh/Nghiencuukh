@@ -6,23 +6,20 @@ class GiangVienModel
     {
         $this->db=new Database();
     }
+    public function exists($magv)
+    {
+      $sql = "SELECT COUNT(*) FROM giangvien WHERE MAGV = '$magv'";
+      $count=$this->db->execute($sql);
+      if($count>1)
+      {
+        return false;
+      }else{
+        return true;
+      }
+    }
     public function showwheregv($magv)
     {
         $sql = "SELECT * FROM giangvien WHERE MAGV='$magv'";
-        $resuil=$this->db->execute($sql);
-        if(mysqli_num_rows($resuil)>0)
-        {
-            $data= $resuil->fetch_all(MYSQLI_ASSOC);
-            return $data;
-        }
-        else
-        {
-            return null;
-        }
-    }
-    public function showid()
-    {
-        $sql = "SELECT * FROM giangvien";
         $resuil=$this->db->execute($sql);
         if(mysqli_num_rows($resuil)>0)
         {
@@ -53,6 +50,7 @@ class GiangVienModel
       try {
         $sql="INSERT INTO `giangvien`(`MAGV`, `TENGV`, `MAKH`) VALUES ('$magv','$tengv', '$makh')";
         $this->db->execute($sql);
+        return "Success"; 
       } catch (Exception $th) {
         echo $th;
       }

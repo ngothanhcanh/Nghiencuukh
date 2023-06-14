@@ -70,7 +70,7 @@
                                             <td contenteditable="true" id="newUserType">
                                                 <select class="select-usertype">
                                                     <option value="admin">admin</option>
-                                                    <option value="nguoidung">nguoidung</option>
+                                                    <option value="giangvien">giangvien</option>
                                                 </select>
                                             </td>
                                             <td contenteditable="true" id="newStatus">

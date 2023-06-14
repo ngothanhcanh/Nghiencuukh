@@ -6,19 +6,16 @@ class HocPhiModel
     {
         $this->db=new Database();
     }
-    public function showid()
+    public function exists($mssv)
     {
-        $sql = "SELECT * FROM hocphi WHERE MAGV";
-        $resuil=$this->db->execute($sql);
-        if(mysqli_num_rows($resuil)>0)
-        {
-            $data= $resuil->fetch_all(MYSQLI_ASSOC);
-            return $data;
-        }
-        else
-        {
-            return null;
-        }
+      $sql = "SELECT COUNT(*) FROM hocphi WHERE MSSV = '$mssv'";
+      $count=$this->db->execute($sql);
+      if($count>1)
+      {
+        return false;
+      }else{
+        return true;
+      }
     }
     public function show()
     {
@@ -39,6 +36,7 @@ class HocPhiModel
       try {
         $sql="INSERT INTO `hocphi` (`MAKH`, `MSSV`, `TRANGTHAI`) VALUES ('$makh','$masv','$tt')";
         $this->db->execute($sql);
+        return "Success";
       } catch (Exception $th) {
         echo $th;
       }
