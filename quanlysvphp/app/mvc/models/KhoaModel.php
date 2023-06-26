@@ -16,6 +16,12 @@ class KhoaModel
         return true;
       }
     }
+    public function totalKhoa()
+    {
+      $sql="SELECT * FROM `khoa`";
+      $result= $this->db->execute($sql);
+      return mysqli_num_rows($result);
+    }
     public function show()
     {
         try {

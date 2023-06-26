@@ -21,10 +21,10 @@ class AdminGiangVienController extends Controller
         if(isset($_GET['delete']))
         {    $id=$_GET['delete'];
             
-            if($this->giangvienModel->delete($id))
-            {
+            $this->giangvienModel->delete($id);
+            
             header('location:'.URL.'/AdminGiangVienController/index');
-            }
+            
         }
         $this->loadContent();
     }

@@ -51,10 +51,11 @@
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending" style="width: 223px;">Tên học phần</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 223px;">Số TC</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 223px;">Giáo viên phụ trách</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 223px;">Nhập Điểm Các Sinh Viên</th>                      
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 223px;">Danh sách điểm danh</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 223px;">Nhập điểm các cinh Viên</th>                      
                                         </tr>
                                     </thead>
-                                    <form method="POST" action="<?=URL ?>/GiangVienHPBDController/index">
+                                    
                                     <tbody id="search-results" role="alert" aria-live="polite" aria-relevant="all">
                                         <?php 
                                         $stt=0;
@@ -64,19 +65,25 @@
                                         }else{
                                         foreach ($result as $row) {
                                         ?>
+                                       
                                             <tr class="odd" id="<?= $row['MAHP'] ?>">
                                                 <td><?= ++$stt ?></td>
                                                 <td class="sorting_1"><?php echo $row['MAHP'] ?></td>
                                                 <td class="name"> <?= $row['TENHP'] ?></td>
                                                 <td class="password"><?= $row['SOTC'] ?></td>
                                                 <td class="giangvien"><?= $row['GVPT'] ?></td>
+                                                <form method="POST" action="<?=URL ?>/GiangVienDiemDanhController/index">
+                                                <td class="DSdiemsanh"><button name="mahp-dsdd" value="<?php echo $row['MAHP'] ?>" ><i class="fa fa-list-alt"></i></button></td>
+                                                </form>
+                                                <form method="POST" action="<?=URL ?>/GiangVienHPBDController/index">
                                                 <td class="DSsinhvien"><button name="mahp-dssv" value="<?php echo $row['MAHP'] ?>" ><i class="fa fa-list-alt"></i></button></td>
+                                                </form>
                                             </tr>
                                         <?php
                                         }}
                                         ?>
                                     </tbody>
-                                    </form>
+                                    
                                 </table>
                             </div>
                         </div>
@@ -92,15 +99,14 @@
     $(document).ready(function() {
         //tìm kiếm 
         $('#search-input').on('input', function() {
-            $('.odd').remove(); //xóa các tr odd đang hiện 
+            $('.odd').hide(); //xóa các tr odd đang hiện 
             var searchValue = $(this).val().toLowerCase(); //đưa hết về chữ thường 
             <?php if (isset($result)) {
                 foreach ($result as $row) { ?>
                     var name = '<?php echo $row['TENHP']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
                     if (name.includes(searchValue)) //so sách giá trị tìm bằng giá trị name
                     {
-                        var listItem = ' <tr class="odd" id="<?= $row['MAHP'] ?>"><td><?= ++$stt ?></td><td class="sorting_1"><?php echo $row['MAHP'] ?></td><td class="name"> <?= $row['TENHP'] ?></td><td class="password"><?= $row['SOTC'] ?></td><td class="giangvien"><?= $row['GVPT'] ?></td><td class="DSsinhvien"><button name="mahp-dssv" value="<?php echo $row['MAHP'] ?>" ><i class="fa fa-list-alt"></i></button></td></tr>';
-                        $('#search-results').append(listItem);
+                        $('#<?= $row['MAHP'] ?>').show();
                     }
 
             <?php }

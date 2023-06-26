@@ -41,7 +41,7 @@
 <div class="brand">
 
     <a href="index.html" class="logo">
-        <img src="images/logo.png" alt="">
+        <img src="<?=URL ?>/public/images/logo.png" alt="">
     </a>
     <div class="sidebar-toggle-box">
         <div class="fa fa-bars"></div>
@@ -241,8 +241,8 @@
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
-                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                <!-- <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li> -->
                 <li><a href="<?=URL ?>/AdminIndexController/out?thoat"><i class="fa fa-key"></i> Log Out</a></li>
             </ul>
         </li>
@@ -283,14 +283,15 @@
                         <li><a href="<?=URL?>/AdminHocPhiController/index">Học Phí</a></li>
                         <li><a href="<?=URL?>/AdminThoiKhoaBieuController/index">Thời Khóa Biểu</a></li>
                         <li><a href="<?=URL?>/AdminGiangVienLopController/index">Giảng Viên Lớp</a></li>
-                        <li><a href="<?=URL?>/AdminPhuHuynhController/index">Phụ Huynh</a></li>
+                        <li><a href="<?=URL?>/AdminPhuHuynhController/index">Phụ Huynh</a></li> 
+                        <li><a href="<?=URL?>/AdminDiemDanhController/index">Điểm Danh</a></li>
                         <li><a href="<?=URL?>/AdminBangDiemController/index">Bảng Điểm</a></li>
                 </ul>
             </li>
             <li>
                 <a href="<?=URL ?>/AdminIndexController/out?thoat">
                     <i class="fa fa-user"></i>
-                    <span>Login Page</span>
+                    <span>Logout Page</span>
                 </a>
             </li>
         </ul></div>        

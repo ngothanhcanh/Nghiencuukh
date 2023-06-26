@@ -31,6 +31,13 @@ class GiangVienModel
             return null;
         }
     }
+    public function totalTeacher()
+    {
+     
+        $sql="SELECT * FROM giangvien";
+        $resuil= $this->db->execute($sql);
+        return mysqli_num_rows($resuil);
+    }
     public function show()
     {
         try {

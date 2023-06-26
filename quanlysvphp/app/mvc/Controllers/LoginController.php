@@ -18,12 +18,12 @@ class LoginController extends Controller
            if($result && $result['Name']===$name && $result['Pass']===$password && $result['TrangThai']==='enable')
            { 
             $_SESSION['user_id']=$result['ID'];
-            $_SESSION['status']=$result['trangthai'];
+            $_SESSION['status']=$result['TrangThai'];
             $_SESSION['user_type']=$result['User_type'];
            if( $_SESSION['user_type']==='giangvien')
             { 
                 $_SESSION['MAGV']=$result['GV'];
-                header('location:'.URL.'/GiangVienProfileController/index');
+                header('location:'.URL.'/GiangVienIndexController/index');
             }
             if($_SESSION['user_type']==='admin')
             {

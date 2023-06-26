@@ -26,6 +26,13 @@ class SinhVienModel
         return $data;
       }
     }
+    public function totalStudents()
+    {
+     
+        $sql="SELECT * FROM sinhvien";
+        $resuil= $this->db->execute($sql);
+        return mysqli_num_rows($resuil);
+    }
     public function show()
     { 
         $sql="SELECT * FROM sinhvien";

@@ -40,7 +40,6 @@ class UserController extends Controller
     }
     public function save()
     {    
-       
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
        
     // Lấy dữ liệu từ yêu cầu AJAX
@@ -130,7 +129,7 @@ class UserController extends Controller
     }
     public function import()
     {
-        if (isset($_POST['importSinhVien'])) {
+        if (isset($_POST['importuser'])) {
             // Đường dẫn đến tệp Excel
             $excelFilePath = $_FILES['excelFile']['tmp_name'];
     
@@ -166,10 +165,10 @@ class UserController extends Controller
             if (!empty($error)) {
                 $_SESSION['import_error'] = $error;
             }
-    
             header('Location: ' . URL . '/UserController/index');
-            exit();
         }
+       
+            
     }
     
 }

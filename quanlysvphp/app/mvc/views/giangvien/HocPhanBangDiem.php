@@ -72,7 +72,6 @@
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="2" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 100px;">Học Kỳ</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="2" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 100px;">Năm Học</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="2" colspan="1" aria-label="Edit: activate to sort column ascending" style="width: 103px;">Edit</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="2" colspan="1" aria-label="Delete: activate to sort column ascending" style="width: 149px;">Delete</th>
                                         </tr>
                                     
                                     </thead>
@@ -99,7 +98,7 @@
                                                 <td class="HocKy"><?= $row['HOCKY'] ?></td>
                                                 <td class="NamHoc"><?= $row['NAMHOC'] ?></td>
                                                 <td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td>
-                                                <td class=" "><a class="delete" name="delete" href="<?= URL ?>/GiangVienHPBDController/index?deletesv=<?= $row['MSSV'] ?>&deletehp=<?= $row['MAHP'] ?> ">Delete</a></td>
+                                        
                                             </tr>
                                         <?php
                                         }}
@@ -230,7 +229,7 @@
                     var name = '<?php echo $row['MSSV']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
                     if (name.includes(searchValue)) //so sách giá trị tìm bằng giá trị name
                     {
-                        var listItem = ' <tr class="odd" id="<?= $row['MSSV'] ?>"><td class="MSSV"><?=$row['MSSV'] ?></td><td class="MAHP"> <?= $row['MAHP'] ?></td><td class="CC"><?= $row['CC'] ?></td><td class="GK"><?= $row['GK'] ?></td><td class="CK"><?= $row['CK'] ?></td><td class="DTB"><?= $row['DIEMHE10'] ?></td><td class="DIEMHE4"><?= $row['DIEMHE4'] ?></td><td class="DIEMQUYDOI"><?= $row['DIEMQUYDOI'] ?></td><td class="HocKy"><?= $row['HOCKY'] ?></td><td class="NamHoc"><?= $row['NAMHOC'] ?></td><td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td><td class=" "><a class="delete" name="delete" href="<?= URL ?>/GiangVienHPBDController/index?delete=<?= $row['MSSV'] ?>">Delete</a></td></tr>'
+                        var listItem = ' <tr class="odd" id="<?= $row['MSSV'] ?>"><td class="MSSV"><?=$row['MSSV'] ?></td><td class="MAHP"> <?= $row['MAHP'] ?></td><td class="CC"><?= $row['CC'] ?></td><td class="GK"><?= $row['GK'] ?></td><td class="CK"><?= $row['CK'] ?></td><td class="DTB"><?= $row['DIEMHE10'] ?></td><td class="DIEMHE4"><?= $row['DIEMHE4'] ?></td><td class="DIEMQUYDOI"><?= $row['DIEMQUYDOI'] ?></td><td class="HocKy"><?= $row['HOCKY'] ?></td><td class="NamHoc"><?= $row['NAMHOC'] ?></td><td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td></tr>'
                         $('#search-results').append(listItem);
                     }
 
@@ -285,7 +284,6 @@
                     <td>${response.HocKy}</td>
                     <td>${response.NamHoc}</td>
                     <td class=" "><a class="delete" href="">edit</a></td>
-                    <td><a class="edit" name="delete" href="<?= URL ?>/GiangVienHPBDController/index?delete=${response.MSSV}">Delete</a></td>
                 </tr>
                   `;
                     $("#editable-sample tbody").append(newRow);

@@ -178,7 +178,7 @@ class AdminBangDiemController extends Controller
                 }
         }
         public function export()
-    { 
+      { 
         if(isset($_POST['exportds']))
         {
         $data = $this->BangDiemModel->show();

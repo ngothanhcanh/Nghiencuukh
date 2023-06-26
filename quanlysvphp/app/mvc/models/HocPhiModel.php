@@ -6,9 +6,9 @@ class HocPhiModel
     {
         $this->db=new Database();
     }
-    public function exists($mssv)
+    public function exists($masv,$namhoc,$hocky)
     {
-      $sql = "SELECT COUNT(*) FROM hocphi WHERE MSSV = '$mssv'";
+      $sql = "SELECT COUNT(*) FROM hocphi WHERE `MSSV`='$masv' and `NAMHOC`='$namhoc' and `HOCKY`= $hocky";
       $count=$this->db->execute($sql);
       if($count>1)
       {
@@ -31,30 +31,30 @@ class HocPhiModel
             echo $th;
         }
     }
-    public function add($makh,$masv, $tt)
+    public function add($masv,$namhoc,$hocky,$status,$ghichu)
     {
       try {
-        $sql="INSERT INTO `hocphi` (`MAKH`, `MSSV`, `TRANGTHAI`) VALUES ('$makh','$masv','$tt')";
+        $sql="INSERT INTO `hocphi`(`MSSV`, `NAMHOC`, `HOCKY`, `STATUS`, `GHICHU`) VALUES ('$masv','$namhoc',$hocky,$status,'$ghichu')";
         $this->db->execute($sql);
         return "Success";
       } catch (Exception $th) {
         echo $th;
       }
     }
-    public function update($makh,$masv, $tt)
+    public function update($masv,$namhoc,$hocky,$status,$ghichu)
     {
         try {
-            $sql = "UPDATE `hocphi` SET `TRANGTHAI`='$tt'  WHERE `MAKH`='$makh' AND `MSSV`='$masv'";
+            $sql = "UPDATE `hocphi` SET `STATUS`=$status,`GHICHU`='$ghichu' WHERE  `MSSV`='$masv' and `NAMHOC`='$namhoc'and `HOCKY`= $hocky";
             $this->db->execute($sql);
         } catch (Exception $th) {
             echo $th;
         }
     }
 
-    public function delete($makh,$masv)
+    public function delete($masv,$namhoc,$hocky)
     {
         try {
-            $sql= "DELETE FROM `hocphi` WHERE `MAKH`='$makh' AND `MSSV`='$masv'";
+            $sql= "DELETE FROM `hocphi` WHERE `MSSV`='$masv' and `NAMHOC`='$namhoc' and `HOCKY`= $hocky";
             $this->db->execute($sql);
         } catch (Exception $th) {
             echo $th;

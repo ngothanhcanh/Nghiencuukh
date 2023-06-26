@@ -6,12 +6,10 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class AdminHocPhiController extends Controller
 {
     private $hocphiModel;
-    private $khoaModel;
     private $sinhvienModel;
     public function __construct()
     {
         $this->hocphiModel=$this->model('HocPhiModel');
-        $this->khoaModel=$this->model('KhoaModel');
         $this->sinhvienModel=$this->model('SinhVienModel');
         if( $_SESSION['user_type'] !== 'admin' )
         {
@@ -20,36 +18,38 @@ class AdminHocPhiController extends Controller
     }
     public function index() 
     {  
-        if(isset($_GET['delete_kh']) && isset($_GET['delete_sv']))
+        if(isset($_GET['delete_SV']))
         {    
-            $makh=$_GET['delete_kh'];
-            $masv=$_GET['delete_sv'];
-            $this->hocphiModel->delete($makh, $masv);
+            $masv=$_GET['delete_SV'];
+            $namhoc=$_GET['delete_NH'];
+            $hocky=$_GET['delete_HK'];
+            $this->hocphiModel->delete($masv,$namhoc,$hocky);
             header('location:'.URL.'/AdminHocPhiController/index');
         }
         $result=$this->hocphiModel->show();
-        $result_kh=$this->khoaModel->show();
         $result_sv=$this->sinhvienModel->show();
         $this->view('admin/hocphi',
     [
         'result'=>$result,
-        'result_kh'=>$result_kh,
-        'result_sv'=>$result_sv,
+        'result_sv'=>$result_sv
     ]);
     }
     public function save()
     {    
-       
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Lấy dữ liệu từ yêu cầu AJAX
-        $makh = $_POST["makh"];
         $masv = $_POST["masv"];
-        $tt = $_POST["tt"];
-        $this->hocphiModel->add($makh, $masv, $tt);
+        $namhoc=$_POST['namhoc'];
+        $hocky=$_POST['hocky'];
+        $status=$_POST['status'];
+        $ghichu = $_POST["ghichu"];
+        $this->hocphiModel->add($masv, $namhoc, $hocky, $status, $ghichu);
         $response = array(
-            'makh'=>$makh,
-            'masv'=>$masv,
-            'tt'=>$tt,
+            'MSSV'=>$masv,
+            'NAMHOC'=>$namhoc,
+            'HOCKY'=>$hocky,
+            'STATUS'=>$status,
+            'GHICHU'=>$ghichu
         );
         echo json_encode($response);
         }
@@ -58,14 +58,18 @@ class AdminHocPhiController extends Controller
     {
         if($_SERVER["REQUEST_METHOD"] === "POST")
         {
-            $makh = $_POST["makh"];
             $masv = $_POST["masv"];
-            $tt = $_POST["tt"];
-            $this->hocphiModel->update($makh, $masv, $tt);
+            $namhoc=$_POST['Namhoc'];
+            $hocky=$_POST['Hocky'];
+            $status=$_POST['Status'];
+            $ghichu = $_POST["Ghichu"];
+            $this->hocphiModel->update($masv, $namhoc, $hocky, $status, $ghichu);
             $response = array(
-                'makh'=>$makh,
-                'masv'=>$masv,
-                'tt'=>$tt,
+                'MSSV'=>$masv,
+               'NAMHOC'=>$namhoc,
+              'HOCKY'=>$hocky,
+               'STATUS'=>$status,
+               'GHICHU'=>$ghichu
             );
             echo json_encode($response);
         }
@@ -82,17 +86,20 @@ class AdminHocPhiController extends Controller
         $sheet->setTitle('Danh sách học phí');
     
         // Đặt tiêu đề các cột
-        $sheet->setCellValue('A1', 'Mã khoa');
-        $sheet->setCellValue('B1', 'Mã sinh vien');
-        $sheet->setCellValue('C1', 'Trang thái');
+        $sheet->setCellValue('A1', 'Mã sinh viên');
+        $sheet->setCellValue('B1', 'Năm Học');
+        $sheet->setCellValue('C1', 'Học kỳ');
+        $sheet->setCellValue('D1', 'Status');
+        $sheet->setCellValue('E1', 'Ghi chú');
 
         $row = 2;
         foreach ($data as $row_data) {
             // Xuất dữ liệu vào các ô tương ứng
-            $sheet->setCellValue('A' . $row, $row_data['MAKH']);
-            $sheet->setCellValue('B' . $row, $row_data['MSSV']);
-            $sheet->setCellValue('C' . $row, $row_data['TRANGTHAI']);
-    
+            $sheet->setCellValue('A' . $row, $row_data['MSSV']);
+            $sheet->setCellValue('B' . $row, $row_data['NAMHOC']);
+            $sheet->setCellValue('C' . $row, $row_data['HOCKY']);
+            $sheet->setCellValue('D' . $row, $row_data['STATUS']);
+            $sheet->setCellValue('E' . $row, $row_data['GHICHU']);
             $row++;
         }
     
@@ -124,13 +131,15 @@ class AdminHocPhiController extends Controller
             // Lặp qua từng dòng để lấy dữ liệu
             for ($row = 2; $row <= $lastRow; $row++) {
                 // Lấy dữ liệu từ từng cột
-                $mahp = $sheet->getCell('A' . $row)->getValue();
-                $mssv = $sheet->getCell('B' . $row)->getValue();
-                $trangthai = $sheet->getCell('C' . $row)->getValue();
+                $mssv = $sheet->getCell('A' . $row)->getValue();
+                $namhoc = $sheet->getCell('B' . $row)->getValue();
+                $hocky = $sheet->getCell('C' . $row)->getValue();
+                $status = $sheet->getCell('D' . $row)->getValue();
+                $ghichu = $sheet->getCell('E' . $row)->getValue();
     
                 // Thêm dữ liệu sinh viên
-                if ($this->hocphiModel->add($mahp, $mssv, $trangthai) !== "Success") {
-                    if($this->hocphiModel->exists($mssv)===true){
+                if ($this->hocphiModel->add($mssv, $namhoc, $hocky,$status,$ghichu) !== "Success") {
+                    if($this->hocphiModel->exists($mssv,$namhoc,$hocky)===true){
                         $error[] = $mssv;
                     }
                 }               

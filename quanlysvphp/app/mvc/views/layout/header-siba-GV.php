@@ -40,11 +40,11 @@
 <div class="brand">
 
     <a href="<?=URL ?>/GiangVienIndexController/index" class="logo">
-        <img src="<?=URL ?>/public/theme-bucket-master/images/logo.png" alt="">
+        <img src="<?=URL ?>/public/images/logo.png" alt="">
     </a>
-    <div class="sidebar-toggle-box">
+    <!-- <div class="sidebar-toggle-box">
         <div class="fa fa-bars"></div>
-    </div>
+    </div> -->
 </div>
 <!--logo end-->
 
@@ -283,7 +283,7 @@
                 <li>
                     <a href="<?=URL ?>/GiangVienIndexController/out?thoat">
                         <i class="fa fa-user"></i>
-                        <span>Login Page</span>
+                        <span>Logout Page</span>
                     </a>
                 </li>
             </ul>            </div>

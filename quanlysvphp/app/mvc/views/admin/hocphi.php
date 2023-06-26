@@ -67,25 +67,17 @@
                                     <thead>
                                         <tr role="row">
                                             <!-- <th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="First Name" style="width: 120px;">ID</th> -->
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending" style="width: 223px;">Mã Khoa</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Mã Sinh Viên</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 100px;">T.Thái</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending" style="width: 223px;">Mã Sinh Viên</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Năm Học</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 100px;">Học kỳ</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 100px;">Status</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 100px;">Ghi Chú</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Edit: activate to sort column ascending" style="width: 103px;">Edit</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Delete: activate to sort column ascending" style="width: 149px;">Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody id="search-results" role="alert" aria-live="polite" aria-relevant="all">
                                         <tr id="new-row" style="display:none;">
-                                            <td contenteditable="true" id="newMaKH">
-                                                <select class="makh-select">
-                                                    <option value="">Không</option>
-                                                    <?php if (isset($result_kh) && is_array($result_kh) || is_object($result_kh)) {
-                                                        foreach ($result_kh as $rowkh) { ?>
-                                                            <option value="<?php echo $rowkh['MAKH'] ?>"><?php echo $rowkh['MAKH'] ?></option>
-                                                    <?php }
-                                                    } ?>
-                                                </select>
-                                            </td>
                                             <td contenteditable="true" id="newMSSV">
                                                 <select class="masv-select">
                                                     <option value="">Không</option>
@@ -96,19 +88,24 @@
                                                     } ?>
                                                 </select>
                                             </td>
-                                            <td contenteditable="true" id="newTRANGTHAI"></td>
+                                            <td contenteditable="true" id="newNAMHOC"></td>
+                                            <td contenteditable="true" id="newHOCKY"></td>
+                                            <td contenteditable="true" id="newSTATUS"></td>
+                                            <td contenteditable="true" id="newGHICHU"></td>
                                             <td><button id="saveButton" class="save">save</button></td>
                                             <td><a class="delete" name="delete" href="<?= URL ?>/AdminHocPhiController/index?delete=">Delete</a></td>
                                         </tr>
                                         <?php if (isset($result) && is_array($result) || is_object($result)) {
                                             foreach ($result as $row) {
                                         ?>
-                                                <tr class="odd">
-                                                    <td class="maKH"> <?= $row['MAKH'] ?></td>
+                                                <tr class="odd" id=<?=$row['MSSV'] ?>>
                                                     <td class="maSV"><?= $row['MSSV'] ?></td>
-                                                    <td class="trangthai"><?= $row['TRANGTHAI'] ?></td>
+                                                    <td class="namhoc"><?= $row['NAMHOC'] ?></td>
+                                                    <td class="hocky"><?= $row['HOCKY'] ?></td>
+                                                    <td class="status"><?= $row['STATUS'] ?></td>
+                                                    <td class="ghichu"><?= $row['GHICHU'] ?></td>
                                                     <td class=" "><a class="edit editHocPhi" name="edit" href="#">Edit</a></td>
-                                                    <td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminHocPhiController/index?delete_kh=<?= $row['MAKH'] ?>&delete_sv=<?= $row['MSSV'] ?>">Delete</a></td>
+                                                    <td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminHocPhiController/index?delete_SV=<?= $row['MSSV'] ?>&delete_NH=<?= $row['NAMHOC'] ?>&delete_HK=<?= $row['HOCKY'] ?>">Delete</a></td>
                                                 </tr>
                                         <?php
                                             }
@@ -160,7 +157,6 @@
         $('#editable-sample_new').click(function(e) {
             // Lấy dòng mẫu để thêm dữ liệu mới
             var newRow = $('#new-row');
-            console.log(newRow);
             // Sao chép dòng mẫu và thêm vào bảng
             var tableBody = $('#editable-sample tbody');
             var cloneRow = newRow.clone();
@@ -172,37 +168,41 @@
         $(document).on('click', '.save', function() {
             var newRow = $(this).closest('tr'); // Dòng mới được thêm    
             // Lấy giá trị từ các ô input
-            var makh = newRow.find('.makh-select').val();
             var masv = newRow.find('.masv-select').val();
-            const tt = newRow.find("#newTRANGTHAI").text().trim()
+            var namhoc=newRow.find('#newNAMHOC').text();
+            var hocky=newRow.find('#newHOCKY').text();
+            var status=newRow.find('#newSTATUS').text();
+            var ghichu=newRow.find('#newGHICHU').text();
             // Tạo đối tượng dữ liệu để gửi đi
             var data = {
-                makh,
-                masv,
-                tt
+                masv:masv,
+                namhoc:namhoc,
+                hocky:hocky,
+                status:status,
+                ghichu:ghichu
             };
             console.log(data);
             // Gửi yêu cầu AJAX để lưu dữ liệu
             $.ajax({
                 url: '<?= URL ?>/AdminHocPhiController/save',
+                dataType: 'json',
                 type: 'POST',
                 data: data,
                 success: function(response) {
-                    console.log(response);
                     //thêm đối tượng trả về vào dòng mới tạm thời.
                     var newRow = `
                 <tr>
-                    <td class="maGV">${makh}</td>
-                    <td class="maLOP">${masv}</td>
-                    <td class="trangthai">${tt}</td>
+                    <td >${response.MSSV}</td>
+                    <td >${response.NAMHOC}</td>
+                    <td >${response.HOCKY}</td>
+                    <td >${response.STATUS}</td>
+                    <td >${response.GHICHU}</td>
                     <td class=""><a class="delete editHocPhi" href="">edit</a></td>
-                    <td><a class="edit" name="delete" href="<?= URL ?>/AdminHocPhiController/index??delete_kh=${makh}&delete_sv=${masv}">Delete</a></td>
+                    <td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminHocPhiController/index?delete_SV=${response.MSSV}&delete_NH=${response.NAMHOC}&delete_HK=${response.HOCKY}">Delete</a></td>
                 </tr>
-         `;
+               `;
 
                     $("#editable-sample tbody").append(newRow);
-
-
                 },
                 error: function(xhr, status, error) {
                     // Xử lý lỗi khi gửi yêu cầu AJAX
@@ -211,38 +211,65 @@
             });
             newRow.css('display', 'none');
         });
-
         $(document).on('click', '.editHocPhi', function(e) {
             e.preventDefault()
             var newRow = $(this).closest('tr');
             $(this).parent("td").html(`<button id="updateButton" class="update">update</button>`)
-            newRow.find('.trangthai').attr("contenteditable", "true")
+            newRow.find('.status').attr("contenteditable", "true");
+            newRow.find('.ghichu').attr("contenteditable", "true");
         });
         // Xử lý sự kiện click của nút "Edit"
         $(document).on('click', '#updateButton', function() {
             var newRow = $(this).closest('tr');
-            var makh = newRow.find('.maKH').text().trim();
             var masv = newRow.find('.maSV').text().trim();
-            var tt = newRow.find('.trangthai').text().trim();
+            var Namhoc = newRow.find('.namhoc').text().trim();
+            var Hocky = newRow.find('.hocky').text().trim();
+            var Status = newRow.find('.status').text().trim();
+            var Ghichu =newRow.find('.ghichu').text().trim();
             var data = {
-                makh,
                 masv,
-                tt
+                Namhoc,
+                Hocky,
+                Status,
+                Ghichu
             };
             $.ajax({
                 url: '<?= URL ?>/AdminHocPhiController/edit',
                 type: 'POST',
                 data: data,
                 success: (response) => {
-                    console.log(response);
                     $(this).parent("td").html(`<a class="editHocPhi" href="#">edit</a>`)
-                    newRow.find('.trangthai').text(tt)
+                    newRow.find('.hocky').text(Hocky);
+                    newRow.find('.status').text(Status);
+                    newRow.find('.ghichu').text(Ghichu);
+
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
                 }
             });
             //  newRow.css('display', 'none');
+        });
+           //tìm kiếm 
+           $('#search-input').on('input', function() {
+             //ẩn các tr odd đang hiện 
+            var searchValue = $(this).val().toLowerCase(); //đưa hết về chữ thường 
+            <?php if (isset($result)) {
+                foreach ($result as $row) { ?>
+                    var name = '<?php echo $row['MSSV']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
+                    if (name.includes(searchValue)) //so sách giá trị tìm bằng giá trị name
+                    {     
+                        $('.odd').hide();                 
+                        $('#<?= $row['MSSV'] ?>').show();
+                    }
+                    if(searchValue =="")
+                    {
+                     $('.odd').show();
+                     }
+            <?php }
+
+            } ?>
+
         });
     });
 </script>
