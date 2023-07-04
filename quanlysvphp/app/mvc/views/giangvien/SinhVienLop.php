@@ -37,20 +37,25 @@
                                     </thead>
 
                                     <tbody id="search-results" role="alert" aria-live="polite" aria-relevant="all">
-                                        <?php foreach ($result_svlop as $row) {
-                                        ?>
-                                            <tr class="odd" id="<?= $row['MSSV'] ?>">
-                                                <td class="sorting_1"><?php echo $row['MSSV'] ?></td>
-                                                <td class="name"> <?= $row['TENSV'] ?></td>
-                                                <td class="gioitinh"><?= $row['GIOITINH'] ?></td>
-                                                <td class="ngaysinh"><?= $row['NGAYSINH'] ?></td>
-                                                <td class="diachi"><?= $row['DIACHI'] ?></td>
-                                                <td class="khoas"><?= $row['IDKHOAS'] ?></td>
-                                                <td class="malop"><?= $row['MALOP'] ?></td>
-                                                <td class="makh"><?= $row['MAKH'] ?></td>
-                                                <td class="maph"><?= $row['MAPH'] ?></td>
-                                            </tr>
+                                        <?php if(!empty($result_svlop))
+                                        {
+                                            foreach ($result_svlop as $row) {
+                                                ?>
+                                                    <tr class="odd" id="<?= $row['MSSV'] ?>">
+                                                        <td class="sorting_1"><?php echo $row['MSSV'] ?></td>
+                                                        <td class="name"> <?= $row['TENSV'] ?></td>
+                                                        <td class="gioitinh"><?= $row['GIOITINH'] ?></td>
+                                                        <td class="ngaysinh"><?= $row['NGAYSINH'] ?></td>
+                                                        <td class="diachi"><?= $row['DIACHI'] ?></td>
+                                                        <td class="khoas"><?= $row['IDKHOAS'] ?></td>
+                                                        <td class="malop"><?= $row['MALOP'] ?></td>
+                                                        <td class="makh"><?= $row['MAKH'] ?></td>
+                                                        <td class="maph"><?= $row['MAPH'] ?></td>
+                                                    </tr>
                                         <?php
+                                            }
+                                        }else{
+                                                
                                         }
                                         ?>
                                     </tbody>

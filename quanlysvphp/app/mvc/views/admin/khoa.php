@@ -143,7 +143,7 @@
             var tableBody = $('#editable-sample tbody');
             var cloneRow = newRow.clone();
             cloneRow.removeAttr('style'); // Hiển thị dòng mới
-            tableBody.append(cloneRow);
+            tableBody.prepend(cloneRow);
         });
 
         // Xử lý sự kiện click của nút "Save"
@@ -174,7 +174,7 @@
                 </tr>
             `;
             
-            $("#editable-sample tbody").append(newRow);
+            $("#editable-sample tbody").prepend(newRow);
            
            
                 },

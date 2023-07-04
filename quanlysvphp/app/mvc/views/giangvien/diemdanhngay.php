@@ -41,7 +41,7 @@
                     <td class="mahpngay"><?= $row['MAHP'] ?></td>
                     <td class="buoinay"><?= $row['BUOIHOC'] ?></td>
                     <td class="ngayhoc" hidden><?= $row['NGAYHOC'] ?></td>
-                    <td class="statusngay"><?= $row['STATUS'] ?></td>
+                    <td class="statusngay"><?php if($row['STATUS']==='1'){echo 'có';}else{echo 'vắng';} ?></td>
                     <td class="ghichungay"><?= $row['GHICHU'] ?></td>
                 </tr>
             <?php
@@ -54,22 +54,37 @@
     <!-- page end-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        document.getElementById("edit-all-btn").addEventListener("click", function() {
-            var rows = document.querySelectorAll("#search-results_diemdanh tr"); // Lấy danh sách tất cả các dòng trong bảng
+document.getElementById("edit-all-btn").addEventListener("click", function() {
+    var rows = document.querySelectorAll("#search-results_diemdanh tr"); // Get all rows in the table
 
-            for (var i = 0; i < rows.length; i++) {
-                var row = rows[i];
-                var cells = row.querySelectorAll("td.ghichungay, td.statusngay"); // Lấy danh sách tất cả các ô dữ liệu trong dòng
+    for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        var cells = row.querySelectorAll("td.ghichungay, td.statusngay"); // Get all data cells in the row
 
-                for (var j = 0; j < cells.length; j++) {
-                    cells[j].setAttribute("contenteditable", "true"); // Bật chế độ chỉnh sửa cho mỗi ô dữ liệu
-                }
+        for (var j = 0; j < cells.length; j++) {
+            var cell = cells[j];
+
+            if (cell.classList.contains("statusngay")) {
+                // Create a checkbox element
+                var checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = cell.textContent.trim() === "có"; // Set checkbox checked state based on cell content
+
+                // Replace the text content with the checkbox element
+                cell.textContent = "";
+                cell.appendChild(checkbox);
+            } else {
+                cell.setAttribute("contenteditable", "true"); // Enable editing mode for other data cells
+                cell.classList.add("editable"); // Add the 'editable' class to mark editable cells
             }
-        });
-        document.getElementById("save-btn-dd").addEventListener("click", function(event) {
+        }
+    }
+});
+
+document.getElementById("save-btn-dd").addEventListener("click", function(event) {
     event.preventDefault();
     console.log("Button clicked");
-    var rows = document.querySelectorAll("#search-results_diemdanh tr"); // Lấy danh sách tất cả các dòng trong bảng
+    var rows = document.querySelectorAll("#search-results_diemdanh tr"); // Get all rows in the table
     var data = [];
 
     for (var i = 0; i < rows.length; i++) {
@@ -78,7 +93,9 @@
         var mahp = row.querySelector(".mahpngay").textContent.trim();
         var buoi = row.querySelector(".buoinay").textContent.trim();
         var ngay = row.querySelector(".ngayhoc").textContent.trim();
-        var status = row.querySelector(".statusngay").textContent.trim();
+        var statusCell = row.querySelector(".statusngay");
+        var statusCheckbox = statusCell.querySelector("input[type=checkbox]");
+        var status = statusCheckbox.checked ? "1" : "0";
         var ghichu = row.querySelector(".ghichungay").textContent.trim();
 
         data.push({
@@ -90,23 +107,33 @@
             "ghichu": ghichu
         });
     }
-             // Gửi dữ liệu đến controller để cập nhật vào cơ sở dữ liệu
-             $.ajax({
-                type: "POST",
-                url: "<?= URL ?>/GiangVienDiemDanhController/saveData",
-                data: { data: JSON.stringify(data) },
-                dataType: 'json',
-                success: function(response) {
-                    console.log('thanhcong');
-                    // Xử lý phản hồi từ controller (nếu cần)
-                    console.log(response);
-                },
-                error: function(xhr, status, error) {
-                    console.log(error)
-                }
-            });
-        });
-    </script>
+
+    // Send the data to the controller to update the database
+    $.ajax({
+        type: "POST",
+        url: "<?= URL ?>/GiangVienDiemDanhController/saveData",
+        data: { data: JSON.stringify(data) },
+        dataType: 'json',
+        success: function(response) {
+            console.log('thanhcong');
+            // Handle the response from the controller if needed
+            console.log(response);
+        },
+        error: function(xhr, status, error) {
+            console.log(error)
+        }
+    });
+
+    // Disable editing mode and remove the 'editable' class for data cells
+    var editableCells = document.querySelectorAll("#search-results_diemdanh .editable");
+    for (var k = 0; k < editableCells.length; k++) {
+        var editableCell = editableCells[k];
+        editableCell.setAttribute("contenteditable", "false");
+        editableCell.classList.remove("editable");
+    }
+});
+
+</script>
     <!-- main-end -->
 </body>
 

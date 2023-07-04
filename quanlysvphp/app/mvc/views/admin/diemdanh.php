@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dataTables_filter" id="editable-sample_filter">
-                                            <label>Search: <input id="search-input" type="text" aria-controls="editable-sample" class="form-control medium"></label>
+                                            <label>Search: <input id="search-input" type="text" aria-controls="editable-sample" class="form-control medium"  placeholder="nhập mã sinh viên để tìm kiếm.."></label>
                                         </div>
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@
                                             </td>
                                             <td contenteditable="true" id="newBuoi" ></td>
                                             <td id="newNgayHoc"><input type="date" style="height: 20px; width: 70px"/></td>
-                                            <td contenteditable="true" id="newStatus" ></td>
+                                            <td contenteditable="true" id="newStatus" ><input class="checkbox" type="checkbox"></td>
                                             <td contenteditable="true" id="newGhiChu" ></td>
                                             <td><button id="saveButton" class="save">save</button></td>
                                             <td><a class="delete" name="delete" href="<?= URL ?>/AdminDiemDanhController/index">Delete</a></td>
@@ -120,7 +120,7 @@
                                                 <td class="MAHP"> <?= $row['MAHP'] ?></td>
                                                 <td class="BUOIHOC"><?= $row['BUOIHOC'] ?></td>
                                                 <td class="NGAYHOC"><?= $row['NGAYHOC'] ?></td>
-                                                <td class="STATUS"><?= $row['STATUS'] ?></td>
+                                                <td class="STATUS"><?php if($row['STATUS']==="1"){ echo "có"; }else{ echo "vắng";} ?></td>
                                                 <td class="GHICHU"><?= $row['GHICHU'] ?></td>
                                                 <td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td>
                                                 <td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminDiemDanhController/index?deletesv=<?= $row['MSSV'] ?>&deletehp=<?= $row['MAHP'] ?>&deletebuoi=<?= $row['BUOIHOC'] ?> ">Delete</a></td>
@@ -182,14 +182,14 @@
             var GHICHU = row.find('.GHICHU').text().trim();
             //hiển thị giá trị đoạn trên và chuyển kiểu thành input để sửa
             row.find('.NGAYHOC').html('<input type="date">');
-            row.find('.STATUS').html('<input style="width:50px"  type="text"  value="'+STATUS+'">');
+            row.find('.STATUS').html('<input style="width:50px"  type="checkbox">');
             row.find('.GHICHU').html('<input style="width:50px"  type="text" value="'+GHICHU+'">');
             //thay nut edit thanh update
             row.find('.edit-btn').text('Update');
             row.find('.edit-btn').removeClass('edit-btn').addClass('update-btn');
             row.find('.update-btn').on('click', function() {
                 var editedNgayhoc = row.find('input').eq(0).val();
-                var editedStatus = row.find('input').eq(1).val();
+                var editedStatus = row.find('input').eq(1).is(':checked') ? 1 : 0;
                 var editedGhiChu = row.find('input').eq(2).val();
                 var data = {
                     MSSV:MSSV,
@@ -206,8 +206,9 @@
                     data: data,
                     success: function(response) {
                         console.log(data);
+                        var statuscheck= response.STATUS === '0'? 'vắng' : 'có';
                         row.find('.NGAYHOC').html(response.NGAY);
-                        row.find('.STATUS').html(response.STATUS);
+                        row.find('.STATUS').html(statuscheck);
                         row.find('.GHICHU').html(response.GHICHU);
                         row.find('.update-btn').text('Edit');
                         row.find('.update-btn').removeClass('save').addClass('edit-btn');
@@ -229,7 +230,7 @@
             var tableBody = $('#editable-sample tbody');
             var cloneRow = newRow.clone();
             cloneRow.removeAttr('style'); // Hiển thị dòng mới
-            tableBody.append(cloneRow);
+            tableBody.prepend(cloneRow);
         });
         //tìm kiếm 
         $('#search-input').on('input', function() {
@@ -262,7 +263,7 @@
             var MAHP = newRow.find('.select-MAHP').val();
             var BUOIHOC = newRow.find('#newBuoi').text();
             var NGAYHOC = newRow.find('#newNgayHoc input').val();
-            var STATUS = newRow.find('#newStatus').text();
+            var STATUS = newRow.find('.checkbox').is(':checked') ? 1 : 0;
             var GHICHU = newRow.find('#newGhiChu').text();
             // Tạo đối tượng dữ liệu để gửi đi
             var data = {
@@ -283,19 +284,20 @@
                 success: function(response) {
                     console.log(data);
                     //thêm đối tượng trả về vào dòng mới tạm thời.
+                    var statuscheck= response.STATUS === '0'? 'vắng' : 'có';
                     var newRow = `
                 <tr>
                     <td>${response.MSSV}</td>
                     <td>${response.MAHP}</td>
                     <td>${response.BUOI}</td>
                     <td>${response.NGAY}</td>
-                    <td>${response.STATUS}</td>
+                    <td>${statuscheck}</td>
                     <td>${response.GHICHU}</td>
                     <td class=" "><a class="delete" href="">edit</a></td>
                     <td><a class="edit" name="delete" href="<?= URL ?>/AdminDiemDanhController/index?delete=${response.MSSV}">Delete</a></td>
                 </tr>
                   `;
-                    $("#editable-sample tbody").append(newRow);
+                    $("#editable-sample tbody").prepend(newRow);
                 },
                 error: function(xhr, status, error) {
                     console.log(data);

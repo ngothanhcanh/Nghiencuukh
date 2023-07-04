@@ -65,7 +65,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dataTables_filter" id="editable-sample_filter">
-                                            <label>Search: <input id="search-input" type="text" aria-controls="editable-sample" class="form-control medium"></label>
+                                            <label>Search: <input id="search-input" type="text" aria-controls="editable-sample" class="form-control medium"  placeholder="nhập tên để tìm kiếm.."></label>
                                         </div>
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                         <tr role="row">
                                             <th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="First Name" style="width: 120px;">MSSV</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Last Name: activate to sort column ascending" style="width: 223px;">Tên Sinh Viên</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Giới Tính</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 160px;">Giới Tính</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Ngày Sinh</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Địa Chỉ</th>
                                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="editable-sample" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending" style="width: 145px;">Mã khóa học</th>
@@ -92,8 +92,8 @@
                                             <td contenteditable="true" id="newName"></td>
                                             <td contenteditable="true" id="newGioitinh">
                                                 <select class="select-gioitinh">
-                                                    <option value="0">Nam</option>
-                                                    <option value="1">Nữ</option>
+                                                    <option value="1">Nam</option>
+                                                    <option value="0">Nữ</option>
                                                 </select>
                                             </td>
                                             <td id="newNgaysinh"><input type="date" style="height: 20px; width: 70px" /></td>
@@ -134,7 +134,7 @@
                                             <tr class="odd" id="<?= $row['MSSV'] ?>">
                                                 <td class="sorting_1"><?php echo $row['MSSV'] ?></td>
                                                 <td class="name"> <?= $row['TENSV'] ?></td>
-                                                <td class="gioitinh"><?= $row['GIOITINH'] ?></td>
+                                                <td class="gioitinh"><?php if($row['GIOITINH']==='1'){echo 'Nam';}else{echo 'Nữ';} ?></td>
                                                 <td class="ngaysinh"><?= $row['NGAYSINH'] ?></td>
                                                 <td class="diachi"><?= $row['DIACHI'] ?></td>
                                                 <td class="khoas"><?= $row['IDKHOAS'] ?></td>
@@ -200,7 +200,7 @@
             var diachi = row.find('.diachi').text().trim();
             //hiển thị giá trị đoạn trên và chuyển kiểu thành input để sửa
             row.find('.name').html('<input type="text" value="' + name + '">');
-            row.find('.gioitinh').html('<input type="text" value="' + gioitinh + '">')
+            row.find('.gioitinh').html('<select class="selectdgioitinh"><option value="0">Nam</option><option value="1">Nữ</option></select>')
             row.find('.ngaysinh').html('<input type="date">');
             row.find('.diachi').html('<input type="text" value="' + diachi + '">');
             row.find('.khoas').html('<select class="editkhoas"><?php foreach ($result_KhoasModel as $rowKhoahocModel) { ?><option value="<?php echo $rowKhoahocModel['ID'] ?>"><?php echo $rowKhoahocModel['ID'] ?></option><?php } ?></select>');
@@ -212,9 +212,9 @@
             row.find('.edit-btn').removeClass('edit-btn').addClass('update-btn');
             row.find('.update-btn').on('click', function() {
                 var editedName = row.find('input').eq(0).val();
-                var editedGioitinh = row.find('input').eq(1).val();
-                var editedNgaysinh = row.find('input').eq(2).val();
-                var editedDiachi = row.find('input').eq(3).val();
+                var editedGioitinh = row.find('.selectdgioitinh').find('option:selected').val();
+                var editedNgaysinh = row.find('input').eq(1).val();
+                var editedDiachi = row.find('input').eq(2).val();
                 var editedKhoas = row.find('.editkhoas').find('option:selected').val();
                 var editedMalop = row.find('.editmalop').find('option:selected').val();
                 var editedMakh = row.find('.editmakh').find('option:selected').val();
@@ -236,9 +236,9 @@
                     dataType: 'json',
                     data: data,
                     success: function(response) {
-
+                        var checkgioitinh=editedGioitinh===1?'Nam':'Nữ';
                         row.find('.name').html(editedName);
-                        row.find('.gioitinh').html(editedGioitinh);
+                        row.find('.gioitinh').html(checkgioitinh);
                         row.find('.ngaysinh').html(editedNgaysinh);
                         row.find('.diachi').html(editedDiachi);
                         row.find('.khoas').html(editedKhoas);
@@ -265,7 +265,7 @@
             var tableBody = $('#editable-sample tbody');
             var cloneRow = newRow.clone();
             cloneRow.removeAttr('style'); // Hiển thị dòng mới
-            tableBody.append(cloneRow);
+            tableBody.prepend(cloneRow);
         });
         //tìm kiếm 
         $('#search-input').on('input', function() {
@@ -319,11 +319,12 @@
                 success: function(response) {
                     console.log(data);
                     //thêm đối tượng trả về vào dòng mới tạm thời.
+                    var checkgioitinh=response.gioitinh==='1'?'Nam':'Nữ';
                     var newRow = `
                 <tr>
                     <td class="sorting_1">${id}</td>
                     <td>${response.name}</td>
-                    <td>${response.gioitinh}</td>
+                    <td>${checkgioitinh}</td>
                     <td>${response.ngaysinh}</td>
                     <td>${response.diachi}</td>
                     <td>${response.khoas}</td>

@@ -273,7 +273,7 @@
                         <i class="fa fa-laptop"></i>
                         <span>Layouts</span>
                     </a>
-                    <ul class="sub">
+                    <ul class="sub" style="display:block">
                     <li><a href="<?=URL?>/GiangVienLopController/index">Lớp</a></li>
                     <li><a href="<?=URL?>/GiangVienThoiKhoaBieuController/index">Thời Khóa Biểu</a></li>
                     <li><a href="<?=URL?>/GiangVienHocPhanController/index">Học Phần</a></li>

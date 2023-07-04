@@ -61,7 +61,7 @@
                                                 </select> records per page</label></div> -->
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="dataTables_filter" id="editable-sample_filter"><label>Search: <input type="text" id="search-input" aria-controls="editable-sample" class="form-control medium"></label></div>
+                                        <div class="dataTables_filter" id="editable-sample_filter"><label>Search: <input type="text" id="search-input" aria-controls="editable-sample" class="form-control medium" placeholder="nhập tên để tìm kiếm.."></label></div>
                                     </div>
                                 </div>
                                 <table class="table table-striped table-hover table-bordered dataTable" id="editable-sample" aria-describedby="editable-sample_info">
@@ -161,6 +161,10 @@
 </section>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+        // Lấy danh sách các liên kết trong menu sidebar
+        var sidebarLinks = document.querySelectorAll('#nav-accordion a');
+
+// Lặp qua từng liên kết và ngăn chặn sự kiện mặc định khi được nhấp
     $(document).ready(function() {
         $('#excelFile').change(function() {
         var fileInput = document.getElementById('excelFile');
@@ -253,7 +257,7 @@
             var tableBody = $('#editable-sample tbody');
             var cloneRow = newRow.clone();
             cloneRow.removeAttr('style'); // Hiển thị dòng mới
-            tableBody.append(cloneRow);
+            tableBody.prepend(cloneRow);
         });
         //tìm kiếm 
         $('#search-input').on('input', function() {
@@ -320,7 +324,7 @@
                     <td><a class="edit" Name="delete" href="<?= URL ?>/UserController/index?delete=${response.id}">Delete</a></td>
                 </tr>
                   `;
-                    $("#editable-sample tbody").append(newRow);
+                    $("#editable-sample tbody").prepend(newRow);
                         }
                 },
                 error: function(xhr, TrangThai, error) {
@@ -335,6 +339,7 @@
         });
         //set time tại 500ml giây
     });
+    
 </script>
 <!-- main-end -->
 <?php include '../quanlysvphp/app/mvc/views/layout/footer.php' ?>

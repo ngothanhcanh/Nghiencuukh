@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
 
@@ -11,15 +12,16 @@
     <title>Editable Table</title>
 
     <!--Core CSS -->
-    <link href="<?=URL ?>/public/theme-bucket-master/bs3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?=URL ?>/public/theme-bucket-master/css/bootstrap-reset.css" rel="stylesheet">
-    <link href="<?=URL ?>/public/theme-bucket-master/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="<?= URL ?>/public/theme-bucket-master/bs3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= URL ?>/public/theme-bucket-master/css/bootstrap-reset.css" rel="stylesheet">
+    <link href="<?= URL ?>/public/theme-bucket-master/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="<?=URL ?>/public/theme-bucket-master/js/data-tables/DT_bootstrap.css" />
+    <link rel="stylesheet" href="<?= URL ?>/public/theme-bucket-master/js/data-tables/DT_bootstrap.css" />
 
     <!-- Custom styles for this template -->
-    <link href="<?=URL ?>/public/theme-bucket-master/css/style.css" rel="stylesheet">
-    <link href="<?=URL ?>/public/theme-bucket-master/css/style-responsive.css" rel="stylesheet" />
+    <link href="<?= URL ?>/public/theme-bucket-master/css/style.css" rel="stylesheet">
+    <link href="<?= URL ?>/public/theme-bucket-master/css/style-responsive.css" rel="stylesheet" />
+    <link href="<?= URL ?>/public/css/styleactive.css" rel="stylesheet" />
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]>
@@ -34,26 +36,26 @@
 
 <body>
 
-<section id="container" >
-<!--header start-->
-<header class="header fixed-top clearfix">
-<!--logo start-->
-<div class="brand">
+    <section id="container">
+        <!--header start-->
+        <header class="header fixed-top clearfix">
+            <!--logo start-->
+            <div class="brand">
 
-    <a href="index.html" class="logo">
-        <img src="<?=URL ?>/public/images/logo.png" alt="">
-    </a>
-    <div class="sidebar-toggle-box">
-        <div class="fa fa-bars"></div>
-    </div>
-</div>
-<!--logo end-->
+                <a href="index.html" class="logo">
+                    <img src="<?= URL ?>/public/images/logo.png" alt="">
+                </a>
+                <div class="sidebar-toggle-box">
+                    <div class="fa fa-bars"></div>
+                </div>
+            </div>
+            <!--logo end-->
 
-<div class="nav notify-row" id="top_menu">
-    <!--  notification start -->
-    <ul class="nav top-menu">
-        <!-- settings start -->
-        <!-- <li class="dropdown">
+            <div class="nav notify-row" id="top_menu">
+                <!--  notification start -->
+                <ul class="nav top-menu">
+                    <!-- settings start -->
+                    <!-- <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <i class="fa fa-tasks"></i>
                 <span class="badge bg-success">8</span>
@@ -120,9 +122,9 @@
                 </li>
             </ul>
         </li> -->
-        <!-- settings end -->
-        <!-- inbox dropdown start-->
-        <!-- <li id="header_inbox_bar" class="dropdown">
+                    <!-- settings end -->
+                    <!-- inbox dropdown start-->
+                    <!-- <li id="header_inbox_bar" class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <i class="fa fa-envelope-o"></i>
                 <span class="badge bg-important">4</span>
@@ -184,9 +186,9 @@
                 </li>
             </ul>
         </li> -->
-        <!-- inbox dropdown end -->
-        <!-- notification dropdown start-->
-        <!-- <li id="header_notification_bar" class="dropdown">
+                    <!-- inbox dropdown end -->
+                    <!-- notification dropdown start-->
+                    <!-- <li id="header_notification_bar" class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                 <i class="fa fa-bell-o"></i>
@@ -223,79 +225,80 @@
 
             </ul>
         </li> -->
-        <!-- notification dropdown end -->
-    </ul>
-    <!--  notification end -->
-</div>
-<div class="top-nav clearfix">
-    <!--search & user info start-->
-    <ul class="nav pull-right top-menu">
-        <li>
-            <input type="text" class="form-control search" placeholder=" Search">
-        </li>
-        <!-- user login dropdown start-->
-        <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <img alt="" src="images/avatar1_small.jpg">
-                <span class="username">Admin</span>
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu extended logout">
-                <!-- <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li> -->
-                <li><a href="<?=URL ?>/AdminIndexController/out?thoat"><i class="fa fa-key"></i> Log Out</a></li>
-            </ul>
-        </li>
-        <!-- user login dropdown end -->
-        <li>
-            <div class="toggle-right-box">
-                <div class="fa fa-bars"></div>
-            </div>
-        </li>
-    </ul>
-    <!--search & user info end-->
-</div>
-</header>
-<!--header end-->
-<aside>
-    <div id="sidebar" class="nav-collapse">
-        <!-- sidebar menu start-->            <div class="leftside-navigation">
-            <ul class="sidebar-menu" id="nav-accordion">
-            <li>
-                <a href="<?=URL?>/AdminIndexController/index">
-                    <i class="fa fa-dashboard"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li class="sub-menu">
-                <a href="javascript:;">
-                    <i class="fa fa-laptop"></i>
-                    <span>Layouts</span>
-                </a>
-                <ul class="sub">
-                <li><a href="<?=URL?>/UserController/index">Người Dùng</a></li>
-                        <li><a href="<?=URL?>/AdminSinhVienController/index">Sinh Viên</a></li>
-                        <li><a href="<?=URL?>/AdminKhoaController/index">Khoa</a></li>
-                        <li><a href="<?=URL?>/AdminGiangVienController/index">Giảng Viên</a></li>
-                        <li><a href="<?=URL?>/AdminKhoasController/index">Khóa Học</a></li>
-                        <li><a href="<?=URL?>/AdminHocPhanController/index">Học Phần</a></li>
-                        <li><a href="<?=URL?>/AdminLopController/index">Lớp</a></li>                      
-                        <li><a href="<?=URL?>/AdminHocPhiController/index">Học Phí</a></li>
-                        <li><a href="<?=URL?>/AdminThoiKhoaBieuController/index">Thời Khóa Biểu</a></li>
-                        <li><a href="<?=URL?>/AdminGiangVienLopController/index">Giảng Viên Lớp</a></li>
-                        <li><a href="<?=URL?>/AdminPhuHuynhController/index">Phụ Huynh</a></li> 
-                        <li><a href="<?=URL?>/AdminDiemDanhController/index">Điểm Danh</a></li>
-                        <li><a href="<?=URL?>/AdminBangDiemController/index">Bảng Điểm</a></li>
+                    <!-- notification dropdown end -->
                 </ul>
-            </li>
-            <li>
-                <a href="<?=URL ?>/AdminIndexController/out?thoat">
-                    <i class="fa fa-user"></i>
-                    <span>Logout Page</span>
-                </a>
-            </li>
-        </ul></div>        
-<!-- sidebar menu end-->
-    </div>
-</aside>
-<!--sidebar end-->
+                <!--  notification end -->
+            </div>
+            <div class="top-nav clearfix">
+                <!--search & user info start-->
+                <ul class="nav pull-right top-menu">
+                    <li>
+                        <input type="text" class="form-control search" placeholder=" Search">
+                    </li>
+                    <!-- user login dropdown start-->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <img alt="" src="images/avatar1_small.jpg">
+                            <span class="username">Admin</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu extended logout">
+                            <!-- <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li> -->
+                            <li><a href="<?= URL ?>/AdminIndexController/out?thoat"><i class="fa fa-key"></i> Log Out</a></li>
+                        </ul>
+                    </li>
+                    <!-- user login dropdown end -->
+                    <li>
+                        <div class="toggle-right-box">
+                            <div class="fa fa-bars"></div>
+                        </div>
+                    </li>
+                </ul>
+                <!--search & user info end-->
+            </div>
+        </header>
+        <!--header end-->
+        <aside>
+            <div id="sidebar" class="nav-collapse">
+                <!-- sidebar menu start-->
+                <div class="leftside-navigation">
+                    <ul class="sidebar-menu" id="nav-accordion">
+                        <li>
+                            <a href="<?= URL ?>/AdminIndexController/index">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-laptop"></i>
+                                <span>Layouts</span>
+                            </a>
+                            <ul class="sub" style="display: block;">
+                                <li><a href="<?= URL ?>/UserController/index">Người Dùng</a></li>
+                                <li><a href="<?= URL ?>/AdminSinhVienController/index">Sinh Viên</a></li>
+                                <li><a href="<?= URL ?>/AdminKhoaController/index">Khoa</a></li>
+                                <li><a href="<?= URL ?>/AdminGiangVienController/index">Giảng Viên</a></li>
+                                <li><a href="<?= URL ?>/AdminKhoasController/index">Khóa Học</a></li>
+                                <li><a href="<?= URL ?>/AdminHocPhanController/index">Học Phần</a></li>
+                                <li><a href="<?= URL ?>/AdminLopController/index">Lớp</a></li>
+                                <li><a href="<?= URL ?>/AdminHocPhiController/index">Học Phí</a></li>
+                                <li><a href="<?= URL ?>/AdminThoiKhoaBieuController/index">Thời Khóa Biểu</a></li>
+                                <li><a href="<?= URL ?>/AdminGiangVienLopController/index">Giảng Viên Lớp</a></li>
+                                <li><a href="<?= URL ?>/AdminPhuHuynhController/index">Phụ Huynh</a></li>
+                                <li><a href="<?= URL ?>/AdminDiemDanhController/index">Điểm Danh</a></li>
+                                <li><a href="<?= URL ?>/AdminBangDiemController/index">Bảng Điểm</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="<?= URL ?>/AdminIndexController/out?thoat">
+                                <i class="fa fa-user"></i>
+                                <span>Logout Page</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>

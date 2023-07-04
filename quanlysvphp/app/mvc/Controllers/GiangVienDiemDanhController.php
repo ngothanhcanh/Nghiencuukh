@@ -12,6 +12,16 @@ class GiangVienDiemDanhController extends Controller
     {
         $mahp=$_POST['mahp-dsdd'];
         $_SESSION['maHP']=$mahp;
+        $mahp = $_SESSION['maHP'];
+        $result_sv=$this->DiemDanhModel->showwheremahp($mahp);
+        if(isset($result_sv[0]['MSSV']))
+        {
+          $sinhvien1=$result_sv[0]['MSSV'];
+          $_SESSION['sinhvien1']=$sinhvien1;
+        }else
+        {
+
+        }
     }else if(isset($_SESSION['maHP']))
     {
         $mahp = $_SESSION['maHP'];

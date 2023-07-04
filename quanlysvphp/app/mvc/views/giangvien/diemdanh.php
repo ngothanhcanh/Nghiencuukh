@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dataTables_filter" id="editable-sample_filter">
-                                            <label>Search: <input id="search-input" type="text" aria-controls="editable-sample" class="form-control medium"></label>
+                                            <label>Search: <input id="search-input" type="text" aria-controls="editable-sample" class="form-control medium" placeholder="nhập mã sinh viên để tìm kiếm..."></label>
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@
                                                     <td class="MAHP"><?= $row['MAHP'] ?></td>
                                                     <td class="buoi"><?= $row['BUOIHOC'] ?></td>
                                                     <td class="ngay"><?= $row['NGAYHOC'] ?></td>
-                                                    <td class="status"><?= $row['STATUS'] ?></td>
+                                                    <td class="status"><?php if($row['STATUS']==='1'){echo 'có';}else{echo 'vắng';} ?></td>
                                                     <td class="ghichu"><?= $row['GHICHU'] ?></td>
                                                     <td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td>
                                                 </tr>
@@ -163,13 +163,13 @@
             var STATUS = row.find('.status').text().trim();
             var GHICHU = row.find('.ghichu').text().trim();
             //hiển thị giá trị đoạn trên và chuyển kiểu thành input để sửa
-            row.find('.status').html('<input style="width:130px"  type="text"  value="'+STATUS+'">');
+            row.find('.status').html('<input style="width:130px"  type="checkbox">');
             row.find('.ghichu').html('<input style="width:130px"  type="text" value="'+GHICHU+'">');
             //thay nut edit thanh update
             row.find('.edit-btn').text('Update');
             row.find('.edit-btn').removeClass('edit-btn').addClass('update-btn');
             row.find('.update-btn').on('click', function() {
-                var editedStatus = row.find('input').eq(0).val();
+                var editedStatus = row.find('input').eq(0).is(':checked')?1:0;
                 var editedGhiChu = row.find('input').eq(1).val();
                 var data = {
                     MSSV:MSSV,
@@ -185,8 +185,9 @@
                     dataType: 'json',
                     data: data,
                     success: function(response) {
+                        var statuschecked=response.STATUS==='0'?'vắng':'có';
                         console.log(data);
-                        row.find('.status').html(response.STATUS);
+                        row.find('.status').html(statuschecked);
                         row.find('.ghichu').html(response.GHICHU);
                         row.find('.update-btn').text('Edit');
                         row.find('.update-btn').removeClass('save').addClass('edit-btn');
@@ -198,6 +199,22 @@
                 })
             });
 
+
+        });
+        $('#search-input').on('input', function() {
+            $('.odd').remove(); //xóa các tr odd đang hiện 
+            var searchValue = $(this).val().toLowerCase(); //đưa hết về chữ thường 
+            <?php if (isset($result)) {
+                foreach ($result as $row) { ?>
+                    var name = '<?php echo $row['MSSV']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
+                    if (name.includes(searchValue)) //so sách giá trị tìm bằng giá trị name
+                    {
+                        var listItem = ' <tr class="odd" id="<?= $row['MSSV'] ?>"><td class="MSSV"><?= $row['MSSV'] ?></td><td class="MAHP"><?= $row['MAHP'] ?></td><td class="buoi"><?= $row['BUOIHOC'] ?></td><td class="ngay"><?= $row['NGAYHOC'] ?></td><td class="status"><?= $row['STATUS'] ?></td><td class="ghichu"><?= $row['GHICHU'] ?></td><td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td></tr>'
+                        $('#search-results').append(listItem);
+                    }
+
+            <?php }
+            } ?>
 
         });
     function addNewRecord() {

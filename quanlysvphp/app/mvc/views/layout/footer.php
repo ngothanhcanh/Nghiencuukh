@@ -1,7 +1,38 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.sub-menu li').click(function() {
+    // Xóa lớp 'active' của tất cả các thẻ <li> trong .sub-menu
+    $('.sub-menu li').removeClass('active');
 
+    // Thêm lớp 'active' vào thẻ <li> đã được nhấp vào
+    $(this).addClass('active');
+
+    // Lưu trạng thái active vào localStorage
+    localStorage.setItem('activeItem', $(this).index());
+  });
+
+  // Khôi phục trạng thái active sau khi trang tải lại
+  $(window).on('load', function() {
+    var activeIndex = localStorage.getItem('activeItem');
+    if (activeIndex !== null) {
+      $('.sub-menu li').eq(activeIndex).addClass('active');
+    }
+  });
+  $('.sub-menu a').click(function() {
+    var subMenu = $(this).siblings('.sub');
+    if (subMenu.css('display') === 'none') {
+      subMenu.css('display', 'block');
+    } else {
+      subMenu.css('display', 'none');
+    }
+  });
+});
+    
+</script>
 <script src="<?=URL ?>/public/theme-bucket-master/js/jquery-1.8.3.min.js"></script>
 <script src="<?=URL ?>/public/theme-bucket-master/bs3/js/bootstrap.min.js"></script>
-<script class="include" type="text/javascript" src="<?=URL ?>/public/theme-bucket-master/js/jquery.dcjqaccordion.2.7.js"></script>
+<!-- <script class="include" type="text/javascript" src="<?=URL ?>/public/theme-bucket-master/js/jquery.dcjqaccordion.2.7.js"></script> -->
 <script src="<?=URL ?>/public/theme-bucket-master/js/jquery.scrollTo.min.js"></script>
 <script src="<?=URL ?>/public/theme-bucket-master/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
 <script src="<?=URL ?>/public/theme-bucket-master/js/jquery.nicescroll.js"></script>

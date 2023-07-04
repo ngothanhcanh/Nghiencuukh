@@ -44,9 +44,9 @@
                                                     <option value="-1">All</option>
                                                 </select> records per page</label></div> -->
                                     </div>
-                                    <div class="col-lg-6">
+                                    <!-- <div class="col-lg-6">
                                         <div class="dataTables_filter" id="editable-sample_filter"><label>Search: <input type="text" aria-controls="editable-sample" class="form-control medium"></label></div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <table class="table table-striped table-hover table-bordered dataTable" id="editable-sample" aria-describedby="editable-sample_info">
                                     <thead>
@@ -116,7 +116,7 @@
             var tableBody = $('#editable-sample tbody');
             var cloneRow = newRow.clone();
             cloneRow.removeAttr('style'); // Hiển thị dòng mới
-            tableBody.append(cloneRow);
+            tableBody.prepend(cloneRow);
         });
 
         // Xử lý sự kiện click của nút "Save"
@@ -147,7 +147,7 @@
                 </tr>
             `;
             
-            $("#editable-sample tbody").append(newRow);
+            $("#editable-sample tbody").prepend(newRow);
            
            
                 },

@@ -1,99 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="ThemeBucket">
-    <link rel="shortcut icon" href="<?= URL ?>/public/theme-bucket-master/images/favicon.png">
-
-    <title>Login</title>
-
-    <!--Core CSS -->
-    <link href="<?= URL ?>/public/theme-bucket-master/bs3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?= URL ?>/public/theme-bucket-master/css/bootstrap-reset.css" rel="stylesheet">
-    <link href="<?= URL ?>/public/theme-bucket-master/font-awesome/css/font-awesome.css" rel="stylesheet" />
-
-    <!-- Custom styles for this template -->
-    <link href="<?= URL ?>/public/theme-bucket-master/css/style.css" rel="stylesheet">
-    <link href="<?= URL ?>/public/theme-bucket-master/css/style-responsive.css" rel="stylesheet" />
-
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]>
-    <script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css"  href="<?php echo URL ?>/public/css/style.css">
 </head>
-
-  <body class="login-body">
-
     <div class="container">
-      <form class="form-signin" method="post" action="<?=URL?>/LoginController/index">
-        <h2 class="form-signin-heading">sign in now</h2>
-        <h3><?php foreach($error as $er)
-        {
-            echo $er;
-        }?></h3>
-        <div class="login-wrap">
-            <div class="user-login-info">
-                <input type="text" name="login_name" class="form-control" placeholder="User Name" autofocus>
-                <input type="password" name="login_password" class="form-control" placeholder="Password">
+		<div class="form-container">
+            <div class="logo-login">
+            <img src="<?= URL ?>/public/images/logo-UPT.png" alt="">
+			<h2>WELCOME TO UPT</h2>
             </div>
-            <!-- <label class="checkbox">
-                <input type="checkbox" value="remember-me"> Remember me
-                <span class="pull-right">
-                    <a data-toggle="modal" href="#myModal"> Forgot Password?</a>
+			<h3><?php 
+			if(!empty($errorslogin))
+			{
+			foreach($errorslogin as $error)
+			{  
+				echo $error;
+			}
+		    }
+			?>
+			</h3>
+			<form class="form-signin" method="post" action="<?=URL?>/LoginController/index">
+				<label for="username"></label>
+				<input type="text"  name="login_name" class="form-control" placeholder="User Name" autofocus>
 
-                </span>
-            </label> -->
-            <button class="btn btn-lg btn-login btn-block" name="login_submit" type="submit">Sign in</button>
+				<label for="password"></label>
+                <input type="password" name="login_password" class="form-control" placeholder="Password">
 
-            <!-- <div class="registration">
-                Don't have an account yet?
-                <a class="" href="registration.html">
-                    Create an account
-                </a>
-            </div> -->
+				<input type="submit" name="login_submit" value="Đăng nhập">
 
-        </div>
-
-          <!-- Modal -->
-          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
-              <div class="modal-dialog">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                          <h4 class="modal-title">Forgot Password ?</h4>
-                      </div>
-                      <div class="modal-body">
-                          <p>Enter your e-mail address below to reset your password.</p>
-                          <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
-
-                      </div>
-                      <div class="modal-footer">
-                          <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-                          <button class="btn btn-success" type="button">Submit</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <!-- modal -->
-
-      </form>
-
-    </div>
-
-
-
-    <!-- Placed js at the end of the document so the pages load faster -->
-
-    <!--Core js-->
-    <script src="<?= URL ?>/public/theme-bucket-master/js/jquery.js"></script>
-    <script src="<?= URL ?>/public/theme-bucket-master/bs3/js/bootstrap.min.js"></script>
-  </body>
+			</form>
+		</div>
+	</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </body>
 </html>

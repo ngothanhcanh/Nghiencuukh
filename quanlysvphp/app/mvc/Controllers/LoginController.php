@@ -14,6 +14,8 @@ class LoginController extends Controller
         {  
            $name=isset($_POST['login_name']) ? $_POST['login_name'] : '' ;
            $password=$_POST['login_password'] ? $_POST['login_password'] : '';
+            $name=$this->xulykituvao($name);
+            $password=$this->xulykituvao($password);
            $result=$this->loginModel->sigin($name,$password) ?? array();
            if($result && $result['Name']===$name && $result['Pass']===$password && $result['TrangThai']==='enable')
            { 
@@ -45,5 +47,10 @@ class LoginController extends Controller
       
     ]);
        
+    }
+    public function xulykituvao($input)
+    {
+        $xulykituvao =htmlspecialchars($input);
+        return $xulykituvao;
     }
 }

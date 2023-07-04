@@ -8,7 +8,7 @@
             <div class="col-sm-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        Editable Table
+                        Học phí
                         <span class="tools pull-right">
                             <a href="javascript:;" class="fa fa-chevron-down"></a>
                             <a href="javascript:;" class="fa fa-cog"></a>
@@ -60,7 +60,7 @@
                                                 </select> records per page</label></div> -->
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="dataTables_filter" id="editable-sample_filter"><label>Search: <input type="text" id="search-input" aria-controls="editable-sample" class="form-control medium"></label></div>
+                                        <div class="dataTables_filter" id="editable-sample_filter"><label>Search: <input type="text" id="search-input" aria-controls="editable-sample" class="form-control medium"  placeholder="nhập mã sinh viên để tìm kiếm.."></label></div>
                                     </div>
                                 </div>
                                 <table class="table table-striped table-hover table-bordered dataTable" id="editable-sample" aria-describedby="editable-sample_info">
@@ -90,7 +90,7 @@
                                             </td>
                                             <td contenteditable="true" id="newNAMHOC"></td>
                                             <td contenteditable="true" id="newHOCKY"></td>
-                                            <td contenteditable="true" id="newSTATUS"></td>
+                                            <td contenteditable="true" id="newSTATUS"><input class="newSTATUS" type="checkbox"/></td>
                                             <td contenteditable="true" id="newGHICHU"></td>
                                             <td><button id="saveButton" class="save">save</button></td>
                                             <td><a class="delete" name="delete" href="<?= URL ?>/AdminHocPhiController/index?delete=">Delete</a></td>
@@ -102,7 +102,7 @@
                                                     <td class="maSV"><?= $row['MSSV'] ?></td>
                                                     <td class="namhoc"><?= $row['NAMHOC'] ?></td>
                                                     <td class="hocky"><?= $row['HOCKY'] ?></td>
-                                                    <td class="status"><?= $row['STATUS'] ?></td>
+                                                    <td class="status"><?php if($row['STATUS']==="0"){echo 'chưa đóng';}else{echo 'đã đóng';} ?></td>
                                                     <td class="ghichu"><?= $row['GHICHU'] ?></td>
                                                     <td class=" "><a class="edit editHocPhi" name="edit" href="#">Edit</a></td>
                                                     <td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminHocPhiController/index?delete_SV=<?= $row['MSSV'] ?>&delete_NH=<?= $row['NAMHOC'] ?>&delete_HK=<?= $row['HOCKY'] ?>">Delete</a></td>
@@ -161,7 +161,7 @@
             var tableBody = $('#editable-sample tbody');
             var cloneRow = newRow.clone();
             cloneRow.removeAttr('style'); // Hiển thị dòng mới
-            tableBody.append(cloneRow);
+            tableBody.prepend(cloneRow);
         });
 
         // Xử lý sự kiện click của nút "Save"
@@ -171,7 +171,7 @@
             var masv = newRow.find('.masv-select').val();
             var namhoc=newRow.find('#newNAMHOC').text();
             var hocky=newRow.find('#newHOCKY').text();
-            var status=newRow.find('#newSTATUS').text();
+            var status=newRow.find('.newSTATUS').is(':checked')? 1:0;
             var ghichu=newRow.find('#newGHICHU').text();
             // Tạo đối tượng dữ liệu để gửi đi
             var data = {
@@ -190,19 +190,20 @@
                 data: data,
                 success: function(response) {
                     //thêm đối tượng trả về vào dòng mới tạm thời.
+                    var statusText = response.STATUS === '0' ? 'chưa đóng' : 'đã đóng';
                     var newRow = `
                 <tr>
                     <td >${response.MSSV}</td>
                     <td >${response.NAMHOC}</td>
                     <td >${response.HOCKY}</td>
-                    <td >${response.STATUS}</td>
+                    <td >${statusText}</td>
                     <td >${response.GHICHU}</td>
                     <td class=""><a class="delete editHocPhi" href="">edit</a></td>
                     <td class=" "><a class="delete" name="delete" href="<?= URL ?>/AdminHocPhiController/index?delete_SV=${response.MSSV}&delete_NH=${response.NAMHOC}&delete_HK=${response.HOCKY}">Delete</a></td>
                 </tr>
                `;
 
-                    $("#editable-sample tbody").append(newRow);
+                    $("#editable-sample tbody").prepend(newRow);
                 },
                 error: function(xhr, status, error) {
                     // Xử lý lỗi khi gửi yêu cầu AJAX
@@ -215,7 +216,7 @@
             e.preventDefault()
             var newRow = $(this).closest('tr');
             $(this).parent("td").html(`<button id="updateButton" class="update">update</button>`)
-            newRow.find('.status').attr("contenteditable", "true");
+            newRow.find('.status').html('<input style="width:50px"  type="checkbox">');
             newRow.find('.ghichu').attr("contenteditable", "true");
         });
         // Xử lý sự kiện click của nút "Edit"
@@ -224,7 +225,7 @@
             var masv = newRow.find('.maSV').text().trim();
             var Namhoc = newRow.find('.namhoc').text().trim();
             var Hocky = newRow.find('.hocky').text().trim();
-            var Status = newRow.find('.status').text().trim();
+            var Status = newRow.find('.status').is(':checked')?1:0;
             var Ghichu =newRow.find('.ghichu').text().trim();
             var data = {
                 masv,
@@ -238,9 +239,10 @@
                 type: 'POST',
                 data: data,
                 success: (response) => {
+                    var statusText = Status === 0 ? 'chưa đóng' : 'đã đóng';
                     $(this).parent("td").html(`<a class="editHocPhi" href="#">edit</a>`)
                     newRow.find('.hocky').text(Hocky);
-                    newRow.find('.status').text(Status);
+                    newRow.find('.status').text(statusText);
                     newRow.find('.ghichu').text(Ghichu);
 
                 },

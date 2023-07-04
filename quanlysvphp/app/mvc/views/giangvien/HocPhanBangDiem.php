@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dataTables_filter" id="editable-sample_filter">
-                                            <label>Search: <input id="search-input" type="text" aria-controls="editable-sample" class="form-control medium"></label>
+                                            <label>Search: <input id="search-input" type="text" aria-controls="editable-sample" class="form-control medium"  placeholder="nhập mã sinh viên để tìm kiếm.."></label>
                                         </div>
                                     </div>
                                 </div>
@@ -238,68 +238,68 @@
 
         });
         // Xử lý sự kiện click của nút "Save"
-        $(document).on('click', '.save', function(e) {
-            e.preventDefault();
-            var newRow = $(this).closest('tr'); // Dòng mới được thêm    
-            // Lấy giá trị từ các ô input
-            // var STT= newRow.find('#newSTT').text();
-            var MSSV = newRow.find('.select-MSSV').val();
-            var MAHP = newRow.find('.select-MAHP').val();
-            var CC = newRow.find('#newCC').text();
-            var GK = newRow.find('#newGK').text();
-            var CK = newRow.find('#newCK').text();
-            var DTB = CC*0.1+GK*0.3+CK*0.6;
-            var HocKy= newRow.find('#newHK').text();
-            var NamHoc = newRow.find('#newNH').text();
-            // Tạo đối tượng dữ liệu để gửi đi
-            var data = {
-               MSSV : MSSV,
-               MAHP : MAHP,
-               CC:CC,
-               GK:GK,
-               CK:CK,
-               DTB:DTB,
-               HocKy:HocKy,
-               NamHoc:NamHoc
-            };
-            // Gửi yêu cầu AJAX để lưu dữ liệu
-            $.ajax({
-                url: '<?= URL ?>/GiangVienHPBDController/save',
-                type: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function(response) {
-                    console.log(data);
-                    //thêm đối tượng trả về vào dòng mới tạm thời.
-                    var newRow = `
-                <tr>
-                    <td>${response.MSSV}</td>
-                    <td>${response.MAHP}</td>
-                    <td>${response.CC}</td>
-                    <td>${response.GK}</td>
-                    <td>${response.CK}</td>
-                    <td>${response.DTB}</td>
-                    <td>${response.DIEMHE4}</td>
-                    <td>${response.DIEMQUYDOI}</td>
-                    <td>${response.HocKy}</td>
-                    <td>${response.NamHoc}</td>
-                    <td class=" "><a class="delete" href="">edit</a></td>
-                </tr>
-                  `;
-                    $("#editable-sample tbody").append(newRow);
-                },
-                error: function(xhr, status, error) {
-                    console.log(data);
-                    // Xử lý lỗi khi gửi yêu cầu AJAX
-                    console.error(xhr.responseText);
-                }
-            });
-            newRow.css('display', 'none');
-            // setTimeout(() => {
-            //     location.reload();
-            // }, 500);
-        });
-        //set time tại 500ml giây
+        // $(document).on('click', '.save', function(e) {
+        //     e.preventDefault();
+        //     var newRow = $(this).closest('tr'); // Dòng mới được thêm    
+        //     // Lấy giá trị từ các ô input
+        //     // var STT= newRow.find('#newSTT').text();
+        //     var MSSV = newRow.find('.select-MSSV').val();
+        //     var MAHP = newRow.find('.select-MAHP').val();
+        //     var CC = newRow.find('#newCC').text();
+        //     var GK = newRow.find('#newGK').text();
+        //     var CK = newRow.find('#newCK').text();
+        //     var DTB = CC*0.1+GK*0.3+CK*0.6;
+        //     var HocKy= newRow.find('#newHK').text();
+        //     var NamHoc = newRow.find('#newNH').text();
+        //     // Tạo đối tượng dữ liệu để gửi đi
+        //     var data = {
+        //        MSSV : MSSV,
+        //        MAHP : MAHP,
+        //        CC:CC,
+        //        GK:GK,
+        //        CK:CK,
+        //        DTB:DTB,
+        //        HocKy:HocKy,
+        //        NamHoc:NamHoc
+        //     };
+        //     // Gửi yêu cầu AJAX để lưu dữ liệu
+        //     $.ajax({
+        //         url: '<?= URL ?>/GiangVienHPBDController/save',
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         data: data,
+        //         success: function(response) {
+        //             console.log(data);
+        //             //thêm đối tượng trả về vào dòng mới tạm thời.
+        //             var newRow = `
+        //         <tr>
+        //             <td>${response.MSSV}</td>
+        //             <td>${response.MAHP}</td>
+        //             <td>${response.CC}</td>
+        //             <td>${response.GK}</td>
+        //             <td>${response.CK}</td>
+        //             <td>${response.DTB}</td>
+        //             <td>${response.DIEMHE4}</td>
+        //             <td>${response.DIEMQUYDOI}</td>
+        //             <td>${response.HocKy}</td>
+        //             <td>${response.NamHoc}</td>
+        //             <td class=" "><a class="delete" href="">edit</a></td>
+        //         </tr>
+        //           `;
+        //             $("#editable-sample tbody").append(newRow);
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.log(data);
+        //             // Xử lý lỗi khi gửi yêu cầu AJAX
+        //             console.error(xhr.responseText);
+        //         }
+        //     });
+        //     newRow.css('display', 'none');
+        //     // setTimeout(() => {
+        //     //     location.reload();
+        //     // }, 500);
+        // });
+        // //set time tại 500ml giây
     });
 </script>
 <!-- main-end -->

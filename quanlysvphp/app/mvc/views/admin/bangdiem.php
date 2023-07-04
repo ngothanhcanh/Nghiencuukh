@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dataTables_filter" id="editable-sample_filter">
-                                            <label>Search: <input id="search-input" type="text" aria-controls="editable-sample" class="form-control medium"></label>
+                                            <label>Search: <input id="search-input" type="text" aria-controls="editable-sample" class="form-control medium"  placeholder="nhập mã sinh viên để tìm kiếm.."></label>
                                         </div>
                                     </div>
                                 </div>
@@ -256,7 +256,7 @@
             var tableBody = $('#editable-sample tbody');
             var cloneRow = newRow.clone();
             cloneRow.removeAttr('style'); // Hiển thị dòng mới
-            tableBody.append(cloneRow);
+            tableBody.prepend(cloneRow);
         });
         //tìm kiếm 
         $('#search-input').on('input', function() {
@@ -325,7 +325,7 @@
                     <td><a class="edit" name="delete" href="<?= URL ?>/AdminBangDiemController/index?delete=${response.MSSV}">Delete</a></td>
                 </tr>
                   `;
-                    $("#editable-sample tbody").append(newRow);
+                    $("#editable-sample tbody").prepend(newRow);
                 },
                 error: function(xhr, status, error) {
                     console.log(data);
@@ -340,6 +340,7 @@
         });
         //set time tại 500ml giây
     });
+    
 </script>
 <!-- main-end -->
 <?php include '../quanlysvphp/app/mvc/views/layout/footer.php' ?>
