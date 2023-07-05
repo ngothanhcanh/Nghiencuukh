@@ -7,7 +7,7 @@ class GiangVienDiemDanhController extends Controller
     $this->DiemDanhModel=$this->model('DiemDanhModel');
   }
   public function index()
-  {
+  {   
     if(isset($_POST['mahp-dsdd']))
     {
         $mahp=$_POST['mahp-dsdd'];
@@ -20,14 +20,20 @@ class GiangVienDiemDanhController extends Controller
           $_SESSION['sinhvien1']=$sinhvien1;
         }else
         {
-
+         
         }
     }else if(isset($_SESSION['maHP']))
     {
         $mahp = $_SESSION['maHP'];
         $result_sv=$this->DiemDanhModel->showwheremahp($mahp);
-        $sinhvien1=$result_sv[0]['MSSV'];
-        $_SESSION['sinhvien1']=$sinhvien1;
+        if(isset($result_sv[0]['MSSV']))
+        {
+          $sinhvien1=$result_sv[0]['MSSV'];
+          $_SESSION['sinhvien1']=$sinhvien1;
+        }else{
+          
+        }
+       
     }
     $result=$this->DiemDanhModel->showwheremahp($mahp);
     $this->view('giangvien/diemdanh',[
@@ -59,7 +65,7 @@ class GiangVienDiemDanhController extends Controller
   }
   public function diemdanh()
   { 
-    if(isset($_POST['diemdanhnagy']))
+    if(isset($_POST['diemdanhnagy']) && isset($_SESSION['sinhvien1']))
     {
     $ghichu='';
     $status=0;

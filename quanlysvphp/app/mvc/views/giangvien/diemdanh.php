@@ -92,7 +92,11 @@
                                                     <td class="MAHP"><?= $row['MAHP'] ?></td>
                                                     <td class="buoi"><?= $row['BUOIHOC'] ?></td>
                                                     <td class="ngay"><?= $row['NGAYHOC'] ?></td>
-                                                    <td class="status"><?php if($row['STATUS']==='1'){echo 'có';}else{echo 'vắng';} ?></td>
+                                                    <td class="status"><?php if ($row['STATUS'] === '1') {
+                                                                            echo 'có';
+                                                                        } else {
+                                                                            echo 'vắng';
+                                                                        } ?></td>
                                                     <td class="ghichu"><?= $row['GHICHU'] ?></td>
                                                     <td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td>
                                                 </tr>
@@ -151,96 +155,106 @@
             showInput();
         });
     });
-      //nút edit
-      $(document).on('click', '.edit-btn', function() {
-            var row = $(this).closest('tr'); //lấy đoạn tr vừa bấm
-           
-            //lấy gán từng giá tri của từng biến tương ứng
-            var MSSV = row.find('.MSSV').text().trim();
-            var MAHP = row.find('.MAHP').text().trim();
-            var BUOIHOC = row.find('.buoi').text().trim();
-            var NGAY = row.find('.ngay').text().trim();
-            var STATUS = row.find('.status').text().trim();
-            var GHICHU = row.find('.ghichu').text().trim();
-            //hiển thị giá trị đoạn trên và chuyển kiểu thành input để sửa
-            row.find('.status').html('<input style="width:130px"  type="checkbox">');
-            row.find('.ghichu').html('<input style="width:130px"  type="text" value="'+GHICHU+'">');
-            //thay nut edit thanh update
-            row.find('.edit-btn').text('Update');
-            row.find('.edit-btn').removeClass('edit-btn').addClass('update-btn');
-            row.find('.update-btn').on('click', function() {
-                var editedStatus = row.find('input').eq(0).is(':checked')?1:0;
-                var editedGhiChu = row.find('input').eq(1).val();
-                var data = {
-                    MSSV:MSSV,
-                    MAHP:MAHP,
-                    BUOIHOC:BUOIHOC,
-                    NGAY:NGAY,
-                    editedStatus:editedStatus,
-                    editedGhiChu:editedGhiChu
-                };
-                $.ajax({
-                    url: '<?= URL ?>/GiangVienDiemDanhController/update',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function(response) {
-                        var statuschecked=response.STATUS==='0'?'vắng':'có';
-                        console.log(data);
-                        row.find('.status').html(statuschecked);
-                        row.find('.ghichu').html(response.GHICHU);
-                        row.find('.update-btn').text('Edit');
-                        row.find('.update-btn').removeClass('save').addClass('edit-btn');
-                    },
-                    error: function(xhr, status, error) {
-                       console.log(data);
-                        console.log('Lỗi khi gửi yêu cầu AJAX:', error);
-                    }
-                })
-            });
+    //nút edit
+    $(document).on('click', '.edit-btn', function() {
+        var row = $(this).closest('tr'); //lấy đoạn tr vừa bấm
 
-
-        });
-        $('#search-input').on('input', function() {
-            $('.odd').remove(); //xóa các tr odd đang hiện 
-            var searchValue = $(this).val().toLowerCase(); //đưa hết về chữ thường 
-            <?php if (isset($result)) {
-                foreach ($result as $row) { ?>
-                    var name = '<?php echo $row['MSSV']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
-                    if (name.includes(searchValue)) //so sách giá trị tìm bằng giá trị name
-                    {
-                        var listItem = ' <tr class="odd" id="<?= $row['MSSV'] ?>"><td class="MSSV"><?= $row['MSSV'] ?></td><td class="MAHP"><?= $row['MAHP'] ?></td><td class="buoi"><?= $row['BUOIHOC'] ?></td><td class="ngay"><?= $row['NGAYHOC'] ?></td><td class="status"><?= $row['STATUS'] ?></td><td class="ghichu"><?= $row['GHICHU'] ?></td><td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td></tr>'
-                        $('#search-results').append(listItem);
-                    }
-
-            <?php }
-            } ?>
-
-        });
-    function addNewRecord() {
-            // Lấy giá trị nhập vào từ trường input
-            var diemdanhnagy = document.getElementById("name-input").value;
-            console.log(diemdanhnagy);
+        //lấy gán từng giá tri của từng biến tương ứng
+        var MSSV = row.find('.MSSV').text().trim();
+        var MAHP = row.find('.MAHP').text().trim();
+        var BUOIHOC = row.find('.buoi').text().trim();
+        var NGAY = row.find('.ngay').text().trim();
+        var STATUS = row.find('.status').text().trim();
+        var GHICHU = row.find('.ghichu').text().trim();
+        //hiển thị giá trị đoạn trên và chuyển kiểu thành input để sửa
+        row.find('.status').html('<input style="width:130px"  type="checkbox">');
+        row.find('.ghichu').html('<input style="width:130px"  type="text" value="' + GHICHU + '">');
+        //thay nut edit thanh update
+        row.find('.edit-btn').text('Update');
+        row.find('.edit-btn').removeClass('edit-btn').addClass('update-btn');
+        row.find('.update-btn').on('click', function() {
+            var editedStatus = row.find('input').eq(0).is(':checked') ? 1 : 0;
+            var editedGhiChu = row.find('input').eq(1).val();
             var data = {
-                diemdanhnagy:diemdanhnagy
-             };
+                MSSV: MSSV,
+                MAHP: MAHP,
+                BUOIHOC: BUOIHOC,
+                NGAY: NGAY,
+                editedStatus: editedStatus,
+                editedGhiChu: editedGhiChu
+            };
+            $.ajax({
+                url: '<?= URL ?>/GiangVienDiemDanhController/update',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function(response) {
+                    var statuschecked = response.STATUS === '0' ? 'vắng' : 'có';
+                    console.log(data);
+                    row.find('.status').html(statuschecked);
+                    row.find('.ghichu').html(response.GHICHU);
+                    row.find('.update-btn').text('Edit');
+                    row.find('.update-btn').removeClass('save').addClass('edit-btn');
+                },
+                error: function(xhr, status, error) {
+                    console.log(data);
+                    console.log('Lỗi khi gửi yêu cầu AJAX:', error);
+                }
+            })
+        });
+
+
+    });
+    $('#search-input').on('input', function() {
+        $('.odd').remove(); //xóa các tr odd đang hiện 
+        var searchValue = $(this).val().toLowerCase(); //đưa hết về chữ thường 
+        <?php if (isset($result)) {
+            foreach ($result as $row) { ?>
+                var name = '<?php echo $row['MSSV']; ?>'.toLowerCase(); //đặt biến name là tên của giá trị name trong bảng người dùng
+                if (name.includes(searchValue)) //so sách giá trị tìm bằng giá trị name
+                {
+                    var listItem = ' <tr class="odd" id="<?= $row['MSSV'] ?>"><td class="MSSV"><?= $row['MSSV'] ?></td><td class="MAHP"><?= $row['MAHP'] ?></td><td class="buoi"><?= $row['BUOIHOC'] ?></td><td class="ngay"><?= $row['NGAYHOC'] ?></td><td class="status"><?= $row['STATUS'] ?></td><td class="ghichu"><?= $row['GHICHU'] ?></td><td class="edit"><a class="edit-btn" name="edit" href="#">Edit</a></td></tr>'
+                    $('#search-results').append(listItem);
+                }
+
+        <?php }
+        } ?>
+
+    });
+
+    function addNewRecord() {
+        // Lấy giá trị nhập vào từ trường input
+        var diemdanhnagy = document.getElementById("name-input").value;
+        console.log(diemdanhnagy);
+        var data = {
+            diemdanhnagy: diemdanhnagy
+        };
         $.ajax({
-        url:'<?= URL ?>/GiangVienDiemDanhController/diemdanh',
-        type: 'POST',
-        dataType: 'html',
-        data:data,
-        success:function(response)
-        {
-          $('#editable-sample').html(response);
-        }, 
-        error: function(xhr, status, error) {
-        console.log('Lỗi khi gửi yêu cầu AJAX:', error);
-        }
-       })
-            document.getElementById("input-container").style.display = "none";
-            // Xóa giá trị trong trường input
-            document.getElementById("name-input").value = "";
-        }
+            url: '<?= URL ?>/GiangVienDiemDanhController/diemdanh',
+            type: 'POST',
+            dataType: 'html',
+            data: data,
+            success: function(response) {
+                $('#editable-sample').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.log('Lỗi khi gửi yêu cầu AJAX:', error);
+            }
+        })
+        document.getElementById("input-container").style.display = "none";
+        // Xóa giá trị trong trường input
+        document.getElementById("name-input").value = "";
+    };
+
+
+    var result = <?php echo json_encode($result); ?>; // Chuyển đổi $result thành một đối tượng JavaScript
+
+    // Kiểm tra nếu result không có dữ liệu, vô hiệu hóa nút và thêm lớp CSS 'disabled'
+    if (result.length === 0) {
+        var addButton = document.getElementById("editable-sample_new");
+        addButton.disabled = true;
+        addButton.classList.add("disabled");
+    }
 </script>
 <!-- main-end -->
 <?php include '../quanlysvphp/app/mvc/views/layout/footerGV.php' ?>

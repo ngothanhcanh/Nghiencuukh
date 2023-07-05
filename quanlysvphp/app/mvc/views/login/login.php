@@ -12,12 +12,12 @@
             <img src="<?= URL ?>/public/images/logo-UPT.png" alt="">
 			<h2>WELCOME TO UPT</h2>
             </div>
-			<h3><?php 
-			if(!empty($errorslogin))
+			<h3 style="color:red;"><?php 
+			if(!empty($error))
 			{
-			foreach($errorslogin as $error)
+			foreach($error as $errors)
 			{  
-				echo $error;
+				echo $errors;
 			}
 		    }
 			?>
